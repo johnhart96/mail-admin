@@ -1,0 +1,54 @@
+#wrap {
+    padding: 10px;
+    width: 400px;
+    border: solid 1px #CCC;
+    border-radius: 5px;
+    margin: 0 auto;
+    background: #FFF;
+}
+#wrap #logo {
+    margin: 0 auto;
+    width: 100px;
+}
+#wrap h1 {
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+}
+#wrap form {
+    margin: 10px;
+}
+#wrap form #username , #password {
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+    margin: 5px;
+}
+#wrap form #login {
+    width: 50%;
+    text-align: center;
+    padding: 5px;
+    margin: 0 auto;
+    border: solid 1px #CCC;
+    border-radius: 5px;
+    background: #CCC;
+}
+.space {
+    height: 150px;
+}
+#footer {
+    bottom: 0px;
+    left: 10px;
+    position: fixed;
+    font-size: 10px;
+    color: #000;
+}
+#dialog-error {
+    padding: 5px;
+    background-color: #800;
+    border: solid 1px #F00;
+    color: #FFF;
+    text-align: center;
+    margin: 5px;
+}

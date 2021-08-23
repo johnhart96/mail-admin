@@ -1,0 +1,10 @@
+.col {
+    padding: 10px;
+    display: inline-block;
+}
+#dialog-error {
+    padding: 5px;
+    background-color: #800;
+    border: solid 1px #F00;
+}
+
