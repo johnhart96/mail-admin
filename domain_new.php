@@ -30,37 +30,26 @@ if( isset( $_POST['submit'] ) ) {
     $info['enabledService'][3] = "smtptsl";
     $info['mtaTransport'] = "dovecot";
     $info['domainName'] = $domain;
-    $sr = ldap_search( $ds , "dc=JH96,dc=LOCAL" , "(domainName=$domain)" );
-    $check = ldap_get_entries( $ds , $sr );
-    if( (int)$check['count'] !==0 ) {
-        $domainAlreadyExists = true;
-    } else {
-        // Create the object
-        $r = ldap_add( $ds , "domainName=$domain," . LDAP_DOMAINDN , $info );
+    
+    // Create the object
+    $r = ldap_add( $ds , "domainName=$domain," . LDAP_DOMAINDN , $info );
 
-        // Create OUs
-        $ou['objectclass'][0] = "organizationalUnit";
-        $ou['objectclass'][1] = "top";
-        $ou['ou'] = "Aliases";
-        ldap_add( $ds , "ou=Aliases," . "domainName=$domain," . LDAP_DOMAINDN , $ou );
-        $ou['ou'] = "Users";
-        ldap_add( $ds , "ou=Users," . "domainName=$domain," . LDAP_DOMAINDN , $ou );
-        $ou['ou'] = "Computers";
-        ldap_add( $ds , "ou=Computers," . "domainName=$domain," . LDAP_DOMAINDN , $ou );
-        $ou['ou'] = "Externals";
-        ldap_add( $ds , "ou=Externals," . "domainName=$domain," . LDAP_DOMAINDN , $ou );
-        $ou['ou'] = "Groups";
-        ldap_add( $ds , "ou=Groups," . "domainName=$domain," . LDAP_DOMAINDN , $ou );
-        plugins_process( "domain_new" , "submit" );
+    // Create OUs
+    $ou['objectclass'][0] = "organizationalUnit";
+    $ou['objectclass'][1] = "top";
+    $ou['ou'] = "Aliases";
+    ldap_add( $ds , "ou=Aliases," . "domainName=$domain," . LDAP_DOMAINDN , $ou );
+    $ou['ou'] = "Users";
+    ldap_add( $ds , "ou=Users," . "domainName=$domain," . LDAP_DOMAINDN , $ou );
+    $ou['ou'] = "Computers";
+    ldap_add( $ds , "ou=Computers," . "domainName=$domain," . LDAP_DOMAINDN , $ou );
+    $ou['ou'] = "Externals";
+    ldap_add( $ds , "ou=Externals," . "domainName=$domain," . LDAP_DOMAINDN , $ou );
+    $ou['ou'] = "Groups";
+    ldap_add( $ds , "ou=Groups," . "domainName=$domain," . LDAP_DOMAINDN , $ou );
+    plugins_process( "domain_new" , "submit" );
 
-        // Check entry exists
-        $sr = ldap_search( $ds , "dc=JH96,dc=LOCAL" , "(domainName=$domain)" );
-        $info = ldap_get_entries( $ds , $sr );
-        if( $info['count'] == 1 ) {
-            // Object added
-            header( "Location:domains.php?added" );
-        }
-    }
+    header( "Location:domains.php?added" );
 
 }
 ?>
@@ -92,7 +81,7 @@ if( isset( $_POST['submit'] ) ) {
                             </ol>
                         </nav>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="accountstatus" name="accountstatus">
+                            <input class="form-check-input" checked type="checkbox" value="" id="accountstatus" name="accountstatus">
                             <label class="form-check-label" for="accountstatus">
                                 Enable this domain
                             </label>
