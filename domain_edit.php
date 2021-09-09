@@ -38,7 +38,9 @@ if( isset( $_POST['submit'] ) ) {
     $info['cn'] = $cn;
     $info['accountsetting'][0] = "minPasswordLength:" . $minPasswordLength;
     $info['accountsetting'][1] = "defaultQuota:" . $defaultQuota;
-    $info['description'] = filter_var( $_POST['description'] , FILTER_SANITIZE_STRING );
+    if( ! empty( $_POST['description'] ) ) {
+        $info['description'] = filter_var( $_POST['description'] , FILTER_SANITIZE_STRING );
+    }
     if( ldap_modify( $ds , $dn , $info ) ) {
         $saved = true;
         $result = ldap_search( $ds , LDAP_BASEDN , $filter );
