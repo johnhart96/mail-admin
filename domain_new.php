@@ -30,8 +30,10 @@ if( isset( $_POST['submit'] ) ) {
     $info['enabledService'][3] = "smtptsl";
     $info['mtaTransport'] = "dovecot";
     $info['domainName'] = $domain;
+    error_reporting( 0 );
     $sr = ldap_search( $ds , "dc=JH96,dc=LOCAL" , "(domainName=$domain)" );
     $check = ldap_get_entries( $ds , $sr );
+    error_reporting( -1 );
     if( (int)$check['count'] !==0 ) {
         $domainAlreadyExists = true;
     } else {
@@ -92,7 +94,7 @@ if( isset( $_POST['submit'] ) ) {
                             </ol>
                         </nav>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="accountstatus" name="accountstatus">
+                            <input class="form-check-input" checked type="checkbox" value="" id="accountstatus" name="accountstatus">
                             <label class="form-check-label" for="accountstatus">
                                 Enable this domain
                             </label>
