@@ -7,3 +7,4 @@
 <script src='js/a076d05399.js' crossorigin='anonymous'></script>
 <link href="css/topbar.css" rel="stylesheet" type="text/css" />
 <link href="css/ui.css" rel="stylesheet" type="text/css" />
+<title><?php echo BRANDING; ?>
