@@ -29,3 +29,8 @@ When you install iRedMail, make sure that you install with no web server to foll
     sudo git clone https://github.com/johnhart96/mail-admin
     sudo cp /var/www/html/mail-admin/usr/config.sample.php /var/www/html/mail-admin/usr/config.php
  Then edit */var/www/html/mail-admin/usr/config.php* and add your LDAP details that you find in *~/iRedmail-xx/iRedMail.tips*
+## Updating
+If you used git to clone the repository to your server, you should be able to run the following command to update to the latest version
+    
+    cd /var/www/html/mail-admin
+    sudo git pull
