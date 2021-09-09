@@ -66,7 +66,7 @@ securePage();
                                 echo "</td>";
                                 echo "<td>" . $domain['accountstatus'][0] . "</td>";
                                 echo "<td width='1'>";
-                                echo "<a class='btn btn-danger' href='users.php?domain=" . $domain['domainname'][0] . "'><i class='fa fa-id-badge'></i></a>";
+                                echo "<a class='btn btn-primary' href='users.php?domain=" . $domain['domainname'][0] . "'><i class='fa fa-id-badge'></i></a>";
                                 echo "</td>";
                                 echo "<td width='1'>";
                                 echo "<a class='btn btn-primary' href='domain_edit.php?domain=" . $domain['domainname'][0] . "'><i class='fas fa-edit'></i></a>";
