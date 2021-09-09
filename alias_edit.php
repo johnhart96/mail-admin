@@ -17,7 +17,9 @@ require 'inc/bind.php';
         $current = ldap_get_entries( $ds , $getCurrent );
         unset( $current['count'] );
         if( isset( $_POST['submit'] ) ) {
-            $description = filter_var( $_POST['description'] , FILTER_SANITIZE_STRING );
+            if( ! empty( $_POST['description'] ) ) {
+                $description = filter_var( $_POST['description'] , FILTER_SANITIZE_STRING );
+            }
             ldap_mod_del( $ds , $dn , array( "mailforwardingaddress" => array() ) );
             $addressess = explode( "," , filter_var( $_POST['destinations'] , FILTER_SANITIZE_STRING ) );
             foreach( $addressess as $address ) {

@@ -12,7 +12,9 @@ if( isset( $_POST['submit'] ) ) {
     $info['givenname'][0] = filter_var( $_POST['firstname'] , FILTER_SANITIZE_STRING );
     $info['sn'][0] = filter_var( $_POST['lastname'] , FILTER_SANITIZE_STRING );
     $info['displayname'][0] = filter_var( $_POST['displayname'] , FILTER_SANITIZE_STRING );
-    $info['description'][0] = filter_var( $_POST['description'] , FILTER_SANITIZE_STRING );
+    if( ! empty( $_POST['description'] ) ) {
+        $info['description'][0] = filter_var( $_POST['description'] , FILTER_SANITIZE_STRING );
+    }
     if( ! empty( $_POST['password'] ) ) {
         $password = filter_var( $_POST['password'] , FILTER_SANITIZE_STRING );
         $info['userPassword'] = hash_password( $password );
