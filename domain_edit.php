@@ -76,8 +76,14 @@ if( isset( $_POST['submit'] ) ) {
                         if( empty( $domain['domainSenderBccAddress'][0] ) ) {
                             $domain['domainSenderBccAddress'][0] = NULL;
                         }
+                        // Check for an empty CN
+                        if( empty( $domain['cn'][0] ) ) {
+                            $cn = NULL;
+                        } else {
+                            $cn = $domain['cn'][0];
+                        }
                         ?>
-                        <h1>Domain: <?php echo $domain['cn'][0]; ?></h1>
+                        <h1>Domain: <?php echo $cn ?></h1>
                         <p><em><?php echo $domain['domainname'][0]; ?></em></p>
                         <?php
                         if( isset( $saved ) ) {
@@ -130,7 +136,7 @@ if( isset( $_POST['submit'] ) ) {
                         </div>
                         <div class="input-group">
                             <div class="input-group-prepend"><span class="input-group-text">Company/Organization Name</span></div>
-                            <input name="cn" class="form-control" value="<?php echo $domain['cn'][0]; ?>">
+                            <input name="cn" class="form-control" value="<?php echo $cn; ?>">
                         </div>
                         <div class="input-group">
                             <?php
