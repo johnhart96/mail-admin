@@ -44,7 +44,7 @@ if( isset( $_GET['confirm'] ) ) {
                             </ol>
                         </nav>
                         <?php
-                        $sr = ldap_search( $ds , "dc=JH96,dc=LOCAL" , "(domainName=$domain)" );
+                        $sr = ldap_search( $ds , LDAP_BASEDN , "(domainName=$domain)" );
                         $check = ldap_get_entries( $ds , $sr );
                         if( (int)$check[0]['domaincurrentusernumber'][0] !== 0 ) {
                             echo "<div class='alert alert-danger'><strong>Error:</strong> This domain cannot be considared for deletion as it has existing mailboxes.</div>";
