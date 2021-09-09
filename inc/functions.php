@@ -28,4 +28,24 @@ function plugins_process( $page , $location ) {
         }
     }
 }
+function watchdog( $entry ) {
+    // Header
+    $stamp = date( "Y-m-d H:i" );
+    if( isset( $_SESSION['mail-admin'] ) ) {
+        $header = $stamp . " (" . $_SESSION['mail-admin'] . "): ";
+    } else {
+        $header = $stamp . ": ";
+    }
+    // Check if log file exists
+    if( ! file_exists( "usr/admin.log" ) ) {
+        // Create the file
+        $create = fopen( "usr/admin.log" , "w" );
+        fwrite( $create , NULL );
+        fclose( $create );
+    }
+    // Add entry to the log file
+    $log = fopen( "usr/admin.log" , "a" );
+    fwrite( $log , "\n" . $header . $entry );
+    fclose( $log );
+}
 ?>

@@ -48,7 +48,7 @@ if( isset( $_POST['submit'] ) ) {
     $ou['ou'] = "Groups";
     ldap_add( $ds , "ou=Groups," . "domainName=$domain," . LDAP_DOMAINDN , $ou );
     plugins_process( "domain_new" , "submit" );
-
+    watchdog( "Adding domain `" . $domain . "`" );
     header( "Location:domains.php?added" );
 
 }

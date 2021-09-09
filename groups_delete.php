@@ -38,7 +38,10 @@ if( isset( $_GET['confirm'] ) ) {
                         <div class="alert alert-warning">
                             Are you sure you want to delete `<?php echo $group ?>`?
                         </div>
-                        <?php plugins_process( "groups_delete" , "form" ); ?>
+                        <?php
+                        plugins_process( "groups_delete" , "form" );
+                        watchdog( "Deleting group `" . $group . "`" );
+                        ?>
                         <p>
                             <a href="groups_delete.php?group=<?php echo $group; ?>&confirm" class="btn btn-danger"><i class="fas fa-check"></i>&nbsp;Yes</a>
                             <a href="groups.php" class="btn btn-success"><i class="fas fa-times"></i>&nbsp;No</a> 

@@ -18,6 +18,7 @@ if( isset( $_GET['confirm'] ) ) {
     // Delete the domain it's self
     if( ldap_delete( $ds  , $entry ) ) {
         plugins_process( "domain_delete" , "submit" );
+        watchdog( "Deleting domain `" . $domain . "`" );
         header( "Location:domains.php?deleted" );
     } else {
         die( "Unable to delete" );

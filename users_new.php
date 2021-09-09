@@ -84,6 +84,7 @@ if( isset( $_POST['submit'] ) ) {
         $dn = "mail=" . $address . "@" . $domain . ",ou=Users,domainName=" . $domain . "," . LDAP_DOMAINDN;
         if( ldap_add( $ds , $dn , $info ) ) {
             plugins_process( "users_new" , "submit" );
+            watchdog( "Adding user `" . $address . "@" . $domain . "`" );
             header( "Location: users.php?saved" );
         } else {
             die( "cannot add" );

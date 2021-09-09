@@ -61,6 +61,7 @@ if( isset( $_POST['submit'] ) ) {
     $result = ldap_search( $ds , LDAP_BASEDN , $filter );
     $domain = ldap_get_entries( $ds , $result );
     plugins_process( "domain_bcc" , "submit" );
+    watchdog( "Editing domain `" . $domain['domainName'][0] . "`" );
     $saved = TRUE;
 }
 

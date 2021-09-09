@@ -91,6 +91,7 @@ if( isset( $_POST['submit'] ) ) {
     plugins_process( "groups_edit" , "submit" );
 
     if( ! isset( $cannotFindOwner ) ) {
+        watchdog( "Editing group `" . $group . "`" );
         header( "Location: groups.php?saved" );
     }
     

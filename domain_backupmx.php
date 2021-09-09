@@ -36,6 +36,7 @@ if( isset( $_POST['submit'] ) ) {
     $filter = "(domainName=$domainToFind)";
     $result = ldap_search( $ds , LDAP_BASEDN , $filter );
     $domain = ldap_get_entries( $ds , $result );
+    watchdog( "Editing domain `" . $domain['domainName'][0] . "`" );
     plugins_process( "domain_backupmx" , "submit" );
     $saved = TRUE;
 }

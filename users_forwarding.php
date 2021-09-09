@@ -26,6 +26,7 @@ if( isset( $_POST['submit'] ) ) {
     }
     ldap_mod_add( $ds , $dn , $info );
     plugins_process( "users_forwarding" , "submit" );
+    watchdog( "Editing user `" . $user . "`" );
     header( "Location:users_forwarding.php?user=" . $user . "&saved" );
 }
 

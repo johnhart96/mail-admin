@@ -29,6 +29,7 @@ if( isset( $_POST['submit'] ) ) {
     // Modify all user details
     if( ldap_modify( $ds , $dnToUse , $info ) ) {
         plugins_process( "users_edit" , "submit" );
+        watchdog( "Editing user `" . $user . "`" );
         header( "Location:users.php?saved" );
     } else {
         die( "Cannot modify object!" );

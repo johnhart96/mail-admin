@@ -20,6 +20,7 @@ if( isset( $_POST['submit'] ) ) {
     $info['userrecipientbccaddress'][0] = $userRecipientBccAddress;
     ldap_modify( $ds , $dn , $info );
     plugins_process( "users_bcc" , "submit" );
+    watchdog( "Editing user `" . $user . "`" );
     header( "Location:users_bcc.php?user=" . $user . "&saved" );
 }
 

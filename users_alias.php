@@ -22,6 +22,7 @@ if( isset( $_POST['submit'] ) ) {
     } else {
         $info['shadowaddress'] = NULL;
         if( ldap_modify( $ds , $dn , $info ) ) {
+            watchdog( "Editing user `" . $user . "`" );
             plugins_process( "users_alias" , "submit" );
             $saved = TRUE;
         }

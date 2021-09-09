@@ -46,6 +46,7 @@ if( isset( $_POST['submit'] ) ) {
         }
     }
     plugins_process( "users_services" , "submit" );
+    watchdog( "Editing user `" . $user . "`" );
     header( "Location:users_services.php?user=" . $user . "&saved" );
 }
 

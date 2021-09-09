@@ -10,6 +10,7 @@ if( isset( $_GET['confirm'] ) ) {
     $dnToDelete = "mail=" . $user . ",ou=Users,domainName=" . $domain . "," . LDAP_DOMAINDN;
     if( ldap_delete( $ds , $dnToDelete ) ) {
         plugins_process( "users_delete" , "submit" );
+        watchdog( "Deleting user `" . $user . "`" );
         header( "Location: users.php?deleted" );
     } else {
         die( "Cannot delete!" );

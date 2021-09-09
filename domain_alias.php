@@ -46,6 +46,7 @@ if( isset( $_POST['submit'] ) ) {
     $domain = ldap_get_entries( $ds , $result );
     $dn = $domain[0]['dn'];
     $count = (int)$domain['count'];
+    watchdog( "Editing domain `" . $domain['domainName'][0] . "`" );
 }
 
 ?>

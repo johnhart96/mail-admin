@@ -23,6 +23,7 @@ if( isset( $_POST['submit'] ) ) {
 
         if( ldap_add( $ds , $dnToAdd , $info ) ) {
             plugins_process( "groups_new" , "submit" );
+            watchdog( "Adding group `" . $address . "@" . $address . "`" );
             header( "Location: groups.php?saved" );
         } else {
             die( "Cannot add!" );

@@ -45,6 +45,7 @@ if( isset( $_POST['submit'] ) ) {
         $fullDNToAdd = "mail=catch-all,ou=Users," . $dn;
         ldap_add( $ds , $fullDNToAdd , $dets );
         plugins_process( "domain_catchall" , "submit" );
+        watchdog( "Editing domain `" . $domain['domainName'][0] . "`" );
         header( "Location:domain_catchall.php?saved&domain=" . $domainToFind );
     }
 }
