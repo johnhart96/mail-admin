@@ -10,6 +10,7 @@
       <img src="images/default.jpg">
     </div>
     <div id="user_menu">
+      <?php plugins_process( "user_menu" , "item" ); ?>
       <p>
         <a href="logout.php">Logout</a>
       </p>
@@ -51,7 +52,7 @@
         </div>
         <span class="title">Aliases</span>
       </a>
-      
+      <?php plugins_process( "user_menu" , "main" ); ?>
       <!--<a href="settings.php" class="tile">
         <div class="icon">
           <i class="fa fa-cogs"></i>
