@@ -92,12 +92,25 @@ plugins_process( "index" , "submit" );
                     </div>
                 </div>
             </div>
+            <div class="row">&nbsp;</div>
             <div class="row">
                 <div class="col">
-                    
-                </div>
-                <div class="col">
-                    
+                    <div class="card">
+                        <div class="card-header"><strong>Logging</strong></div>
+                        <div class="card-body">
+                            <?php
+                            $logFile = file( "usr/admin.log" );
+                            $logFile = array_reverse( $logFile );
+                            ?>
+                            <table class="table table-bordered table-striped">
+                                <?php
+                                foreach( $logFile as $entry ) {
+                                    echo "<tr><td>" . $entry . "</td></tr>";
+                                }
+                                ?>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
             <?php plugins_process( "index" , "form" ); ?>
