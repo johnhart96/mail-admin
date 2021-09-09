@@ -18,18 +18,7 @@ securePage();
                     <form method="post">
                         <h1>Users</h1>
                         <?php
-                        // Is there an active domain filter?
-                        if( isset( $_GET['domain'] ) ) {
                             $domain = filter_var( $_GET['domain'] , FILTER_SANITIZE_STRING );
-                            echo "<nav aria-label='breadcrumb'>";
-                            echo "<ol class='breadcrumb'>";
-                            echo "<li class='breadcrumb-item'><a href='domains.php'>Domains</a></li>";
-                            echo "<li class='breadcrumb-item'><a href='domain_edit.php?domain=" . $domain . "'>" . $domain . "</a></li>";
-                            echo "<li class='breadcrumb-item active' aria-current='page'>Users</li>";
-                            echo "</ol>";
-                            echo "</nav>";
-                        }
-                        // Dialogs
                         if( isset( $_GET['deleted'] ) ) {
                             echo "<div class='alert alert-success'>User deleted!</div>";
                         }
