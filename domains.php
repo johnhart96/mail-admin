@@ -42,15 +42,19 @@ securePage();
                                 <th>Domain</th>
                                 <th>Description</th>
                                 <th>Status</th>
-                                <th>User Count</th>
-                                <th colspan="2"></th>
+                                <th colspan="3"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             foreach( $entries as $domain ) {
+                                if( empty( $domain['cn'][0] ) ) {
+                                    $cn = NULL;
+                                } else {
+                                    $cn = $domain['cn'][0];
+                                }
                                 echo "<tr>";
-                                echo "<td>" . $domain['cn'][0] . "</td>";
+                                echo "<td>" . $cn . "</td>";
                                 echo "<td>" . $domain['domainname'][0] . "</td>";
                                 // Description
                                 echo "<td>";
@@ -61,13 +65,16 @@ securePage();
                                 }
                                 echo "</td>";
                                 echo "<td>" . $domain['accountstatus'][0] . "</td>";
-                                echo "<td>" . $domain['domaincurrentusernumber'][0] . "</td>";
+                                echo "<td width='1'>";
+                                echo "<a class='btn btn-danger' href='users.php?domain=" . $domain['domainname'][0] . "'><i class='fa fa-id-badge'></i></a>";
+                                echo "</td>";
                                 echo "<td width='1'>";
                                 echo "<a class='btn btn-primary' href='domain_edit.php?domain=" . $domain['domainname'][0] . "'><i class='fas fa-edit'></i></a>";
                                 echo "</td>";
                                 echo "<td width='1'>";
                                 echo "<a class='btn btn-danger' href='domain_delete.php?domain=" . $domain['domainname'][0] . "'><i class='fas fa-trash'></i></a>";
                                 echo "</td>";
+                                
                                 echo "</tr>";
                             }
                             ?>
