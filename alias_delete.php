@@ -15,7 +15,7 @@ require 'inc/bind.php';
             $dn = "mail=" . $alias . ",ou=Aliases,domainName=" . $domain . "," . LDAP_DOMAINDN;
             plugins_process( "alias_delete" , "submit" );
             if( ldap_delete( $ds , $dn ) ) {
-                header( "Location: alias.php?deleted" );
+                go( "alias.php?deleted" );
             } else {
                 die( "cannot delete!" );
             }

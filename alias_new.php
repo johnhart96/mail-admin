@@ -30,7 +30,7 @@ require 'inc/bind.php';
                 $dn = "mail=" . $address . ",ou=Aliases,domainName=" . $domain . "," . LDAP_DOMAINDN;
                 if( ldap_add( $ds , $dn , $info ) ) {
                     plugins_process( "alias_new" , "submit" );
-                    header( "Location: alias.php?saved" );
+                    go( "alias.php?saved" );
                 } else {
                     die( "Cannot add" );
                 }
