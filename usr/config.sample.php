@@ -7,6 +7,11 @@
 // General
 define( "BRANDING" , "Mail-Admin" ); // Set the brand name
 define( "MAILQUOTA" , 6442450944 );
+define( "DEBUG" , TRUE );
+
+// Apps
+define( "APP_MAIL" , "https://gmail.com" );
+define( "APP_DRIVE" , "https://drive.google.com" );
 
 // LDAP
 define( "LDAP_SERVER" , "ldap://127.0.0.1:389" ); // LDAP server location

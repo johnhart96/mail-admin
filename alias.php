@@ -4,13 +4,8 @@ require 'inc/common_header.php';
 securePage();
 require 'inc/bind.php';
 $filter = "(objectclass=mailalias)";
-if( isset( $_GET['domain'] ) ) {
-    $dial = "domainName=" . filter_var( $_GET['domain'] , FILTER_SANITIZE_STRING ) . "," . LDAP_DOMAINDN;
-    $result = ldap_search( $ds , $dial , $filter ) or exit("Unable to search");
-} else {  
-    $result = ldap_search( $ds , LDAP_BASEDN , $filter ) or exit("Unable to search");
-    
-}
+require 'inc/relmset.php';
+$result = ldap_search( $ds , $relm , $filter ) or exit("Unable to search");
 $entries = ldap_get_entries( $ds , $result );
 $count = $entries['count'];
 unset( $entries['count'] );

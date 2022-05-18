@@ -64,7 +64,7 @@ if( isset( $_POST['submit'] ) ) {
         $info['enabledService'][27] = "forward";
         $info['enabledService'][28] = "shadowaddress";
         $info['enabledService'][29] = "displayedInGlobalAddressBook";
-        $info['enabledService'][29] = "sogo";
+        $info['enabledService'][30] = "sogo";
 
             
         // Misc
@@ -116,9 +116,13 @@ if( isset( $_POST['submit'] ) ) {
                             <div class="input-group-prepend"><span class="input-group-text">Address:</span></div>
                             <input type="text" name="address" class="form-control">
                             <?php
-                            if( isset( $_GET['domain'] ) ) {
-                                echo "<input type='hidden' name='domain' value='" . filter_var( $_GET['domain'] , FILTER_SANITIZE_STRING ) . "'>";
-                                echo "<div class='input-group-append'><span class='input-group-text'>@" . filter_var( $_GET['domain'] , FILTER_SANITIZE_STRING ) . "</span></div>";
+                            if( $_SESSION['admin_level'] !== 'global' ) {
+                                require 'inc/relmset.php';
+                                $domain = str_replace( LDAP_DOMAINDN , "" , $relm );
+                                $domain = str_replace( "domainName=" , "" , $domain );
+                                $domain = str_replace( "," , "" , $domain );
+                                echo "<input type='hidden' name='domain' value='" . filter_var( $domain , FILTER_SANITIZE_STRING ) . "'>";
+                                echo "<div class='input-group-append'><span class='input-group-text'>@" . filter_var( $domain , FILTER_SANITIZE_STRING ) . "</span></div>";
                             } else {
                                 echo "<span class='input-group-text'>@</span>";
                                 echo "<select name='domain' class='form-control'>";

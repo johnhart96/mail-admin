@@ -63,9 +63,16 @@ require 'inc/bind.php';
                             <input required type="text" name="address" class="form-control">
                             <span class="input-group-text">@</span>
                             <select required name="domain" class="form-control">
-                                <option selected disabled>--Select--</option>
                                 <?php
-                                $filter = "(domainName=*)";
+                                if( $_SESSION['admin_level'] !== "global" ) {
+                                    require 'inc/relmset.php';
+                                    $domain = str_replace( LDAP_DOMAINDN , "" , $relm );
+                                    $domain = str_replace( "domainName=" , "" , $domain );
+                                    $domain = str_replace( "," , "" , $domain );
+                                    $filter = "(domainName=$domain)";
+                                } else {
+                                    $filter = "(domainName=*)";
+                                }
                                 $getDomains = ldap_search( $ds , LDAP_DOMAINDN , $filter );
                                 $entries = ldap_get_entries( $ds , $getDomains );
                                 unset( $entries['count'] );

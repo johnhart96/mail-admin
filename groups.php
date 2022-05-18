@@ -41,12 +41,8 @@ require 'inc/bind.php';
                             <tbody>
                                 <?php
                                 $filter = "(objectclass=mailList)";
-                                if( isset( $_GET['domain'] ) ) {
-                                    $dnToUse = "domainName=" . filter_var( $_GET['domain'] , FILTER_SANITIZE_STRING ) . "," . LDAP_DOMAINDN;
-                                } else {
-                                    $dnToUse = LDAP_BASEDN;
-                                }
-                                $getGroups = ldap_search( $ds , $dnToUse , $filter );
+                                require 'inc/relmset.php';
+                                $getGroups = ldap_search( $ds , $relm , $filter );
                                 $entries = ldap_get_entries( $ds , $getGroups );
                                 unset( $entries['count'] );
                                 foreach( $entries as $group ) {
@@ -64,7 +60,7 @@ require 'inc/bind.php';
                                     // Members
                                     echo "<td>";
                                     $filter = "(memberofgroup=" . $group['mail'][0] . ")";
-                                    $findMembers = ldap_search( $ds , $dnToUse , $filter );
+                                    $findMembers = ldap_search( $ds , $relm , $filter );
                                     $members = ldap_get_entries( $ds , $findMembers );
                                     echo $members['count'];
                                     echo "</td>";

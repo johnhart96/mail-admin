@@ -19,6 +19,7 @@ if( isset( $_POST['submit'] ) ) {
     $errorUsers = array();
     // Add group to users
     foreach( $membersArray as $member ) {
+        
         if( ! empty( $member ) ) {
             $part = explode( "@" , $member );
             $domain = $part[1];

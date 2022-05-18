@@ -10,6 +10,9 @@ plugins_process( "index" , "submit" );
     <head>
         <?php
         require 'inc/header.php';
+        if( empty( $_SESSION['ldap']['displayname'][0] ) ) {
+            $_SESSION['ldap']['displayname'] = array( 0 => $_SESSION['ldap']['cn'][0] );
+        }
         ?>
     </head>
     <body>
@@ -17,99 +20,24 @@ plugins_process( "index" , "submit" );
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <h1>Welcome</h1>
+                    <h1>
+                        Welcome <?php echo ucfirst( $_SESSION['ldap']['displayname'][0] ); ?>!</h1>
+                    <?php
+                    if( DEBUG ) {
+                        echo "<p id='dialog-error' class='white'><strong>WARNING!</strong> Debug is enabled. Do not leave debug enabled in production enviroments. It may give away secure info!</p>";
+                        echo "<p>Admin Level: " . $_SESSION['admin_level'] . "</p>";
+                        echo "<pre>";
+                        print_r( $_SESSION['ldap'] );
+                        echo "</pre>";
+                    }
+                    ?>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <div class="card">
-                        <div class="card-header"><strong>Statistics</strong></div>
-                        <div class="card-body">
-                            <table class="table table-bordered table-stripped">
-                                <tr>
-                                    <th>Domains:</th>
-                                    <td align="center">
-                                        <?php
-                                        $filter = "(domainName=*)";
-                                        $search = ldap_search( $ds , LDAP_BASEDN , $filter );
-                                        $entries = ldap_get_entries( $ds , $search );
-                                        unset( $entries['count'] );
-                                        echo count( $entries );
-                                        ?>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Groups:</th>
-                                    <td align="center">
-                                        <?php
-                                        $filter = "(objectclass=mailList)";
-                                        $search = ldap_search( $ds , LDAP_BASEDN , $filter );
-                                        $entries = ldap_get_entries( $ds , $search );
-                                        unset( $entries['count'] );
-                                        echo count( $entries );
-                                        ?>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Aliases:</th>
-                                    <td align="center">
-                                    <?php
-                                        $filter = "(objectclass=mailAlias)";
-                                        $search = ldap_search( $ds , LDAP_BASEDN , $filter );
-                                        $entries = ldap_get_entries( $ds , $search );
-                                        unset( $entries['count'] );
-                                        echo count( $entries );
-                                        ?>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Users:</th>
-                                    <td align="center">
-                                    <?php
-                                        $filter = "(objectclass=mailUser)";
-                                        $search = ldap_search( $ds , LDAP_BASEDN , $filter );
-                                        $entries = ldap_get_entries( $ds , $search );
-                                        unset( $entries['count'] );
-                                        echo count( $entries );
-                                        ?>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <div class="card-header"><strong>Quick Create</strong></div>
-                        <div class="card-body">
-                            <div class="btn-group">
-                                <a href="domain_new.php" class="btn btn-success"><i class="fas fa-plus"></i>&nbsp;Domain</a>
-                                <a href="users_new.php" class="btn btn-success"><i class="fas fa-plus"></i>&nbsp;User</a>
-                                <a href="groups_new.php" class="btn btn-success"><i class="fas fa-plus"></i>&nbsp;Group</a>
-                                <a href="alias_new.php" class="btn btn-success"><i class="fas fa-plus"></i>&nbsp;Alias</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">&nbsp;</div>
-            <div class="row">
-                <div class="col">
-                    <div class="card">
-                        <div class="card-header"><strong>Logging</strong></div>
-                        <div class="card-body">
-                            <?php
-                            $logFile = file( "usr/admin.log" );
-                            $logFile = array_reverse( $logFile );
-                            ?>
-                            <table class="table table-bordered table-striped">
-                                <?php
-                                foreach( $logFile as $entry ) {
-                                    echo "<tr><td>" . $entry . "</td></tr>";
-                                }
-                                ?>
-                            </table>
-                        </div>
+                    <div class="appdraw">
+                        <a href="<?php echo APP_MAIL; ?>" target="_blank" class="btn btn-success"><i class="fa fa-envelope"></i>&nbsp;Mail</a>
+                        <a href="<?php echo APP_DRIVE; ?>" target="_blank" class="btn btn-success"><i class="fa fa-folder"></i>&nbsp;Drive</a>
                     </div>
                 </div>
             </div>

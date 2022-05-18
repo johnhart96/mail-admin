@@ -57,7 +57,8 @@ securePage();
                                 if( isset( $_GET['domain'] ) ) {
                                     $dnToUse = "ou=Users,domainName=" . filter_var( $_GET['domain'] , FILTER_SANITIZE_STRING ) . "," . LDAP_DOMAINDN;
                                 } else {
-                                    $dnToUse = LDAP_DOMAINDN;
+                                    require 'inc/relmset.php';
+                                    $dnToUse = $relm;
                                 }
                                 $getUsers = ldap_search( $ds , $dnToUse , $filter );
                                 $users = ldap_get_entries( $ds , $getUsers );
