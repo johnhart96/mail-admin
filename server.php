@@ -32,7 +32,13 @@ if( isset( $_POST['submit_throttle'] ) ) {
     );
     $added = true;
 }
-
+if( isset( $_POST['rdns_submit'] ) ) {
+    $domain = filter_var( $_POST['domain'] , FILTER_SANITIZE_STRING );
+    $wb = filter_var( $_POST['wb'] , FILTER_SANITIZE_STRING );
+    $insert = $apd->prepare( "INSERT INTO `wblist_rdns` (`rdns`,`wb`) VALUES(:rdns,:wb)" );
+    $insert->execute( [ ':rdns' => $domain , ':wb' => $wb ] );
+    $added = true;
+}
 ?>
 <html>
     <head>
@@ -47,20 +53,18 @@ if( isset( $_POST['submit_throttle'] ) ) {
                 <div class="col">
                     <h1>Server</h1>
                     <?php
-                    $getOutgoing = $apd->query( "SELECT * FROM `throttle` WHERE `account` ='@.' AND `kind` ='outgoing' LIMIT 1" );
-                    $getIncoming = $apd->query( "SELECT * FROM `throttle` WHERE `account` ='@.' AND `kind` ='incoming' LIMIT 1" );
-                    $outgoing = $getOutgoing->fetch( PDO::FETCH_ASSOC );
-                    $incoming = $getIncoming->fetch( PDO::FETCH_ASSOC );
+                    if( isset( $added ) ) {
+                        echo "<div class='alert alert-success'>Rule Added!</div>";
+                    }
                     ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
                     <form method="post">
                         <div class="card">
-                            <div class="card-header"><strong>Throttling rules</strong></div>
+                            <div class="card-header"><strong>Throttling rules:</strong></div>
                             <div class="card-body">
-                                <?php
-                                if( isset( $added ) ) {
-                                    echo "<div class='alert alert-success'>Rule Added!</div>";
-                                }
-                                ?>
                                 <table class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
@@ -126,6 +130,65 @@ if( isset( $_POST['submit_throttle'] ) ) {
                     </form>
                 </div>
             </div>
+
+            <div class="row">&nbsp;</div>
+
+            <div class="row">
+                <div class="col">
+                    <form method="post">
+                        <div class="card">
+                            <div class="card-header"><strong>Reverse DNS White/Black List:</strong></div>
+                            <div class="card-body">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Domain</th>
+                                            <th>Type</th>
+                                            <th width="1">&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $getRDNS = $apd->query( "SELECT * FROM `wblist_rdns`" );
+                                        while( $rule = $getRDNS->fetch( PDO::FETCH_ASSOC ) ) {
+                                            echo "<tr>";
+                                            echo "<td>" . $rule['rdns'] . "</td>";
+                                            echo "<td>";
+                                            switch( $rule['wb'] ) {
+                                                case "W":
+                                                    echo "Whitelist";
+                                                    break;
+                                                case "B":
+                                                    echo "Blacklist";
+                                                    break;
+                                            }
+                                            echo "</td>";
+                                            echo "<td><a href='rdns_delete.php?id=" . $rule['id'] . "' class='btn btn-danger'>Delete</a></td>"; 
+                                            echo "</tr>";
+                                        }
+                                        ?>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th><input style="width: 100%" name="domain"></th>
+                                            <th>
+                                                <select name="wb" style="width: 100%">
+                                                    <option value="B">Blacklist</option>
+                                                    <option value="W">Whitelist</option>
+                                                </select>
+                                            </th>
+                                            <th>
+                                                <button style="width: 100%" class="btn btn-success" name="rdns_submit">Save</button>
+                                            </th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </body>
 </html>
