@@ -14,5 +14,8 @@ if( ! file_exists( "plugins" ) ) {
     mkdir( "plugins" );
 }
 
+// iRedAPD Database
+$apd = new PDO( "mysql:host=" . IAPD_HOST . ";dbname=" . IAPD_DB , IAPD_USER , IAPD_PASSWORD );
+
 session_start();
 ?>

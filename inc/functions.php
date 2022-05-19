@@ -48,4 +48,10 @@ function watchdog( $entry ) {
     fwrite( $log , "\n" . $header . $entry );
     fclose( $log );
 }
+function globalOnly() {
+    require 'inc/relmset.php';
+    if( $_SESSION['admin_level'] !== "global" ) {
+        die( "Access Denied!" );
+    }
+}
 ?>

@@ -49,6 +49,12 @@
             </div>
             <span class="title"><span style="color:red">*</span>&nbsp;Domains</span>
         </a>
+        <a href="server.php" class="tile">
+            <div class="icon">
+            <i class="fa fa-server"></i>
+            </div>
+            <span class="title"><span style="color:red">*</span>&nbsp;Server</span>
+        </a>
       <?php } ?>
       <?php plugins_process( "user_menu" , "main" ); ?>
       <a href="settings.php" class="tile">
