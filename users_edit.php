@@ -45,6 +45,9 @@ $userDetail = $userDetail[0];
 if( ! isset( $userDetail['description'][0] ) ) {
     $userDetail['description'][0] = NULL;
 }
+if( empty( $userDetail['displayname'][0] ) ) {
+    $userDetail['displayname'][0] = $userDetail['givenname'][0] . " " . $userDetail['sn'][0];
+}
 ?>
 <html>
     <head>
