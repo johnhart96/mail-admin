@@ -3,12 +3,26 @@ require 'inc/functions.php';
 require 'inc/common_header.php';
 securePage();
 require 'inc/bind.php';
-$domainToFind = filter_var( $_GET['domain'] , FILTER_SANITIZE_STRING );
-$filter = "(domainName=$domainToFind)";
-$result = ldap_search( $ds , LDAP_BASEDN , $filter );
-$domain = ldap_get_entries( $ds , $result );
-$dn = $domain[0]['dn'];
-$count = (int)$domain['count'];
+if( $_SESSION['admin_level'] !== "global" && $_SESSION['admin_level'] !== "self" ) {
+    // domain admin
+    $dn = $_SESSION['admin_level'];
+    $getDomain = ldap_search( $ds , $dn , "(domainname=*)" );
+    $domain = ldap_get_entries( $ds , $getDomain );
+    $count = (int)$domain['count'];
+    $title = "Organisation:";
+    $filter = "(domainName=" . $domain[0]['domainname'][0] . ")";
+} else {
+    // Global admin
+    $domainToFind = filter_var( $_GET['domain'] , FILTER_SANITIZE_STRING );
+    $filter = "(domainName=$domainToFind)";
+    $result = ldap_search( $ds , LDAP_BASEDN , $filter );
+    $domain = ldap_get_entries( $ds , $result );
+    $dn = $domain[0]['dn'];
+    $count = (int)$domain['count'];
+    unset( $domain['count'] );
+    $title = "Domain:";
+}
+$domainToFind = $domain[0]['domainname'][0];
 unset( $domain['count'] );
 
 
@@ -46,7 +60,7 @@ if( isset( $_POST['submit'] ) ) {
     $domain = ldap_get_entries( $ds , $result );
     $dn = $domain[0]['dn'];
     $count = (int)$domain['count'];
-    watchdog( "Editing domain `" . $domain['domainName'][0] . "`" );
+    //watchdog( "Editing domain `" . $domain[0]['domainName'][0] . "`" );           FIX THIS LATER
 }
 
 ?>
@@ -70,7 +84,7 @@ if( isset( $_POST['submit'] ) ) {
                         $dn = $domain['dn'];
 
                         ?>
-                        <h1>Domain: <?php echo $domain['cn'][0]; ?></h1>
+                        <h1><?php echo $title; ?></h1>
                         <p><em><?php echo $domain['domainname'][0]; ?></em></p>
                         <?php
                         if( isset( $saved ) ) {

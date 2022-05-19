@@ -56,6 +56,14 @@
             <span class="title"><span style="color:red">*</span>&nbsp;Server</span>
         </a>
       <?php } ?>
+      <?php if( $_SESSION['admin_level'] !== "self" && $_SESSION['admin_level'] !== "global" ) { ?>
+        <a href="domain_edit.php" class="tile">
+            <div class="icon">
+            <i class="fa fa-building"></i>
+            </div>
+            <span class="title"><span style="color:orange">*</span>&nbsp;Organisation</span>
+        </a>
+      <?php } ?>
       <?php plugins_process( "user_menu" , "main" ); ?>
       <a href="settings.php" class="tile">
         <div class="icon">

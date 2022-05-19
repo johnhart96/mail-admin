@@ -3,7 +3,18 @@ require 'inc/functions.php';
 require 'inc/common_header.php';
 securePage();
 require 'inc/bind.php';
-$domainToFind = filter_var( $_GET['domain'] , FILTER_SANITIZE_STRING );
+if( $_SESSION['admin_level'] !== "global" && $_SESSION['admin_level'] !== "self" ) {
+    $dn = $_SESSION['admin_level'];
+    $getDomain = ldap_search( $ds , $dn , "(domainName=*)" );
+    $domain = ldap_get_entries( $ds , $getDomain );
+    $domain = $domain[0];
+    $domainToFind = $domain['domainname'][0];
+    $title = "Organisation:";
+} else {
+    $domainToFind = filter_var( $_GET['domain'] , FILTER_SANITIZE_STRING );
+    $title = "Domain:";
+}
+//$domainToFind = $domain[0]['domainname'][0];
 $filter = "(domainName=$domainToFind)";
 $result = ldap_search( $ds , LDAP_BASEDN , $filter );
 $domain = ldap_get_entries( $ds , $result );
@@ -86,7 +97,7 @@ if( isset( $_POST['submit'] ) ) {
                             $cn = $domain['cn'][0];
                         }
                         ?>
-                        <h1>Domain: <?php echo $cn ?></h1>
+                        <h1><?php echo $title ?></h1>
                         <p><em><?php echo $domain['domainname'][0]; ?></em></p>
                         <?php
                         if( isset( $saved ) ) {

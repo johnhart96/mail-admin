@@ -2,6 +2,7 @@
 require 'inc/functions.php';
 require 'inc/common_header.php';
 securePage();
+globalOnly();
 ?>
 <html>
     <head>
