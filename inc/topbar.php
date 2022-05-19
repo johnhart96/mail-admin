@@ -11,6 +11,7 @@
     </div>
     <div id="user_menu">
       <?php plugins_process( "user_menu" , "item" ); ?>
+      <p><u><?php echo ucfirst( $_SESSION['ldap']['displayname'][0] ); ?></u></p>
       <p>
         <a href="settings.php">Settings</a> <br />
         <a href="logout.php">Logout</a>
