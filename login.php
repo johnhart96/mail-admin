@@ -7,7 +7,7 @@ if( isset( $_POST['submit'] ) ) {
     $given_password = filter_var( $_POST['password'] , FILTER_SANITIZE_STRING );
 
     require 'inc/bind.php';
-    $filter = "(uid=$given_username)";
+    $filter = "(mail=$given_username)";
     $search = ldap_search( $ds , LDAP_BASEDN , $filter );
     $entry = ldap_get_entries( $ds , $search  );
     $entry = $entry[0];
@@ -20,7 +20,7 @@ if( isset( $_POST['submit'] ) ) {
     if( ldap_bind( $ds , $dn , $given_password ) ) {
         $_SESSION['mail-admin'] = $given_username;
         $_SESSION['dn'] = $dn;
-        $filter = "(uid=$given_username)";
+        $filter = "(mail=$given_username)";
         $search = ldap_search( $ds , $dn , $filter );
         $user = ldap_get_entries( $ds , $search );
         $_SESSION['ldap'] = $user[0];
@@ -43,9 +43,9 @@ if( isset( $_POST['submit'] ) ) {
         }
     }
     if( isset( $_SESSION['mail-admin'] ) ) {
-        header( "Location: index.php" );
+        header( "Location:index.php" );
     } else {
-        header( "Location: login.php?loginerror" );
+        header( "Location:login.php?loginerror" );
     }
 }
 ?>
@@ -68,7 +68,7 @@ if( isset( $_POST['submit'] ) ) {
             }
             ?>
             <form method="post">
-                <input autofocus id="username" name="username" type="text" placeholder="Username">
+                <input autofocus id="username" name="username" type="text" placeholder="Email">
                 <input id="password" name="password" type="password" placeholder="Password">
                 <center>
                     <button id="login" type="submit" name="submit">Login</button>
