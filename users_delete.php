@@ -8,6 +8,20 @@ if( isset( $_GET['confirm'] ) ) {
     $part = explode( "@" , $user );
     $domain = $part[1];
     $dnToDelete = "mail=" . $user . ",ou=Users,domainName=" . $domain . "," . LDAP_DOMAINDN;
+    // Get home path
+    $search = ldap_search( $ds , $dnToDelete , "(mail=*)" );
+    $entry = ldap_get_entries( $ds , $search );
+    $path = $entry[0]['homedirectory'][0];
+    if( ! file_exists( "usr/delete_list.txt" ) ) {
+        $make = fopen( "usr/delete_list.txt" , "w" );
+        fwrite( $make , "" );
+        fclose( $make );
+    }
+    $add = fopen( "usr/delete_list.txt" , "a" );
+    fwrite( $add , $path . "\n" );
+    fclose( $add );
+
+    // Delete
     if( ldap_delete( $ds , $dnToDelete ) ) {
         plugins_process( "users_delete" , "submit" );
         watchdog( "Deleting user `" . $user . "`" );
