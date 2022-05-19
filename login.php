@@ -68,7 +68,7 @@ if( isset( $_POST['submit'] ) ) {
             }
             ?>
             <form method="post">
-                <input id="username" name="username" type="text" placeholder="Username">
+                <input autofocus id="username" name="username" type="text" placeholder="Username">
                 <input id="password" name="password" type="password" placeholder="Password">
                 <center>
                     <button id="login" type="submit" name="submit">Login</button>
