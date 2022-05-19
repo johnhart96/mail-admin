@@ -36,6 +36,7 @@ if( isset( $_POST['submit'] ) ) {
     ldap_mod_del( $ds , $dn , array( "enabledservice" => "forward" ) );
     ldap_mod_del( $ds , $dn , array( "enabledservice" => "recipientbcc" ) );
     ldap_mod_del( $ds , $dn , array( "enabledservice" => "senderbcc" ) );
+    ldap_mod_del( $ds , $dn , array( "enabledservice" => "externalAccessSettings" ) );
     // Add new entries
     foreach( $_POST as $service => $value ) { 
         ldap_mod_del( $ds , $dn , array( "enabledservice" => $service ) );
@@ -44,6 +45,14 @@ if( isset( $_POST['submit'] ) ) {
         if( $value == "on" ) {
             ldap_mod_add( $ds , $dn , array( "enabledservice" => $service ) );
         }
+    }
+    if( ! isset( $_POST['externalAccessSettings'] ) ) {
+        ldap_mod_del( $ds , $dn , array( "enabledservice" => "pop3secured" ) );
+        ldap_mod_del( $ds , $dn , array( "enabledservice" => "pop3tls" ) );
+        ldap_mod_del( $ds , $dn , array( "enabledservice" => "imapsecured" ) );
+        ldap_mod_del( $ds , $dn , array( "enabledservice" => "imaptls" ) );
+        ldap_mod_del( $ds , $dn , array( "enabledservice" => "sievesecured" ) );
+        ldap_mod_del( $ds , $dn , array( "enabledservice" => "sievetls" ) );
     }
     plugins_process( "users_services" , "submit" );
     watchdog( "Editing user `" . $user . "`" );
@@ -109,120 +118,147 @@ function checkbox( $h ) {
                                         <input type="checkbox" name="mail" <?php echo checkbox( "mail" ) ?>>
                                     </td>
                                     <td>Mail Service (Check this box in order to enable other services)</td>
+                                    <td>&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td width="1">
                                         <input type="checkbox" name="smtp" <?php echo checkbox( "smtp" ) ?>>
                                     </td>
                                     <td>Sending mails via SMTP</td>
+                                    <td>&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td width="1">
                                         <input type="checkbox" name="smtpsecured" <?php echo checkbox( "smtpsecured" ) ?>>
                                     </td>
                                     <td>Sending mails via SMTP over TLS/SSL</td>
+                                    <td><pre>(External Access)</pre></td>
                                 </tr>
                                 <tr>
                                     <td width="1">
                                         <input type="checkbox" name="smtptls" <?php echo checkbox( "smtptls" ) ?>>
                                     </td>
                                     <td>Sending mails via SMTP over STARTTLS</td>
+                                    <td><pre>(External Access)</pre></td>
                                 </tr>
                                 <tr>
                                     <td width="1">
                                         <input type="checkbox" name="pop3" <?php echo checkbox( "pop3" ) ?>>
                                     </td>
                                     <td>Fetching mails via POP3</td>
+                                    <td>&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td width="1">
                                         <input type="checkbox" name="pop3secured" <?php echo checkbox( "pop3secured" ) ?>>
                                     </td>
                                     <td>Fetching mails via POP3 over TLS/SSL</td>
+                                    <td><pre>(External Access)</pre></td>
                                 </tr>
                                 <tr>
                                     <td width="1">
                                         <input type="checkbox" name="pop3tls" <?php echo checkbox( "pop3tls" ) ?>>
                                     </td>
                                     <td>Fetching mails via POP3 over STARTTLS</td>
+                                    <td><pre>(External Access)</pre></td>
                                 </tr>
                                 <tr>
                                     <td width="1">
                                         <input type="checkbox" name="imap" <?php echo checkbox( "imap" ) ?>>
                                     </td>
                                     <td>Fetching mails via IMAP</td>
+                                    <td>&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td width="1">
                                         <input type="checkbox" name="imapsecured" <?php echo checkbox( "imapsecured" ) ?>>
                                     </td>
                                     <td>Fetching mails via IMAP over TLS/SSL</td>
+                                    <td><pre>(External Access)</pre></td>
                                 </tr>
                                 <tr>
                                     <td width="1">
                                         <input type="checkbox" name="imaptls" <?php echo checkbox( "imaptls" ) ?>>
                                     </td>
                                     <td>Fetching mails via IMAP over STARTTLS</td>
+                                    <td><pre>(External Access)</pre></td>
                                 </tr>
                                 <tr>
                                     <td width="1">
                                         <input type="checkbox" name="deliver" <?php echo checkbox( "deliver" ) ?>>
                                     </td>
                                     <td>Accepting mails sent to this account on mail server</td>
+                                    <td>&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td width="1">
                                         <input type="checkbox" name="sogo" <?php echo checkbox( "sogo" ) ?>>
                                     </td>
                                     <td>SOGo Groupware (Calendar, Contacts, Tasks)</td>
+                                    <td>&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td width="1">
                                         <input type="checkbox" name="sieve" <?php echo checkbox( "sieve" ) ?>>
                                     </td>
                                     <td>Customize mail filter rule</td>
+                                    <td>&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td width="1">
                                         <input type="checkbox" name="sievesecured" <?php echo checkbox( "sievesecured" ) ?>>
                                     </td>
                                     <td>Customize mail filter rule over TLS/SSL</td>
+                                    <td><pre>(External Access)</pre></td>
                                 </tr>
                                 <tr>
                                     <td width="1">
                                         <input type="checkbox" name="sievetls" <?php echo checkbox( "sievetls" ) ?>>
                                     </td>
                                     <td>Customize mail filter rule over STARTTLS</td>
+                                    <td><pre>(External Access)</pre></td>
                                 </tr>
                                 <tr>
                                     <td width="1">
                                         <input type="checkbox" name="displayedInGlobalAddressBook" <?php echo checkbox( "displayedInGlobalAddressBook" ) ?>>
                                     </td>
                                     <td>Display mail address in global LDAP address book</td>
+                                    <td>&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td width="1">
                                         <input type="checkbox" name="shadowaddress" <?php echo checkbox( "shadowaddress" ) ?>>
                                     </td>
                                     <td>Alias addresses</td>
+                                    <td>&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td width="1">
                                         <input type="checkbox" name="forward" <?php echo checkbox( "forward" ) ?>>
                                     </td>
                                     <td>Forwarding mails to other addresses</td>
+                                    <td>&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td width="1">
                                         <input type="checkbox" name="recipientbcc" <?php echo checkbox( "recipientbcc" ) ?>>
                                     </td>
                                     <td>BCC incoming emails to other address</td>
+                                    <td>&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td width="1">
                                         <input type="checkbox" name="senderbcc" <?php echo checkbox( "senderbcc" ) ?>>
                                     </td>
                                     <td>BCC outgoing emails to other address</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td width="1">
+                                        <input type="checkbox" name="externalAccessSettings" <?php echo checkbox( "externalAccessSettings" ) ?>>
+                                    </td>
+                                    <td>Allow external access</td>
+                                    <td>&nbsp;</td>
                                 </tr>
 
                                 
