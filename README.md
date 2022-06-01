@@ -10,11 +10,7 @@ mail-admin is written in PHP and uses the php-ldap extension. Its written with P
 * End user portal
 * Branding customization
 * Direct replacement for iRedAdmin-Pro
-* Create, Edit, Delete 
-** Domains
-** Users
-** Aliases
-** Groups
+* Create, Edit, Delete for domains, users, aliases and groups
 ## Testing
 * Only tested with open-ldap 3
 * Tested on PHP 8.0, 7.4 and 7.3
