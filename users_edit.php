@@ -20,10 +20,23 @@ if( isset( $_POST['submit'] ) ) {
         $info['userPassword'] = hash_password( $password );
     }
     $dnToUse = "mail=" . $user . ",ou=Users,domainName=" . $domain . "," . LDAP_DOMAINDN;
+
+    // Global Admin?
     if( isset( $_POST['admin'] ) ) {
         $info['domainglobaladmin'][0] = "TRUE";
     } else {
+        error_reporting( 0 ); 
         ldap_mod_del( $ds , $dnToUse , array( "domainglobaladmin" => "TRUE" ) );
+        error_reporting( E_ALL );
+    }
+    
+    // Domain Admin?
+    if( isset( $_POST['domainAdmin'] ) ) {
+        ldap_mod_add( $ds , $dnToUse , array( "enabledservice" => "domainAdmin" ) );
+    } else {
+        error_reporting( 0 ); 
+        ldap_mod_del( $ds , $dnToUse , array( "enabledservice" => "domainAdmin" ) );
+        error_reporting( E_ALL );
     }
 
     // Modify all user details
@@ -44,6 +57,9 @@ unset( $userDetail['count'] );
 $userDetail = $userDetail[0];
 if( ! isset( $userDetail['description'][0] ) ) {
     $userDetail['description'][0] = NULL;
+}
+if( empty( $userDetail['givenname'] ) ) {
+    $userDetail['givenname'] = array( 0 => NULL );
 }
 if( empty( $userDetail['displayname'][0] ) ) {
     $userDetail['displayname'][0] = $userDetail['givenname'][0] . " " . $userDetail['sn'][0];
@@ -124,7 +140,25 @@ if( empty( $userDetail['displayname'][0] ) ) {
                             ?>
                             <input class="form-check-input" type="checkbox" value="" id="admin" name="admin" <?php echo $checked; ?>>
                             <label class="form-check-label" for="admin">
-                                Global Administrator
+                                <span style="color:red">*</span>Global Administrator
+                            </label>
+
+                            <?php
+                            $checkDomainAdmin = ldap_search( $ds , $userDetail['dn'] , "(enabledService=domainAdmin)" );
+                            $result = ldap_get_entries( $ds , $checkDomainAdmin );
+                            $checked = "";
+                            if( isset( $result[0]['enabledservice'] ) ) {
+                                foreach( $result[0]['enabledservice'] as $service ) {
+                                    if( $service == "domainAdmin" ) {
+                                        $checked = "checked";
+                                    }
+                                }
+                            }
+                            ?>
+                            <br />
+                            <input class="form-check-input" type="checkbox" value="" id="domainAdmin" name="domainAdmin" <?php echo $checked; ?>>
+                            <label class="form-check-label" for="domainAdmin">
+                                <span style="color:orange">*</span>Domain Administrator
                             </label>
                         </div>
 
