@@ -20,5 +20,5 @@ $apd = new PDO( "mysql:host=" . IAPD_HOST . ";dbname=" . IAPD_DB , IAPD_USER , I
 session_start();
 
 // Version control
-define( VERSION , "1.1" );
+define( MAVERSION , "1.1" );
 ?>
