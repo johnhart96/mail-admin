@@ -30,9 +30,9 @@ if( isset( $_POST['submit'] ) ) {
         $minPasswordLength = 8;
     }
     if( isset( $_POST['defaultQuota'] ) ) {
-        $defaultQuota = filter_var( $_POST['defaultQuota'] , FILTER_SANITIZE_NUMBER_INT );
+        $defaultQuota = filter_var( $_POST['defaultQuota'] , FILTER_SANITIZE_NUMBER_INT ) * 1024000000;
     } else {
-        $defaultQuota = 1024;
+        $defaultQuota = 1024000000;
     }
     if( isset( $_POST['accountstatus'] ) ) {
         $accountstatus = "active";
@@ -164,12 +164,15 @@ if( isset( $_POST['submit'] ) ) {
                         if( isset( $domain['accountsetting'] ) ) {
                             foreach( $domain['accountsetting'] as $setting ) {
                                 $part = explode( ":" , $setting );
+                                $append = NULL;
                                 switch( $part[0] ) {
                                     case "minPasswordLength":
                                         $label = "Minimum password lenght";
                                         break;
                                     case "defaultQuota":
-                                        $label = "Default Quota (MB)";
+                                        $label = "Default Quota";
+                                        $part[1] = $part[1] / 1024000000;
+                                        $append = "<div class='input-group-append'><span class='input-group-text'>GB</span></div>";
                                         break;
                                     default:
                                         $label = $part[0];
@@ -178,6 +181,7 @@ if( isset( $_POST['submit'] ) ) {
                                 echo "<div class='input-group'>";
                                 echo "<div class='input-group-prepend'><span class='input-group-text'>" . $label . ":</span></div>";
                                 echo "<input name='" . $part[0] . "' class='form-control' value='" . $part[1] . "'>";
+                                echo $append;
                                 echo "</div>";
                             }
                         }

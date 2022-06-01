@@ -77,8 +77,18 @@ if( isset( $_POST['submit'] ) ) {
         $info['homeDirectory'] = "/var/vmail/vmail1/$domain/" . substr( $address , 0 , 1 ) . "/" . substr( $address , 1 , 1 ) . "/" .  substr( $address , 2 , 1 ) . "/" . $address . "-" . date( "Y.m.d.h.i.s" ) . "/";
         $info['userPassword'] = hash_password( $password );
         $info['description'] = $description;
-        $info['mailQuota'] = MAILQUOTA;
 
+        // Quota
+        $getDomain = ldap_search( $ds , LDAP_DOMAINDN , "(domainName=$domain)" );
+        $entries = ldap_get_entries( $ds , $getDomain );
+        $quota = MAILQUOTA;
+        foreach( $entries[0]['accountsetting'] as $setting ) {
+            $part = explode( $setting , ":" );
+            if( $part[0] == "defaultQuota" ) {
+                $quota = $part[1];
+            }
+        }
+        $info['mailQuota'] = $quota;
 
         // Add the user
         $dn = "mail=" . $address . "@" . $domain . ",ou=Users,domainName=" . $domain . "," . LDAP_DOMAINDN;

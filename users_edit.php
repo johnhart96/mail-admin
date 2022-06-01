@@ -22,21 +22,33 @@ if( isset( $_POST['submit'] ) ) {
     $dnToUse = "mail=" . $user . ",ou=Users,domainName=" . $domain . "," . LDAP_DOMAINDN;
 
     // Global Admin?
+    $search = ldap_search( $ds , $dnToUse , "(domainglobaladmin=TRUE)" );
+    $result = ldap_get_entries( $ds , $search );
     if( isset( $_POST['admin'] ) ) {
         $info['domainglobaladmin'][0] = "TRUE";
     } else {
-        error_reporting( 0 ); 
-        ldap_mod_del( $ds , $dnToUse , array( "domainglobaladmin" => "TRUE" ) );
-        error_reporting( E_ALL );
+        if( $result['count'] == 1 ) {
+            ldap_mod_del( $ds , $dnToUse , array( "domainglobaladmin" => "TRUE" ) );
+        }
     }
     
     // Domain Admin?
+    $search = ldap_search( $ds , $dnToUse , "(enabledservice=domainAdmin)" );
+    $result = ldap_get_entries( $ds , $search );
     if( isset( $_POST['domainAdmin'] ) ) {
-        ldap_mod_add( $ds , $dnToUse , array( "enabledservice" => "domainAdmin" ) );
+        if( $result['count'] !==1 ) {
+            ldap_mod_add( $ds , $dnToUse , array( "enabledservice" => "domainAdmin" ) );
+        }
+        
     } else {
-        error_reporting( 0 ); 
-        ldap_mod_del( $ds , $dnToUse , array( "enabledservice" => "domainAdmin" ) );
-        error_reporting( E_ALL );
+        if( $result['count'] !==0 ) {
+            ldap_mod_del( $ds , $dnToUse , array( "enabledservice" => "domainAdmin" ) );
+        }
+    }
+
+    // Quota
+    if( $_SESSION['admin_level'] == "global" ) { 
+        $info['mailquota'] = filter_var( $_POST['mailQuota'] , FILTER_SANITIZE_STRING ) * 1024000000;
     }
 
     // Modify all user details
@@ -129,6 +141,18 @@ if( empty( $userDetail['displayname'][0] ) ) {
                         <div class="input-group">
                             <div class="input-group-prepend"><span class="input-group-text">Description:</span></div>
                             <input type="text" name="description" class="form-control" value="<?php echo $userDetail['description'][0]; ?>">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">Quota:</span></div>
+                            <?php
+                            if( $_SESSION['admin_level'] == "global" ) {
+                                $disabled = "";
+                            } else {
+                                $disabled = "disabled";
+                            }
+                            ?>
+                            <input type="text" name="mailQuota" class="form-control" value="<?php echo $userDetail['mailquota'][0] /1024000000; ?>" <?php echo $disabled; ?>>
+                            <div class="input-group-append"><span class="input-group-text">GB</span></div>
                         </div>
                         <div class="form-check">
                             <?php
