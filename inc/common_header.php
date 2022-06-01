@@ -18,4 +18,7 @@ if( ! file_exists( "plugins" ) ) {
 $apd = new PDO( "mysql:host=" . IAPD_HOST . ";dbname=" . IAPD_DB , IAPD_USER , IAPD_PASSWORD );
 
 session_start();
+
+// Version control
+define( VERSION , "1.1" );
 ?>
