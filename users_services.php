@@ -37,6 +37,7 @@ if( isset( $_POST['submit'] ) ) {
     ldap_mod_del( $ds , $dn , array( "enabledservice" => "recipientbcc" ) );
     ldap_mod_del( $ds , $dn , array( "enabledservice" => "senderbcc" ) );
     ldap_mod_del( $ds , $dn , array( "enabledservice" => "externalAccessSettings" ) );
+    ldap_mod_del( $ds , $dn , array( "enabledservice" => "nextcloud" ) );
     // Add new entries
     foreach( $_POST as $service => $value ) { 
         ldap_mod_del( $ds , $dn , array( "enabledservice" => $service ) );
@@ -251,6 +252,13 @@ function checkbox( $h ) {
                                         <input type="checkbox" name="senderbcc" <?php echo checkbox( "senderbcc" ) ?>>
                                     </td>
                                     <td>BCC outgoing emails to other address</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td width="1">
+                                        <input type="checkbox" name="nextcloud" <?php echo checkbox( "nextcloud" ) ?>>
+                                    </td>
+                                    <td>Nextcloud</td>
                                     <td>&nbsp;</td>
                                 </tr>
                                 <tr>
