@@ -1,6 +1,20 @@
 # mail-admin
 An alternative administrator panel for iRedMail (https://iredmail.org/) LDAP or another LDAP based mail service.
 mail-admin is written in PHP and uses the php-ldap extension. Its written with PHP 8.0 but it should work no problem on version as old as php6.0. Currently mail-admin is not as full featured as the expensive iRedMail Pro admin panel, but we will get there. Hopefully with some help from our Open-sourced community.
+## Features
+* Domain level administration
+* Global server level administration
+* Reverse DNS White/Black list
+* Quota support
+* User level service, enable/disable
+* End user portal
+* Branding customization
+* Direct replacement for iRedAdmin-Pro
+* Create, Edit, Delete 
+** Domains
+** Users
+** Aliases
+** Groups
 ## Testing
 * Only tested with open-ldap 3
 * Tested on PHP 8.0, 7.4 and 7.3
