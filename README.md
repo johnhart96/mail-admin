@@ -30,13 +30,17 @@ When you install iRedMail, make sure that you install with no web server to foll
     sudo apt update
     sudo apt install apache2 php8.0 php8.0-ldap git -y
     cd /var/www/html
-    sudo git clone https://github.com/johnhart96/mail-admin
+    wget https://github.com/johnhart96/mail-admin/archive/refs/tags/1.0.zip
+    unzip mail-admin-1.0.zip
+    mv mail-admin-1.0 mail-admin
     sudo cp /var/www/html/mail-admin/usr/config.sample.php /var/www/html/mail-admin/usr/config.php
  
  Then edit */var/www/html/mail-admin/usr/config.php* and add your LDAP details that you find in *~/iRedmail-xx/iRedMail.tips*
 ### iRedMail with Nginx
     cd /var/www/html
-    sudo git clone https://github.com/johnhart96/mail-admin
+    wget https://github.com/johnhart96/mail-admin/archive/refs/tags/1.0.zip
+    unzip mail-admin-1.0.zip
+    mv mail-admin-1.0 mail-admin
     sudo cp /var/www/html/mail-admin/usr/config.sample.php /var/www/html/mail-admin/usr/config.php
  Then edit */var/www/html/mail-admin/usr/config.php* and add your LDAP details that you find in *~/iRedmail-xx/iRedMail.tips*
 ## Updating
@@ -44,6 +48,8 @@ If you used git to clone the repository to your server, you should be able to ru
     
     cd /var/www/html/mail-admin
     sudo git pull
+
+If you used a package to install, then follow the instructions for a new install but do not override/delete your usr/ directory
 
 ## Todo list
 * Add support for amavisd white & blacklists
