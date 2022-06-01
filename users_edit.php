@@ -21,30 +21,34 @@ if( isset( $_POST['submit'] ) ) {
     }
     $dnToUse = "mail=" . $user . ",ou=Users,domainName=" . $domain . "," . LDAP_DOMAINDN;
 
-    // Global Admin?
-    $search = ldap_search( $ds , $dnToUse , "(domainglobaladmin=TRUE)" );
-    $result = ldap_get_entries( $ds , $search );
-    if( isset( $_POST['admin'] ) ) {
-        $info['domainglobaladmin'][0] = "TRUE";
-    } else {
-        if( $result['count'] == 1 ) {
-            ldap_mod_del( $ds , $dnToUse , array( "domainglobaladmin" => "TRUE" ) );
+    // Global admin bits
+    if( $_SESSION['admin_level'] == "global" ) {
+        // Global Admin?
+        $search = ldap_search( $ds , $dnToUse , "(domainglobaladmin=TRUE)" );
+        $result = ldap_get_entries( $ds , $search );
+        if( isset( $_POST['admin'] ) ) {
+            $info['domainglobaladmin'][0] = "TRUE";
+        } else {
+            if( $result['count'] == 1 ) {
+                ldap_mod_del( $ds , $dnToUse , array( "domainglobaladmin" => "TRUE" ) );
+            }
+        }
+        
+        // Domain Admin?
+        $search = ldap_search( $ds , $dnToUse , "(enabledservice=domainAdmin)" );
+        $result = ldap_get_entries( $ds , $search );
+        if( isset( $_POST['domainAdmin'] ) ) {
+            if( $result['count'] !==1 ) {
+                ldap_mod_add( $ds , $dnToUse , array( "enabledservice" => "domainAdmin" ) );
+            }
+            
+        } else {
+            if( $result['count'] !==0 ) {
+                ldap_mod_del( $ds , $dnToUse , array( "enabledservice" => "domainAdmin" ) );
+            }
         }
     }
     
-    // Domain Admin?
-    $search = ldap_search( $ds , $dnToUse , "(enabledservice=domainAdmin)" );
-    $result = ldap_get_entries( $ds , $search );
-    if( isset( $_POST['domainAdmin'] ) ) {
-        if( $result['count'] !==1 ) {
-            ldap_mod_add( $ds , $dnToUse , array( "enabledservice" => "domainAdmin" ) );
-        }
-        
-    } else {
-        if( $result['count'] !==0 ) {
-            ldap_mod_del( $ds , $dnToUse , array( "enabledservice" => "domainAdmin" ) );
-        }
-    }
 
     // Quota
     if( $_SESSION['admin_level'] == "global" ) { 
@@ -154,38 +158,39 @@ if( empty( $userDetail['displayname'][0] ) ) {
                             <input type="text" name="mailQuota" class="form-control" value="<?php echo $userDetail['mailquota'][0] /1024000000; ?>" <?php echo $disabled; ?>>
                             <div class="input-group-append"><span class="input-group-text">GB</span></div>
                         </div>
-                        <div class="form-check">
-                            <?php
-                            if( isset( $userDetail['domainglobaladmin'] ) ) {
-                                $checked = "checked";
-                            } else {
-                                $checked = "";
-                            }
-                            ?>
-                            <input class="form-check-input" type="checkbox" value="" id="admin" name="admin" <?php echo $checked; ?>>
-                            <label class="form-check-label" for="admin">
-                                <span style="color:red">*</span>Global Administrator
-                            </label>
+                        <?php if( $_SESSION['admin_level'] == "global" ) { ?>
+                            <div class="form-check">
+                                <?php
+                                if( isset( $userDetail['domainglobaladmin'] ) ) {
+                                    $checked = "checked";
+                                } else {
+                                    $checked = "";
+                                }
+                                ?>
+                                <input class="form-check-input" type="checkbox" value="" id="admin" name="admin" <?php echo $checked; ?>>
+                                <label class="form-check-label" for="admin">
+                                    <span style="color:red">*</span>Global Administrator
+                                </label>
 
-                            <?php
-                            $checkDomainAdmin = ldap_search( $ds , $userDetail['dn'] , "(enabledService=domainAdmin)" );
-                            $result = ldap_get_entries( $ds , $checkDomainAdmin );
-                            $checked = "";
-                            if( isset( $result[0]['enabledservice'] ) ) {
-                                foreach( $result[0]['enabledservice'] as $service ) {
-                                    if( $service == "domainAdmin" ) {
-                                        $checked = "checked";
+                                <?php
+                                $checkDomainAdmin = ldap_search( $ds , $userDetail['dn'] , "(enabledService=domainAdmin)" );
+                                $result = ldap_get_entries( $ds , $checkDomainAdmin );
+                                $checked = "";
+                                if( isset( $result[0]['enabledservice'] ) ) {
+                                    foreach( $result[0]['enabledservice'] as $service ) {
+                                        if( $service == "domainAdmin" ) {
+                                            $checked = "checked";
+                                        }
                                     }
                                 }
-                            }
-                            ?>
-                            <br />
-                            <input class="form-check-input" type="checkbox" value="" id="domainAdmin" name="domainAdmin" <?php echo $checked; ?>>
-                            <label class="form-check-label" for="domainAdmin">
-                                <span style="color:orange">*</span>Domain Administrator
-                            </label>
-                        </div>
-
+                                ?>
+                                <br />
+                                <input class="form-check-input" type="checkbox" value="" id="domainAdmin" name="domainAdmin" <?php echo $checked; ?>>
+                                <label class="form-check-label" for="domainAdmin">
+                                    <span style="color:orange">*</span>Domain Administrator
+                                </label>
+                            </div>
+                        <?php } ?>
                         <?php plugins_process( "users_edit" , "form" ); ?>
                         <p>&nbsp;</p>
                         <p><button type="submit" name="submit" class="btn btn-success"><i class="fas fa-save"></i>&nbsp;Save</button></p>
