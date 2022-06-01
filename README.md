@@ -34,3 +34,8 @@ If you used git to clone the repository to your server, you should be able to ru
     
     cd /var/www/html/mail-admin
     sudo git pull
+
+## Todo list
+* Add support for amavisd white & blacklists
+* Two factor authentication
+* Domain level custom login
