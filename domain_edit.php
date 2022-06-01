@@ -24,7 +24,6 @@ $count = (int)$domain['count'];
 
 if( isset( $_POST['submit'] ) ) {
     $cn = filter_var( $_POST['cn'] , FILTER_SANITIZE_STRING );
-    $disclaimer = filter_var( $_POST['disclaimer'] , FILTER_SANITIZE_STRING );
     if( isset( $_POST['minPasswordLength'] ) ) {
         $minPasswordLength = filter_var( $_POST['minPasswordLength'] , FILTER_SANITIZE_NUMBER_INT );
     } else {
@@ -40,11 +39,6 @@ if( isset( $_POST['submit'] ) ) {
     } else {
         $accountstatus = "inactive";
     }
-    if( ! empty( $disclaimer ) && isset( $_POST['disclaimer'] ) ) {
-        $info['disclaimer'] = $disclaimer;
-    } else {
-        $info['disclaimer'] = " ";
-    }
     $info['accountStatus'] = $accountstatus;
     $info['cn'] = $cn;
     $info['accountsetting'][0] = "minPasswordLength:" . $minPasswordLength;
@@ -57,7 +51,7 @@ if( isset( $_POST['submit'] ) ) {
         $result = ldap_search( $ds , LDAP_BASEDN , $filter );
         $domain = ldap_get_entries( $ds , $result );
         plugins_process( "domain_edit" , "submit" );
-        watchdog( "Editing domain `" . $domain . "`" );
+        //  watchdog( "Editing domain `" . $domain . "`" ); Fix this later
     } else {
         die( "Error updating!" );
     }
@@ -164,11 +158,6 @@ if( isset( $_POST['submit'] ) ) {
                             <input name="description" class="form-control" value="<?php echo $description; ?>">
                         </div>
                         
-                        <p>&nbsp;</p>
-                        <div class="mb-3">
-                            <label for="disclaimer" class="form-label">Disclaimer:</label>
-                            <textarea class="form-control" id="disclaimer" rows="3" name="disclaimer"><?php if( ! empty( $domain['disclaimer'][0] ) ) { echo $domain['disclaimer'][0]; } ?></textarea>
-                        </div>
                         
                         <?php
                         unset( $domain['accountsetting']['count'] );
