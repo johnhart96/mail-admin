@@ -1,10 +1,11 @@
-[Back](https://mailadminpanel.org/)
+# Documentation
+[Home](https://mailadminpanel.org/)
 
 This page contains the documentation for configuring and using the mail-admin panel.
 All of the user editable files are located in the 'usr/' directory and this directory will contain the admin logs as well as the main configuration file.
 It is not recomended to directly edit files that are not in the 'usr/' directory, as this may cause damaged to mail-admin.
 
-# Configuration file
+## Configuration file
 
  usr/config.php
 
