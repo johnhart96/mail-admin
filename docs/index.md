@@ -25,14 +25,6 @@ It also requires open-ldap (slapd) version 3. Mail-admin does not require a data
 * Apache >=2.2 or Nginx (not tested with nginx)
 * PHP >= php 6.0 <= php 8.0
 
-## Updating
-If you used git to clone the repository to your server, you should be able to run the following command to update to the latest version
-    
-    cd /var/www/html/mail-admin
-    sudo git pull
-
-If you used a package to install, then follow the instructions for a new install but do not override/delete your usr/ directory
-
 ## Todo list
 * Add support for amavisd white & blacklists
 * Two factor authentication
