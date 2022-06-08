@@ -1,4 +1,5 @@
-[Back](https://mailadminpanel.org/)
+# Installation
+[Home](https://mailadminpanel.org/)
 
 
 There are many different senarios that you can install mail-admin.
@@ -8,8 +9,8 @@ Even know mail-admin was originally designed to work on top of [iRedmail](https:
 However, you may need to spend more time configuring.
 
 
-# Install for use with iRedMail (recomended)
-## iRedMail install with no existing web server installed
+## Install for use with iRedMail (recomended)
+### iRedMail install with no existing web server installed
 When you install iRedMail, make sure that you install with no web server to follow these instructions.
 
     sudo apt install -y lsb-release ca-certificates apt-transport-https software-properties-common
@@ -26,7 +27,7 @@ When you install iRedMail, make sure that you install with no web server to foll
  Then edit */var/www/html/mail-admin/usr/config.php* and add your LDAP details that you find in *~/iRedmail-xx/iRedMail.tips*
  
  
-## iRedMail with Nginx
+### iRedMail with Nginx
 This install method assumes that you have already installed the iRedMail control panel using Nginx.
 
     cd /var/www/html
