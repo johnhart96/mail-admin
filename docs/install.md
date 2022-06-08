@@ -1,3 +1,4 @@
+[Back](https://mailadminpanel.org/)
 # New Install
 ## iRedMail install with no existing web server installed
 When you install iRedMail, make sure that you install with no web server to follow these instructions.
