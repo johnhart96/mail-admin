@@ -1,4 +1,4 @@
-# mail-admin
+# Welcome
 
 Mail-Admin is an open-sourced web (PHP) based administration interface for managing postfix/dovecot mail servers that run on an LDAP backend. It was originally written as a free alternative to [iRedMail-Pro](https://www.iredmail.org/admin_panel.html) but recently we have added features that are not included in this. Such as the user portal.
 
