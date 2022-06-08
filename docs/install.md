@@ -1,4 +1,4 @@
-# Installation
+# New Install
 ## iRedMail install with no existing web server installed
 When you install iRedMail, make sure that you install with no web server to follow these instructions.
 
@@ -20,3 +20,11 @@ When you install iRedMail, make sure that you install with no web server to foll
     unzip mail-admin-1.0.zip
     mv mail-admin-1.0 mail-admin
     sudo cp /var/www/html/mail-admin/usr/config.sample.php /var/www/html/mail-admin/usr/config.php
+
+# Updating
+If you used git to clone the repository to your server, you should be able to run the following command to update to the latest version
+    
+    cd /var/www/html/mail-admin
+    sudo git pull
+
+If you used a package to install, then follow the instructions for a new install but do not override/delete your usr/ directory
