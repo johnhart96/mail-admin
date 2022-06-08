@@ -1,1 +1,4 @@
 theme: jekyll-theme-cayman
+title: Mail-Admin
+description: Mail-Admin, a PHP web panel for managing LDAP based postfix & dovecot servers.
+show_downloads: true
