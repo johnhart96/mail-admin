@@ -69,6 +69,9 @@ if( isset( $_POST['submit'] ) ) {
                             <li class="nav-item">
                                 <a class="nav-link" href="users_bcc.php?user=<?php echo $user; ?>">BCC</a>
                             </li> 
+                            <li class="nav-item">
+                                <a class="nav-link" href="users_wblist.php?user=<?php echo $user; ?>">White/Black List</a>
+                            </li> 
                         </ul>
                         <p>&nbsp;</p>
                         <div class="mb-3">

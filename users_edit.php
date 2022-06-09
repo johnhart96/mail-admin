@@ -115,6 +115,9 @@ if( empty( $userDetail['displayname'][0] ) ) {
                             </li>  
                             <li class="nav-item">
                                 <a class="nav-link" href="users_bcc.php?user=<?php echo $user; ?>">BCC</a>
+                            </li> 
+                            <li class="nav-item">
+                                <a class="nav-link" href="users_wblist.php?user=<?php echo $user; ?>">White/Black List</a>
                             </li>  
                         </ul>
 
