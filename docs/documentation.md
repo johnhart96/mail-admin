@@ -36,7 +36,7 @@ It is not recomended to directly edit files that are not in the 'usr/' directory
 | IAPD_HOST        | String        | iRedAPD database host         |
 | IAPD_USER        | String        | iRedAPD database user         |
 | IAPD_PASSWORD    | String        | iRedAPD database password     |
-
+[Click here if the table is not showing correctly](https://github.com/johnhart96/mail-admin/blob/main/docs/documentation.md)
 ## Plugins
 Mail-admin has the ability to add your own plugins. These can be added in the 'plugins/' directory and are all contained in their own folders.
 ***(more info to come soon)***
