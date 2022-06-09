@@ -45,6 +45,6 @@ Mail-admin has the ability to add your own plugins. These can be added in the 'p
 Mail-admin can integrate with Nextcloud when it uses the same LDAP server as the mail server. 
 Each user has a service called 'Nextcloud' that you can enable on a user by user bases. This adds the ***enabledservice=nextcloud*** atribute to the user account. You will need to add the following user query in your LDAP settings under Settings > LDAP/AD integration.
 
- (|(enabledservice=nextcloud))
+  (|(enabledservice=nextcloud))
  
 ![LDAP settings in Nextcloud](https://github.com/johnhart96/mail-admin/raw/main/docs/ldap.PNG)
