@@ -66,6 +66,15 @@ if( isset( $_POST['submit_newWB'] ) ) {
     $insert->execute( [ ':sid1' => $sid , ':rid' => $rid , ':wb' => $wb ] );
 
 }
+// Greylisting
+if( isset( $_POST['submit_greylisting'] ) ) {
+    $delete = $apd->query( "DELETE FROM `greylisting` WHERE `account` ='@.'" );
+    if( isset( $_POST['greylisting'] ) ) {
+        $enable = $apd->query( "INSERT INTO `greylisting`(`id`,`account`,`priority`,`sender`,`active`) VALUES(1,'@.',0,'@.',1)" );
+    } else {
+        $disable = $apd->query( "INSERT INTO `greylisting`(`id`,`account`,`priority`,`sender`,`active`) VALUES(1,'@.',0,'@.',0)" );
+    }
+}
 ?>
 <html>
     <head>
@@ -270,11 +279,40 @@ if( isset( $_POST['submit_newWB'] ) ) {
                                                     <option value="W">Allow</option>
                                                 </select>
                                             </td>
-                                            <td width="1"><button name="submit_newWB" class="btn btn-success">Save</button></td>
+                                            <td width="1"><button style="width: 100%" name="submit_newWB" class="btn btn-success">Save</button></td>
                                         </tr>
                                     </form>
                                 </tfoot>
                             </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">&nbsp;</div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header"><strong>Greylisting:</strong></div>
+                        <div class="card-body">
+                            <form method="post">
+                                <?php
+                                // Check global policy
+                                $check = $apd->query( "SELECT * FROM `greylisting` WHERE `account` ='@.' LIMIT 1" );
+                                $result = $check->fetch( PDO::FETCH_ASSOC );
+                                $checked = "";
+                                if( isset( $result['active'] ) ) {
+                                    if( $result['active'] == 1 ) {
+                                        $checked = "checked";
+                                    }
+                                }
+                                ?>
+                                <input type="checkbox" name="greylisting" <?php echo $checked; ?>>
+                                <label for="greylisting">Enable</label> <br />
+                                <button class="btn btn-success" type="submit" name="submit_greylisting">Save</button> &nbsp;
+                                <a href="server_greylisting.php" class="btn btn-primary">Settings</a>
+                            </form>
                         </div>
                     </div>
                 </div>
