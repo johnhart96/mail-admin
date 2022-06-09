@@ -2,7 +2,6 @@
 require 'inc/functions.php';
 require 'inc/common_header.php';
 securePage();
-globalOnly();
 require 'inc/bind.php';
 
 if( isset( $_POST['yes'] ) ) {
@@ -10,7 +9,7 @@ if( isset( $_POST['yes'] ) ) {
     $sid = filter_var( $_GET['sid'] , FILTER_SANITIZE_NUMBER_INT );
     $delete = $amavisd->prepare( "DELETE FROM `wblist` WHERE `rid` =:rid AND `sid` =:sid1 LIMIT 1" );
     $delete->execute( [ ':rid' => $rid , ':sid1' => $sid ] );
-    header( "Location:server.php" );
+    header( "Location:index.php" );
 }
 
 ?>
