@@ -16,7 +16,9 @@ Mail-Admin is an open-sourced web (PHP) based administration interface for manag
 * Branding customization
 * Direct replacement for iRedAdmin-Pro
 * Create, Edit, Delete for domains, users, aliases and groups
-* Administration of [iRedAPD](https://github.com/iredmail/iRedAPD)
+* Administration of [iRedAPD](https://github.com/iredmail/iRedAPD) throttling
+* Administration of [iRedAPD](https://github.com/iredmail/iRedAPD) greylisting
+* Global, Domain and user level control of amavisd white/black list
 
 ## Support
 Mail-admin is written to run on a apache or nginx web server with PHP. It was written with PHP 8.0 but has been tested as low as PHP 6. It does require the php-ldap plugin to function.
@@ -27,6 +29,5 @@ It also requires open-ldap (slapd) version 3. Mail-admin does not require a data
 * PHP >= php 6.0 <= php 8.0
 
 ## Todo list
-* Add support for amavisd white & blacklists
 * Two factor authentication
 * Domain level custom login
