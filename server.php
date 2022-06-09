@@ -39,6 +39,33 @@ if( isset( $_POST['rdns_submit'] ) ) {
     $insert->execute( [ ':rdns' => $domain , ':wb' => $wb ] );
     $added = true;
 }
+if( isset( $_POST['submit_newWB'] ) ) {
+    $address = filter_var( $_POST['address'] , FILTER_SANITIZE_STRING );
+    $wb = filter_var( $_POST['wb'] , FILTER_SANITIZE_STRING );
+    
+    // Search for the address
+    $searchAddress = $amavisd->prepare( "SELECT * FROM `mailaddr` WHERE `email` =:email LIMIT 1" );
+    $searchAddress->execute( [ ':email' => $address ] );
+    $result = $searchAddress->fetch( PDO::FETCH_ASSOC );
+    if( isset( $result['id'] ) ) {
+        // Found one
+        $sid = $result['id'];
+    } else {
+        // Did not find one
+        $addMailAddr = $amavisd->prepare( "INSERT INTO `mailaddr` (`priority`,`email`) VALUES(:priority,:email)" );
+        $addMailAddr->execute( [ ':priority' => 10 , ':email' => $address ] );
+        $getLastEntry = $amavisd->query( "SELECT `id` FROM `mailaddr` ORDER BY `id` DESC LIMIT 1" );
+        $lastEntry = $getLastEntry->fetch( PDO::FETCH_ASSOC );
+        $sid = $lastEntry['id'];
+    }
+    // Insert policy
+    $getGlobal = $amavisd->query( "SELECT * FROM `users` WHERE `email` ='@.' LIMIT 1" );
+    $result = $getGlobal->fetch( PDO::FETCH_ASSOC );
+    $rid = $result['id'];
+    $insert = $amavisd->prepare( "INSERT INTO `wblist` (`sid`,`rid`,`wb`) VALUES(:sid1,:rid,:wb)" );
+    $insert->execute( [ ':sid1' => $sid , ':rid' => $rid , ':wb' => $wb ] );
+
+}
 ?>
 <html>
     <head>
@@ -186,6 +213,70 @@ if( isset( $_POST['rdns_submit'] ) ) {
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+
+            <div class="row">&nbsp;</div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header"><strong>Server Level Filter Policies:</strong></div>
+                        <div card="card-body">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Address</th>
+                                        <th>Action</th>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $getGlobal = $amavisd->query( "SELECT * FROM `users` WHERE `email` ='@.' LIMIT 1" );
+                                    $result = $getGlobal->fetch( PDO::FETCH_ASSOC );
+                                    $user = $result['id'];
+                                    $getWB = $amavisd->prepare( "SELECT * FROM `wblist` WHERE `rid` =:user" );
+                                    $getWB->execute( [ ':user' => $user ] );
+                                    $getSID = $amavisd->prepare( "SELECT * FROM `mailaddr` WHERE `id` =:addr LIMIT 1" );
+                                    while( $row = $getWB->fetch( PDO::FETCH_ASSOC ) ) {
+                                        echo "<tr>";
+                                        $address = $row['sid'];
+                                        $getSID->execute( [ ':addr' => $address ] );
+                                        $sid = $getSID->fetch( PDO::FETCH_ASSOC );
+                                        echo "<td>" . $sid['email'] . "</td>";
+                                        echo "<td>";
+                                        switch( $row['wb'] ) {
+                                            case "B":
+                                                echo "Block";
+                                                break;
+                                            case "W":
+                                                echo "Allow";
+                                                break;
+                                        }
+                                        echo "</td>";
+                                        echo "<td width='1'><a class='btn btn-danger' href='wblist_delete.php?rid=" . $row['rid'] . "&sid=" . $row['sid'] . "'>Delete</a></td>";
+                                        echo "</tr>";
+                                    }
+                                    ?>
+                                </tbody>
+                                <tfoot>
+                                    <form method="post">
+                                        <tr>
+                                            <td><input style="width: 100%" name="address"></td>
+                                            <td>
+                                                <select name="wb" style="width: 100%">
+                                                    <option value="B">Block</option>
+                                                    <option value="W">Allow</option>
+                                                </select>
+                                            </td>
+                                            <td width="1"><button name="submit_newWB" class="btn btn-success">Save</button></td>
+                                        </tr>
+                                    </form>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
 

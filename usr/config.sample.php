@@ -26,4 +26,10 @@ define( "IAPD_HOST" , "127.0.0.1" );
 define( "IAPD_USER" , "iredapd" );
 define( "IAPD_PASSWORD" , "GJVAQskHtE3Oh5mcchz81f14vWg3ZwaD" );
 define( "IAPD_DB" , "iredapd" );
+
+// Amavisd
+define( "AMA_HOST" , "127.0.0.1" );
+define( "AMA_USER" , "amavisd" );
+define( "AMA_PASSWORD" , "ENGMUJ0DHQgdiIySQVRrfiBZQiNofqqL" );
+define( "AMA_DB" , "amavisd" );
 ?>

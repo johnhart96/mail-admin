@@ -16,8 +16,10 @@ if( ! file_exists( "plugins" ) ) {
 // iRedAPD Database
 $apd = new PDO( "mysql:host=" . IAPD_HOST . ";dbname=" . IAPD_DB , IAPD_USER , IAPD_PASSWORD );
 
+// Amavisd
+$amavisd = new PDO( "mysql:host=" . AMA_HOST . ";dbname=" . AMA_DB , AMA_USER , AMA_PASSWORD );
 session_start();
 
 // Version control
-define( MAVERSION , "1.1" );
+//define( MAVERSION , "1.1" );
 ?>
