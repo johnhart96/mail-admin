@@ -129,6 +129,9 @@ if( isset( $_POST['submit'] ) ) {
                             <li class="nav-item">
                                 <a class="nav-link" href="domain_backupmx.php?domain=<?php echo $domainToFind; ?>">Backup MX</a>
                             </li>   
+                            <li class="nav-item">
+                                <a class="nav-link" href="domain_wblist.php?domain=<?php echo $domainToFind; ?>">White/Black List</a>
+                            </li>   
                         </ul>
                         <p>&nbsp;</p>
 
