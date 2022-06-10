@@ -132,6 +132,9 @@ if( isset( $_POST['submit'] ) ) {
                             <li class="nav-item">
                                 <a class="nav-link" href="domain_wblist.php?domain=<?php echo $domainToFind; ?>">White/Black List</a>
                             </li>   
+                            <li class="nav-item">
+                                <a class="nav-link" href="domain_greylisting.php?domain=<?php echo $domainToFind; ?>">Greylisting</a>
+                            </li>
                         </ul>
                         <p>&nbsp;</p>
 
