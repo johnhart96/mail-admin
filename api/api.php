@@ -16,9 +16,9 @@ function bind() {
 //Alias
 function alias_delete( $object ) {
     require 'inc/bind.php';
-    $part = explode( "@" , $alias );
+    $part = explode( "@" , $object );
     $domain = $part[1];
-    $dn = "mail=" . $alias . ",ou=Aliases,domainName=" . $domain . "," . LDAP_DOMAINDN;
+    $dn = "mail=" . $object . ",ou=Aliases,domainName=" . $domain . "," . LDAP_DOMAINDN;
     if( ldap_delete( $ds , $dn ) ) {
         return TRUE;
     } else {
