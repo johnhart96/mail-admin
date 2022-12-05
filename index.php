@@ -1,6 +1,7 @@
 <?php
-require 'inc/functions.php';
-require 'inc/common_header.php';
+require_once 'inc/functions.php';
+require_once 'inc/common_header.php';
+require_once 'api/api.php';
 securePage();
 require 'inc/bind.php';
 if( isset( $_POST['submit_wblist'] ) ) {

@@ -10,11 +10,8 @@ require 'inc/bind.php';
         require 'inc/header.php';
         $alias = filter_var( $_GET['alias'] , FILTER_SANITIZE_STRING );
         if( isset( $_GET['confirm'] ) ) {
-            $part = explode( "@" , $alias );
-            $domain = $part[1];
-            $dn = "mail=" . $alias . ",ou=Aliases,domainName=" . $domain . "," . LDAP_DOMAINDN;
             plugins_process( "alias_delete" , "submit" );
-            if( ldap_delete( $ds , $dn ) ) {
+            if( alias_delete( $alias ) ) {
                 go( "alias.php?deleted" );
             } else {
                 die( "cannot delete!" );
