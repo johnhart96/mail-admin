@@ -19,11 +19,7 @@ function alias_delete( $object ) {
     $part = explode( "@" , $object );
     $domain = $part[1];
     $dn = "mail=" . $object . ",ou=Aliases,domainName=" . $domain . "," . LDAP_DOMAINDN;
-    if( ldap_delete($ds, $dn) ) {
-        return TRUE;
-    } else {
-        return FALSE;
-    }
+    ldap_delete($ds, $dn);
 
 }
 ?>
