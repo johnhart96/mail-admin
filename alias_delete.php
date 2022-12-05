@@ -12,11 +12,8 @@ require 'inc/bind.php';
         $alias = filter_var( $_GET['alias'] , FILTER_SANITIZE_STRING );
         if( isset( $_GET['confirm'] ) ) {
             plugins_process( "alias_delete" , "submit" );
-            if( alias_delete( $alias ) == TRUE ) {
-                go( "alias.php?deleted" );
-            } else {
-                die( "cannot delete!" );
-            }
+            alias_delete( $alias );
+            go( "alias.php?deleted" );
         }
         ?>
     </head>
