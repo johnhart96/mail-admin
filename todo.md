@@ -3,7 +3,7 @@ This file outlines the plans and progress of the version two (2.0) development o
 
 # Improvements to make over version one
 * Improve the overall UI for global admins, domain admins and users.
-* Support both SQL and LDAP backends
+* Support both SQL and LDAP backends (but maybe not right away)
 * Ditch the Microsoft 365 UI and focus on what Exchange 2019 does as we only need to worry about mail
 * Simple group management, no CSV values.
 * RestAPI
