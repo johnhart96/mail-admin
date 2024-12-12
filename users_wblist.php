@@ -12,6 +12,16 @@ $search = ldap_search( $ds , LDAP_BASEDN , $filter );
 $entry = ldap_get_entries( $ds , $search );
 unset( $entry['count'] );
 $entry = $entry[0];
+
+// Delete an entry
+if( isset( $_GET['rid'] ) && isset( $_GET['sid'] ) ) {
+    $rid = filter_var( $_GET['rid'] , FILTER_SANITIZE_NUMBER_INT );
+    $sid = filter_var( $_GET['sid'] , FILTER_SANITIZE_NUMBER_INT );
+    $delete = $amavisd->prepare( "DELETE FROM `wblist` WHERE `rid` =:rid AND `sid` =:sid1 LIMIT 1" );
+    $delete->execute( [ ':rid' => $rid , ':sid1' => $sid ] );
+}
+
+// Submit a new entry
 if( isset( $_POST['submit_wblist'] ) ) {
     $address = filter_var( $_POST['address'] , FILTER_SANITIZE_STRING );
     $wb = filter_var( $_POST['wb'] , FILTER_SANITIZE_STRING );
@@ -66,7 +76,7 @@ if( isset( $_POST['submit_wblist'] ) ) {
             <div class="row">
                 <div class="col">
                     <form method="post">
-                        <h1>Edit User</h1>
+                        <h1>Edit Mailbox</h1>
                         <?php
                         if( isset( $_GET['saved'] ) ) {
                             echo "<div class='alert alert-success'>Changes saved!</div>";
@@ -99,6 +109,7 @@ if( isset( $_POST['submit_wblist'] ) ) {
                             </li> 
                         </ul>
                         <p>&nbsp;</p>
+                        <div class="alert alert-info">List email addresses below that are allowed or blocked from emailing this mailbox.</div>
                         <div class="mb-3">
                             <table class="table table-bordered table-striped">
                                 <thead>
@@ -144,7 +155,7 @@ if( isset( $_POST['submit_wblist'] ) ) {
                                                 break;
                                         }
                                         echo "</td>";
-                                        echo "<td width='1'><a href='wblist_delete.php?rid=" . $rid . "&sid=" . $sid . "' class='btn btn-danger'>Delete</a></td>";
+                                        echo "<td width='1'><a href='users_wblist.php?user=$user&rid=" . $rid . "&sid=" . $sid . "' class='btn btn-danger'><i class='fas fa-trash'></i></a></td>";
                                         echo "</tr>";
                                     }
                                     ?>
@@ -152,14 +163,14 @@ if( isset( $_POST['submit_wblist'] ) ) {
                                 <tfoot>
                                     <tr>
                                         <form method="post">
-                                            <td><input style="width: 100%" name="address"></td>
+                                            <td><input class="form-control" name="address"></td>
                                             <td>
-                                                <select style="width: 100%" name="wb">
+                                                <select class="form-control" name="wb">
                                                     <option value="B">Block</option>
                                                     <option value="W">Allow</option>
                                                 </select>
                                             </td>
-                                            <td width="1"><button style="width: 100%" class="btn btn-success" type="submit" name="submit_wblist">Save</button></td>
+                                            <td width="1"><button style="width: 100%" class="btn btn-success" type="submit" name="submit_wblist"><i class='fas fa-plus'></i></button></td>
                                         </form>
                                     </tr>
                                 </tfoot>
