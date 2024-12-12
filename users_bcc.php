@@ -37,7 +37,7 @@ if( isset( $_POST['submit'] ) ) {
             <div class="row">
                 <div class="col">
                     <form method="post">
-                        <h1>Edit User</h1>
+                        <h1>Edit Mailbox</h1>
                         <?php
                         if( isset( $_GET['saved'] ) ) {
                             echo "<div class='alert alert-success'>Changes saved!</div>";
@@ -70,28 +70,28 @@ if( isset( $_POST['submit'] ) ) {
                             </li>  
                         </ul>
                         <p>&nbsp;</p>
+                        <div class="alert alert-info">
+                            BCC can be used to monitor incoming and outgoing emails from this mailbox. Remember to enable BCC services in the permissions tab.
+                        </div>
+                        
                         <div class="mb-3">
                             <?php
                             $userSenderBccAddress = NULL;
                             $userRecipientBccAddress = NULL;
                             if( isset( $entry['userrecipientbccaddress'] ) ) {
-                                $userSenderBccAddress = $entry['userrecipientbccaddress'][0];
+                                $userSenderBccAddress = $entry['usersenderbccaddress'][0];
                             }
                             if( isset( $entry['userrecipientbccaddress'] ) ) {
                                 $userRecipientBccAddress = $entry['userrecipientbccaddress'][0];
                             }
                             
                             ?>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Relay received email to:</span>
-                                </div>
+                            <div class="form-group">
+                                <label for="userRecipientBccAddress">Relay incoming email to:</label>
                                 <input type="text" name="userRecipientBccAddress" class="form-control" value="<?php echo $userRecipientBccAddress; ?>">
                             </div>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Relay sent email to:</span>
-                                </div>
+                            <div class="form-group">
+                                <label for="userSenderBccAddress">Relay sent email to:</label>
                                 <input type="text" name="userSenderBccAddress" class="form-control" value="<?php echo $userSenderBccAddress; ?>">
                             </div>
                             <?php plugins_process( "users_bcc" , "form" ); ?>
