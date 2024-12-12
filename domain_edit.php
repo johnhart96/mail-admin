@@ -148,11 +148,11 @@ if( isset( $_POST['submit'] ) ) {
                                 Enable this domain
                             </label>
                         </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text">Company/Organization Name</span></div>
+                        <div class="form-group">
+                            <label for="cn">Company/Organization Name:</label>
                             <input name="cn" class="form-control" value="<?php echo $cn; ?>">
                         </div>
-                        <div class="input-group">
+                        <div class="mb-3">
                             <?php
                             if( ! empty( $domain['description'] ) ) {
                                 $description = $domain['description'][0];
@@ -160,8 +160,8 @@ if( isset( $_POST['submit'] ) ) {
                                 $description = NULL;
                             }
                             ?>
-                            <div class="input-group-prepend"><span class="input-group-text">Description</span></div>
-                            <input name="description" class="form-control" value="<?php echo $description; ?>">
+                            <label for="description">Description:</label>
+                            <textarea name="description" class="form-control"><?php echo $description; ?></textarea>
                         </div>
                         
                         
@@ -178,16 +178,14 @@ if( isset( $_POST['submit'] ) ) {
                                     case "defaultQuota":
                                         $label = "Default Quota";
                                         $part[1] = $part[1] / 1024000000;
-                                        $append = "<div class='input-group-append'><span class='input-group-text'>GB</span></div>";
                                         break;
                                     default:
                                         $label = $part[0];
                                         break;
                                 }
-                                echo "<div class='input-group'>";
-                                echo "<div class='input-group-prepend'><span class='input-group-text'>" . $label . ":</span></div>";
+                                echo "<div class='form-group'>";
+                                echo "<label for='" . $part[0] . "'>$label:</label>";
                                 echo "<input name='" . $part[0] . "' class='form-control' value='" . $part[1] . "'>";
-                                echo $append;
                                 echo "</div>";
                             }
                         }
