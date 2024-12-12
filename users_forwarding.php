@@ -105,7 +105,7 @@ function checkbox( $h ) {
                                 $al = "";
                             }
                             ?>
-                            <div class="alert alert-info">The addresses listed below will receive a forwarded copy of any emails sent to this mailbox</div>
+                            <div class="alert alert-info">The addresses listed below will receive a forwarded copy of any emails sent to this mailbox. Remember to enable forwarding in the permissions tab.</div>
                             <table class="table table-bordered table-striped">
                                 <?php
                                 if( isset( $entry['mailforwardingaddress'] ) ) {
