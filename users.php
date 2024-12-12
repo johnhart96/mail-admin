@@ -16,7 +16,7 @@ securePage();
             <div class="row">
                 <div class="col">
                     <form method="post">
-                        <h1>Users</h1>
+                        <h1>Mailboxes</h1>
                         <?php
                         if( isset( $_GET['domain'] ) ) {
                             $domain = filter_var( $_GET['domain'] , FILTER_SANITIZE_STRING );
