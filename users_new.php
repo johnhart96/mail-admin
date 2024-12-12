@@ -109,22 +109,22 @@ if( isset( $_POST['submit'] ) ) {
         ?>
     </head>
     <body>
-        <?php require 'inc/topbar.php'; ?>
+        <?php require 'inc/new_topbar.php'; ?>
         <div class="container">
             <div class="row">
                 <div class="col">
                     <form method="post">
-                        <h1>New Users</h1>
+                        <h1>New Mailbox</h1>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="users.php">Users</a></li>
+                                <li class="breadcrumb-item"><a href="users.php">Mailboxes</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">New</li>
                             </ol>
                         </nav>
 
                         <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text">Address:</span></div>
-                            <input type="text" name="address" class="form-control">
+                            <div class="input-group-prepend"><span class="input-group-text"><span style="color: red;">*</span> Address:</span></div>
+                            <input required autofocus type="text" name="address" class="form-control">
                             <?php
                             if( $_SESSION['admin_level'] !== 'global' ) {
                                 require 'inc/relmset.php';
@@ -147,29 +147,32 @@ if( isset( $_POST['submit'] ) ) {
                             }
                             ?>
                         </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text">Username:</span></div>
-                            <input type="text" name="username" class="form-control">
+
+                        <p>&nbsp;</p>
+                        
+                        <div class="form-group">
+                            <label for="username"><span style="color: red;">*</span> Username:</label>
+                            <input type="text" required name="username" class="form-control">
                         </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text">Firstname:</span></div>
-                            <input type="text" name="firstname" class="form-control">
+                        <div class="form-group">
+                            <label for="firstname"><span style="color: red;">*</span> Firstname:</label>
+                            <input id="firstname" type="text" required name="firstname" class="form-control">
                         </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text">Lastname:</span></div>
-                            <input type="text" name="lastname" class="form-control">
+                        <div class="form-group">
+                            <label for="lastname"><span style="color: red;">*</span> Lastname:</label>
+                            <input type="text" id="lastname" required name="lastname" class="form-control">
                         </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text">Display name:</span></div>
-                            <input type="text" name="displayname" class="form-control">
+                        <div class="form-group">
+                            <label for="displayname"><span style="color: red;">*</span> Display name:</label>
+                            <input id="displayname" type="text" required name="displayname" class="form-control">
                         </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text">Password:</span></div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
                             <input type="password" name="password" class="form-control">
                         </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text">Description:</span></div>
-                            <input type="text" name="description" class="form-control">
+                        <div class="mb-3">
+                            <label class="form-label" for="description">Description:</label>
+                            <textarea name="description" class="form-control">Mailbox</textarea>
                         </div>
 
                         <?php plugins_process( "users_new" , "form" ); ?>
