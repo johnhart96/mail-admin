@@ -113,6 +113,7 @@ if( isset( $_POST['submit'] ) ) {
                             </li>
                         </ul>
                         <p>&nbsp;</p>
+                        <div class="alert alert-info">If backup MX is enabled, this server will not store mail for this domain on this server, but will attempt to deliver mail to the server below.</div>
                         <?php
                         if( isset( $domain['domainbackupmx'][0] ) ) {
                             $checked = "checked";
