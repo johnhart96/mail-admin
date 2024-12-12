@@ -82,7 +82,7 @@ function checkbox( $h ) {
             <div class="row">
                 <div class="col">
                     <form method="post">
-                        <h1>Edit User</h1>
+                        <h1>Edit Mailbox</h1>
                         <?php
                         if( isset( $_GET['saved'] ) ) {
                             echo "<div class='alert alert-success'>Changes saved!</div>";
@@ -102,7 +102,7 @@ function checkbox( $h ) {
                                 <a class="nav-link" href="users_alias.php?user=<?php echo $user; ?>">Addresses</a>
                             </li>  
                             <li class="nav-item">
-                                <a class="nav-link active" href="users_services.php?user=<?php echo $user; ?>">Services</a>
+                                <a class="nav-link active" href="users_services.php?user=<?php echo $user; ?>">Permissions</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="users_forwarding.php?user=<?php echo $user; ?>">Forwarding</a>
@@ -116,13 +116,13 @@ function checkbox( $h ) {
                         </ul>
                         <p>&nbsp;</p>
                         <div class="mb-3">
-                            <table class="table">
+                            <table class="table table-bordered table-striped">
                                 <tr>
                                     <td width="1">
                                         <input type="checkbox" name="mail" <?php echo checkbox( "mail" ) ?>>
                                     </td>
-                                    <td>Mail Service (Check this box in order to enable other services)</td>
-                                    <td>&nbsp;</td>
+                                    <td>Mail Service</td>
+                                    <td><em>(Check this box in order to enable other services)</em></td>
                                 </tr>
                                 <tr>
                                     <td width="1">

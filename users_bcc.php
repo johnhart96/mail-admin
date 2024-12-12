@@ -57,7 +57,7 @@ if( isset( $_POST['submit'] ) ) {
                                 <a class="nav-link" href="users_alias.php?user=<?php echo $user; ?>">Addresses</a>
                             </li>  
                             <li class="nav-item">
-                                <a class="nav-link" href="users_services.php?user=<?php echo $user; ?>">Services</a>
+                                <a class="nav-link" href="users_services.php?user=<?php echo $user; ?>">Permissions</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="users_forwarding.php?user=<?php echo $user; ?>">Forwarding</a>
