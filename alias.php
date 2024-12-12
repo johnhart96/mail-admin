@@ -17,7 +17,7 @@ unset( $entries['count'] );
         ?>
     </head>
     <body>
-        <?php require 'inc/topbar.php'; ?>
+        <?php require 'inc/new_topbar.php'; ?>
         <div class="container">
             <div class="row">
                 <div class="col">

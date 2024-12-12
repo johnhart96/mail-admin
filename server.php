@@ -83,7 +83,7 @@ if( isset( $_POST['submit_greylisting'] ) ) {
         ?>
     </head>
     <body>
-        <?php require 'inc/topbar.php'; ?>
+        <?php require 'inc/new_topbar.php'; ?>
         <div class="container">
             <div class="row">
                 <div class="col">
