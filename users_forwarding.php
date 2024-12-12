@@ -12,22 +12,29 @@ $search = ldap_search( $ds , LDAP_BASEDN , $filter );
 $entry = ldap_get_entries( $ds , $search );
 unset( $entry['count'] );
 $entry = $entry[0];
+
+// Add new entry
 if( isset( $_POST['submit'] ) ) {
     $dn = $entry['dn'];
-    // Remove existing forwarders
-    ldap_mod_del( $ds , $dn , array( "mailforwardingaddress" => array() ) );
-    // Add new entrys
-    $address = explode( "," , filter_var( $_POST['forwards'] , FILTER_SANITIZE_STRING ) );
+    $address = explode( "," , filter_var( $_POST['newForward'] , FILTER_VALIDATE_EMAIL ) );
     $count = 0;
-    $info = array();
-    foreach( $address as $a ) {
-        $info['mailforwardingaddress'][$count] = $a;
-        $count ++;
-    }
+    $info = array(
+        "mailforwardingaddress" => $address
+    );
     ldap_mod_add( $ds , $dn , $info );
     plugins_process( "users_forwarding" , "submit" );
     watchdog( "Editing user `" . $user . "`" );
     header( "Location:users_forwarding.php?user=" . $user . "&saved" );
+}
+// Remove entry
+if( isset( $_GET['deleteForward'] ) ) {
+    $deleteForward = filter_var( $_GET['deleteForward'] , FILTER_VALIDATE_EMAIL );
+    $remove = array(
+        "mailforwardingaddress" => $deleteForward
+    );
+    $dn = "mail=" . $user . ",ou=Users,domainName=" . $domain . "," . LDAP_DOMAINDN;
+    ldap_mod_del( $ds , $dn , $remove );
+    header( "Location: users_forwarding.php?user=" . $user );
 }
 
 function checkbox( $h ) {
@@ -52,7 +59,7 @@ function checkbox( $h ) {
             <div class="row">
                 <div class="col">
                     <form method="post">
-                        <h1>Edit User</h1>
+                        <h1>Edit Mailbox</h1>
                         <?php
                         if( isset( $_GET['saved'] ) ) {
                             echo "<div class='alert alert-success'>Changes saved!</div>";
@@ -98,11 +105,25 @@ function checkbox( $h ) {
                                 $al = "";
                             }
                             ?>
-                            <label for="forwards" class="form-label">Forwarding addresses (comma seperated):</label>
-                            <textarea class="form-control" id="forwards" rows="3" name="forwards"><?php echo $al; ?></textarea>
+                            <div class="alert alert-info">The addresses listed below will receive a forwarded copy of any emails sent to this mailbox</div>
+                            <table class="table table-bordered table-striped">
+                                <?php
+                                if( isset( $entry['mailforwardingaddress'] ) ) {
+                                    unset( $entry['mailforwardingaddress']['count'] );
+                                    foreach( $entry['mailforwardingaddress'] as $address ) {
+                                        echo "<tr>";
+                                        echo "<td>" . $address . "</td>";
+                                        echo "<td width='1'><a class='btn btn-danger' href='users_forwarding.php?user=$user&deleteForward=" . $address . "'><i class='fas fa-trash'></i></a>";
+                                        echo "</tr>";
+                                    }
+                                }
+                                ?>
+                                <tr>
+                                    <td><input type="text" name="newForward" class="form-control"></td>
+                                    <td><button type="submit" name="submit" class="btn btn-success"><i class="fas fa-plus"></i></button></td>
+                                </tr>
+                            </table>
                             <?php plugins_process( "users_forwarding" , "form" ); ?>
-                            <p>&nbsp;</p>
-                            <button class="btn btn-success" name="submit" type="submit"><i class="fas fa-save"></i>&nbsp;Save</button>
                         </div>
                     </form>
                 </div>
