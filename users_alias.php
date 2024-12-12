@@ -6,9 +6,11 @@ require 'inc/bind.php';
 $user = filter_var( $_GET['user'] , FILTER_SANITIZE_STRING );
 $part = explode( "@" , $user );
 $domain = $part[1];
-if( isset( $_POST['submit'] ) ) {
+if( isset( $_POST['addAlias'] ) ) {
     $dn = "mail=" . $user . ",ou=Users,domainName=" . $domain . "," . LDAP_DOMAINDN;
-    $aliases = filter_var( $_POST['aliases'] , FILTER_SANITIZE_STRING );
+    $existing_alias = filter_var( $_POST['existing_alias'] , FILTER_SANITIZE_STRING );
+    $new_alias = filter_var( $_POST['new_alias'] , FILTER_UNSAFE_RAW );
+    $aliases = $existing_alias . $new_alias;
     if( $aliases !== "," ) {
         $alias = explode( "," , $aliases );
         $count = 0;
@@ -22,11 +24,20 @@ if( isset( $_POST['submit'] ) ) {
     } else {
         $info['shadowaddress'] = NULL;
         if( ldap_modify( $ds , $dn , $info ) ) {
-            watchdog( "Editing user `" . $user . "`" );
+            watchdog( "Editing mailbox `" . $user . "`" );
             plugins_process( "users_alias" , "submit" );
             $saved = TRUE;
         }
     }
+}
+if( isset( $_GET['deleteAlias'] ) ) {
+    $deleteAlias = filter_var( $_GET['deleteAlias'] , FILTER_UNSAFE_RAW );
+    $dn = "mail=" . $user . ",ou=Users,domainName=" . $domain . "," . LDAP_DOMAINDN;
+    $removal = array(
+        "shadowAddress" => $deleteAlias
+    );
+    ldap_mod_del( $ds , $dn , $removal );
+    header( "Location: users_alias.php?user=" . filter_var( $_GET['user'] , FILTER_UNSAFE_RAW ) );
 }
 ?>
 <html>
@@ -41,7 +52,7 @@ if( isset( $_POST['submit'] ) ) {
             <div class="row">
                 <div class="col">
                     <form method="post">
-                        <h1>Edit User</h1>
+                        <h1>Edit Mailbox</h1>
                         <?php
                         if( isset( $saved ) ) {
                             echo "<div class='alert alert-success'>Changes saved!</div>";
@@ -74,32 +85,41 @@ if( isset( $_POST['submit'] ) ) {
                             </li> 
                         </ul>
                         <p>&nbsp;</p>
-                        <div class="mb-3">
-                            <?php
-                            $filter = "(mail=$user)";
-                            $search = ldap_search( $ds , "ou=Users,domainName=" . $domain . "," . LDAP_DOMAINDN , $filter );
-                            $entry = ldap_get_entries( $ds , $search );
-                            unset( $entry['count'] );
-                            if( isset( $entry[0]['shadowaddress'] ) ) {
-                                $aliases = $entry[0]['shadowaddress'];
-                                unset( $aliases['count'] );
-                                $al = "";
-                                foreach( $aliases as $alias ) {
-                                    $al .= $alias . ",";
-                                }
-                            } else {
-                                $al = NULL;
+                        <?php
+                        $filter = "(mail=$user)";
+                        $search = ldap_search( $ds , "ou=Users,domainName=" . $domain . "," . LDAP_DOMAINDN , $filter );
+                        $entry = ldap_get_entries( $ds , $search );
+                        unset( $entry['count'] );
+                        if( isset( $entry[0]['shadowaddress'] ) ) {
+                            $aliases = $entry[0]['shadowaddress'];
+                            unset( $aliases['count'] );
+                            $al = "";
+                            foreach( $aliases as $alias ) {
+                                $al .= $alias . ",";
                             }
-                            $al = substr( $al , 0 , -1 );
+                        } else {
+                            $al = NULL;
+                        }
+                        $al = substr( $al , 0 , -1 );
+                        ?>
+                        <table class="table table-stripe table-bordered">
+                            <?php
+                            $parts = explode( "," , $al );
+                            $full_list = "";
+                            foreach( $parts as $part ) {
+                                echo "<tr>";
+                                echo "<td>" . $part . "</td>";
+                                echo "<td width='1'><a class='btn btn-danger' href='users_alias.php?user=$user&deleteAlias=" . $part . "'><i class='fas fa-trash'></i></a>";
+                                echo "</tr>";
+                                $full_list .= $part . ",";
+                            }
                             ?>
-                            <label for="aliases" class="form-label">Aliases (comma seperated):</label>
-                            <textarea class="form-control" id="aliases" rows="3" name="aliases"><?php echo $al; ?></textarea>
-                            <?php plugins_process( "users_alias" , "form" ); ?>
-                            <p>&nbsp;</p>
-                            <button type="submit" class="btn btn-success" name="submit"><i class="fas fa-save"></i>&nbsp;Save</button>
-                        </div>
-                        
-                        
+                            <tr>
+                                <td><input type='hidden' name='existing_alias' value='<?php echo $full_list; ?>'><input type="text" autofocus class="form-control" name="new_alias"></td>
+                                <td><button class="btn btn-success" type="submit" name="addAlias"><i class="fas fa-plus"></i></button></td>
+                            </tr>
+                        </table>
+                        <?php plugins_process( "users_alias" , "form" ); ?>
                     </form>
                 </div>
             </div>
