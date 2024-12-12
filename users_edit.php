@@ -93,7 +93,7 @@ if( empty( $userDetail['displayname'][0] ) ) {
             <div class="row">
                 <div class="col">
                     <form method="post">
-                        <h1>Edit User</h1>
+                        <h1>Edit Mailbox</h1>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="users.php">Users</a></li>
@@ -125,29 +125,32 @@ if( empty( $userDetail['displayname'][0] ) ) {
                             <div class="input-group-prepend"><span class="input-group-text">Address:</span></div>
                             <input type="text" name="address" class="form-control" disabled value="<?php echo $userDetail['mail'][0]; ?>">
                         </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text">Username:</span></div>
+
+                        <p>&nbsp;</p>
+                        
+                        <div class="form-group">
+                            <label for="username">Username:</label>
                             <input type="text" name="username" class="form-control" value="<?php echo $userDetail['uid'][0]; ?>">
                         </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text">Firstname:</span></div>
+                        <div class="form-group">
+                            <label for="firstname">Firstname:</label>
                             <input type="text" name="firstname" class="form-control" value="<?php echo $userDetail['givenname'][0]; ?>">
                         </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text">Lastname:</span></div>
+                        <div class="form-group">
+                            <label for="lastname">Lastname:</label>
                             <input type="text" name="lastname" class="form-control" value="<?php echo $userDetail['sn'][0]; ?>">
                         </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text">Display name:</span></div>
+                        <div class="form-group">
+                            <label for="displayname">Display name:</label>
                             <input type="text" name="displayname" class="form-control" value="<?php echo $userDetail['displayname'][0]; ?>">
                         </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text">Password:</span></div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
                             <input type="password" name="password" class="form-control" placeholder="Enter to change">
                         </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text">Description:</span></div>
-                            <input type="text" name="description" class="form-control" value="<?php echo $userDetail['description'][0]; ?>">
+                        <div class="mb-3">
+                            <label for="description">Description:</label>
+                            <textarea name="description" class="form-control"><?php echo $userDetail['description'][0]; ?></textarea>
                         </div>
                         <div class="input-group">
                             <div class="input-group-prepend"><span class="input-group-text">Quota:</span></div>
@@ -161,6 +164,7 @@ if( empty( $userDetail['displayname'][0] ) ) {
                             <input type="text" name="mailQuota" class="form-control" value="<?php echo $userDetail['mailquota'][0] /1024000000; ?>" <?php echo $disabled; ?>>
                             <div class="input-group-append"><span class="input-group-text">GB</span></div>
                         </div>
+                        <p>&nbsp;</p>
                         <?php if( $_SESSION['admin_level'] == "global" ) { ?>
                             <div class="form-check">
                                 <?php
