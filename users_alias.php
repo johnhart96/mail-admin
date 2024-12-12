@@ -60,7 +60,7 @@ if( isset( $_GET['deleteAlias'] ) ) {
                         ?>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="users.php">Users</a></li>
+                                <li class="breadcrumb-item"><a href="users.php">Mailboxes</a></li>
                                 <li class="breadcrumb-item active" aria-current="page"><?php echo $user; ?></li>
                             </ol>
                         </nav>
