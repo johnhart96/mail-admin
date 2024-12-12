@@ -69,7 +69,7 @@ function checkbox( $h ) {
                                 <a class="nav-link" aria-current="page" href="users_edit.php?user=<?php echo $user; ?>">General</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="users_alias.php?user=<?php echo $user; ?>">Aliases</a>
+                                <a class="nav-link" href="users_alias.php?user=<?php echo $user; ?>">Addresses</a>
                             </li>  
                             <li class="nav-item">
                                 <a class="nav-link" href="users_services.php?user=<?php echo $user; ?>">Services</a>

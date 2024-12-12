@@ -19,6 +19,7 @@ if( isset( $_POST['submit'] ) ) {
         $password = filter_var( $_POST['password'] , FILTER_SANITIZE_STRING );
         $info['userPassword'] = hash_password( $password );
     }
+    
     $dnToUse = "mail=" . $user . ",ou=Users,domainName=" . $domain . "," . LDAP_DOMAINDN;
 
     // Global admin bits
@@ -105,7 +106,7 @@ if( empty( $userDetail['displayname'][0] ) ) {
                                 <a class="nav-link active" aria-current="page" href="users_edit.php?user=<?php echo $user; ?>">General</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="users_alias.php?user=<?php echo $user; ?>">Aliases</a>
+                                <a class="nav-link" href="users_alias.php?user=<?php echo $user; ?>">Addresses</a>
                             </li>  
                             <li class="nav-item">
                                 <a class="nav-link" href="users_services.php?user=<?php echo $user; ?>">Services</a>
@@ -120,11 +121,6 @@ if( empty( $userDetail['displayname'][0] ) ) {
                                 <a class="nav-link" href="users_wblist.php?user=<?php echo $user; ?>">White/Black List</a>
                             </li>  
                         </ul>
-
-                        <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text">Address:</span></div>
-                            <input type="text" name="address" class="form-control" disabled value="<?php echo $userDetail['mail'][0]; ?>">
-                        </div>
 
                         <p>&nbsp;</p>
                         

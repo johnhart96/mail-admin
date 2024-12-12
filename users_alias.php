@@ -10,24 +10,29 @@ if( isset( $_POST['addAlias'] ) ) {
     $dn = "mail=" . $user . ",ou=Users,domainName=" . $domain . "," . LDAP_DOMAINDN;
     $existing_alias = filter_var( $_POST['existing_alias'] , FILTER_SANITIZE_STRING );
     $new_alias = filter_var( $_POST['new_alias'] , FILTER_UNSAFE_RAW );
-    $aliases = $existing_alias . $new_alias;
-    if( $aliases !== "," ) {
-        $alias = explode( "," , $aliases );
-        $count = 0;
-        foreach( $alias as $add ) {
-            $info['shadowaddress'][$count] = $add;
-            $count ++;
-        }
-        if( ldap_modify( $ds , $dn , $info ) ) {
-            $saved = TRUE;
+    $new = explode( "@" , $new_alias );
+    if( $domain == $new[1] ) {
+        $aliases = $existing_alias . $new_alias;
+        if( $aliases !== "," ) {
+            $alias = explode( "," , $aliases );
+            $count = 0;
+            foreach( $alias as $add ) {
+                $info['shadowaddress'][$count] = $add;
+                $count ++;
+            }
+            if( ldap_modify( $ds , $dn , $info ) ) {
+                $saved = TRUE;
+            }
+        } else {
+            $info['shadowaddress'] = NULL;
+            if( ldap_modify( $ds , $dn , $info ) ) {
+                watchdog( "Editing mailbox `" . $user . "`" );
+                plugins_process( "users_alias" , "submit" );
+                $saved = TRUE;
+            }
         }
     } else {
-        $info['shadowaddress'] = NULL;
-        if( ldap_modify( $ds , $dn , $info ) ) {
-            watchdog( "Editing mailbox `" . $user . "`" );
-            plugins_process( "users_alias" , "submit" );
-            $saved = TRUE;
-        }
+        $saved = FALSE;
     }
 }
 if( isset( $_GET['deleteAlias'] ) ) {
@@ -55,7 +60,11 @@ if( isset( $_GET['deleteAlias'] ) ) {
                         <h1>Edit Mailbox</h1>
                         <?php
                         if( isset( $saved ) ) {
-                            echo "<div class='alert alert-success'>Changes saved!</div>";
+                            if( $saved == TRUE ) {
+                                echo "<div class='alert alert-success'>Changes saved!</div>";
+                            } else {
+                                echo "<div class='alert alert-danger'>The domain name is not valid.</div>";
+                            }
                         }
                         ?>
                         <nav aria-label="breadcrumb">
@@ -69,7 +78,7 @@ if( isset( $_GET['deleteAlias'] ) ) {
                                 <a class="nav-link" aria-current="page" href="users_edit.php?user=<?php echo $user; ?>">General</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="users_alias.php?user=<?php echo $user; ?>">Aliases</a>
+                                <a class="nav-link active" href="users_alias.php?user=<?php echo $user; ?>">Addresses</a>
                             </li>  
                             <li class="nav-item">
                                 <a class="nav-link" href="users_services.php?user=<?php echo $user; ?>">Services</a>
@@ -89,6 +98,13 @@ if( isset( $_GET['deleteAlias'] ) ) {
                         $filter = "(mail=$user)";
                         $search = ldap_search( $ds , "ou=Users,domainName=" . $domain . "," . LDAP_DOMAINDN , $filter );
                         $entry = ldap_get_entries( $ds , $search );
+
+                        // Get the domain Aliases
+                        $domain_filter = "(domainName=$domain)";
+                        $domain_search = ldap_search( $ds , LDAP_DOMAINDN , $domain_filter );
+                        $domain_result = ldap_get_entries( $ds , $domain_search );
+                        $alias_domains = $domain_result[0]['domainaliasname'];
+                        unset( $alias_domains['count'] );
                         unset( $entry['count'] );
                         if( isset( $entry[0]['shadowaddress'] ) ) {
                             $aliases = $entry[0]['shadowaddress'];
@@ -103,9 +119,21 @@ if( isset( $_GET['deleteAlias'] ) ) {
                         $al = substr( $al , 0 , -1 );
                         ?>
                         <table class="table table-stripe table-bordered">
+                            <tr>
+                                <th><?php echo $user; ?> <em>(Primary)</em></th>
+                                <th></th>
+                            </tr>
                             <?php
                             $parts = explode( "," , $al );
                             $full_list = "";
+                            // Domain aliases
+                            foreach( $alias_domains as $al_domain ) {
+                                echo "<tr>";
+                                echo "<td>" . $part[0] . "@" . $al_domain . " <em>(Domain Alias)</em></td>";
+                                echo "<td></td>";
+                                echo "</tr>";
+                            }
+                            // Mailbox aliases
                             foreach( $parts as $part ) {
                                 echo "<tr>";
                                 echo "<td>" . $part . "</td>";
