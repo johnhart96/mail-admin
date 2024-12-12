@@ -13,3 +13,13 @@
 pre {
     display: inline;
 }
+#sidebar {
+    border-right: 2px solid #000;
+}
+.sidebar_menu {
+    list-style-type: none;
+    font-size: 20px;
+}
+.sidebar_menu li {
+    margin-bottom: 5px;
+}

@@ -58,12 +58,11 @@ plugins_process( "index" , "submit" );
         ?>
     </head>
     <body>
-        <?php require 'inc/topbar.php'; ?>
+        <?php require 'inc/new_topbar.php'; ?>
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <h1>
-                        Welcome <?php echo ucfirst( $_SESSION['ldap']['displayname'][0] ); ?>!</h1>
+                    <h1>Welcome <?php echo ucfirst( $_SESSION['ldap']['displayname'][0] ); ?>!</h1>
                     <?php
                     if( DEBUG ) {
                         echo "<p id='dialog-error' class='white'><strong>WARNING!</strong> Debug is enabled. Do not leave debug enabled in production enviroments. It may give away secure info!</p>";
