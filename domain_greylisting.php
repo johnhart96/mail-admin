@@ -127,7 +127,7 @@ if( isset( $_POST['add_whitelist'] ) ) {
                                     while( $row = $getWhitelist->fetch( PDO::FETCH_ASSOC ) ) {
                                         echo "<tr>";
                                         echo "<td>" . $row['sender'] . "</td>";
-                                        echo "<td width='1'><a href='greylisting_sender_delete.php?id=" . $row['id'] . "&domain=" . str_replace( "@" , "" , $entity ) . "' class='btn btn-danger'>Delete</a></td>";
+                                        echo "<td width='1'><a href='greylisting_sender_delete.php?id=" . $row['id'] . "&domain=" . str_replace( "@" , "" , $entity ) . "' class='btn btn-danger'><i class='fas fa-trash'></i></a></td>";
                                         echo "</tr>";
                                     }
                                     ?>
@@ -135,8 +135,8 @@ if( isset( $_POST['add_whitelist'] ) ) {
                                 <tfoot>
                                     <form method="post">
                                         <tr>
-                                            <td><input type="text" name="sender" placeholder="someone@someone.com or @someone.com" style="width: 100%"></td>
-                                            <td><button style="width: 100%" type="submit" name="add_whitelist" class="btn btn-success">Save</button></td>
+                                            <td><input type="text" name="sender" placeholder="someone@someone.com or @someone.com" class="form-control"></td>
+                                            <td><button style="width: 100%" type="submit" name="add_whitelist" class="btn btn-success"><i class="fas fa-plus"></i></button></td>
                                         </tr>
                                     </form>
                                 </tfoot>
