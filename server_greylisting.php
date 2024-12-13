@@ -50,7 +50,7 @@ if( isset( $_POST['spf_add'] ) ) {
                                     while( $row = $getDomains->fetch( PDO::FETCH_ASSOC ) ) {
                                         echo "<tr>";
                                         echo "<td>" . $row['domain'] . "</td>";
-                                        echo "<td width='1'><a href='greylisting_domain_delete.php?id=" . $row['id'] . "' class='btn btn-danger'>Delete</a></td>";
+                                        echo "<td width='1'><a href='greylisting_domain_delete.php?id=" . $row['id'] . "' class='btn btn-danger'><i class='fas fa-trash'></i></a></td>";
                                         echo "</tr>";
                                     }
                                     ?>
@@ -58,8 +58,8 @@ if( isset( $_POST['spf_add'] ) ) {
                                 <tfoot>
                                     <tr>
                                         <form method="post">
-                                            <td><input placeholder="Domain" type="text" name="domain" style="width: 100%"></td>
-                                            <td><button style="width: 100%;" type="submit" name="domain_add" class="btn btn-success">Save</button></td>
+                                            <td><input placeholder="Domain" type="text" name="domain" class="form-control"></td>
+                                            <td><button style="width: 100%;" type="submit" name="domain_add" class="btn btn-success"><i class='fas fa-plus'></i></button></td>
                                         </form>
                                     </tr>
                                 </tfoot>
@@ -87,7 +87,7 @@ if( isset( $_POST['spf_add'] ) ) {
                                         echo "<tr>";
                                         echo "<td>" . $row['sender'] . "</td>";
                                         echo "<td>" . $row['comment'] . "</td>";
-                                        echo "<td width='1'><a href='greylisting_spf_delete.php?id=" . $row['id'] . "' class='btn btn-danger'>Delete</a></td>";
+                                        echo "<td width='1'><a href='greylisting_spf_delete.php?id=" . $row['id'] . "' class='btn btn-danger'><i class='fas fa-trash'></i></a></td>";
                                         echo "</tr>";
                                     }
                                     ?>
@@ -95,9 +95,9 @@ if( isset( $_POST['spf_add'] ) ) {
                                 <tfoot>
                                     <tr>
                                         <form method="post">
-                                            <td><input placeholder="Domain or IP Address" type="text" name="sender" style="width: 100%"></td>
-                                            <td><input type="text" name="comment" style="width: 100%"></td>
-                                            <td><button style="width: 100%;" type="submit" name="spf_add" class="btn btn-success">Save</button></td>
+                                            <td><input placeholder="Domain or IP Address" type="text" name="sender" class="form-control"></td>
+                                            <td><input type="text" name="comment" class="form-control"></td>
+                                            <td><button style="width: 100%;" type="submit" name="spf_add" class="btn btn-success"><i class='fas fa-plus'></i></button></td>
                                         </form>
                                     </tr>
                                 </tfoot>

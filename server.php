@@ -135,21 +135,21 @@ if( isset( $_POST['submit_greylisting'] ) ) {
                                     </tbody>
                                     <tfoot>
                                     <tr>
-                                            <th><input style="width: 100%;" type="text" name="account"></th>
+                                            <th><input class="form-control" type="text" name="account"></th>
                                             <th>
-                                                <select style="width: 100%;" name="kind">
+                                                <select class="form-control" name="kind">
                                                     <option value="outbound">Outbound</option>
                                                     <option value="inbound">Inbound</option>
                                                     <option value="external">External</option>
                                                 </select>
                                             </th>
-                                            <th><input style="width: 100%;" type="text" name="priority" value="10"></th>
-                                            <th><input style="width: 100%;" type="text" name="period" value="10"></th>
-                                            <th><input style="width: 100%;" type="text" name="msg_size"></th>
-                                            <th><input style="width: 100%;" type="text" name="max_msgs"></th>
-                                            <th><input style="width: 100%;" type="text" name="max_quota"></th>
-                                            <th><input style="width: 100%;" type="text" name="max_rcpts" value="-1"></th>
-                                            <th><button style="width: 100%;" name="submit_throttle" type="submit" class="btn btn-success">Save</button></th>
+                                            <th><input class="form-control" type="text" name="priority" value="10"></th>
+                                            <th><input class="form-control" type="text" name="period" value="10"></th>
+                                            <th><input class="form-control" type="text" name="msg_size"></th>
+                                            <th><input class="form-control" type="text" name="max_msgs"></th>
+                                            <th><input class="form-control" type="text" name="max_quota"></th>
+                                            <th><input class="form-control" type="text" name="max_rcpts" value="-1"></th>
+                                            <th><button name="submit_throttle" type="submit" class="btn btn-success"><i class='fas fa-plus'></i></button></th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -199,22 +199,22 @@ if( isset( $_POST['submit_greylisting'] ) ) {
                                                     break;
                                             }
                                             echo "</td>";
-                                            echo "<td><a href='rdns_delete.php?id=" . $rule['id'] . "' class='btn btn-danger'>Delete</a></td>"; 
+                                            echo "<td><a href='rdns_delete.php?id=" . $rule['id'] . "' class='btn btn-danger'><i class='fas fa-trash'></i></a></td>"; 
                                             echo "</tr>";
                                         }
                                         ?>
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th><input style="width: 100%" name="domain"></th>
+                                            <th><input class="form-control" name="domain"></th>
                                             <th>
-                                                <select name="wb" style="width: 100%">
+                                                <select name="wb" class="form-control">
                                                     <option value="B">Blacklist</option>
                                                     <option value="W">Whitelist</option>
                                                 </select>
                                             </th>
                                             <th>
-                                                <button style="width: 100%" class="btn btn-success" name="rdns_submit">Save</button>
+                                                <button style="width: 100%" class="btn btn-success" name="rdns_submit"><li class='fas fa-plus'></i></button>
                                             </th>
                                         </tr>
                                     </tfoot>
@@ -272,14 +272,14 @@ if( isset( $_POST['submit_greylisting'] ) ) {
                                 <tfoot>
                                     <form method="post">
                                         <tr>
-                                            <td><input style="width: 100%" name="address"></td>
+                                            <td><input class="form-control" name="address"></td>
                                             <td>
-                                                <select name="wb" style="width: 100%">
+                                                <select name="wb" class="form-control">
                                                     <option value="B">Block</option>
                                                     <option value="W">Allow</option>
                                                 </select>
                                             </td>
-                                            <td width="1"><button style="width: 100%" name="submit_newWB" class="btn btn-success">Save</button></td>
+                                            <td width="1"><button style="width: 100%" name="submit_newWB" class="btn btn-success"><i class='fas fa-plus'></i></button></td>
                                         </tr>
                                     </form>
                                 </tfoot>
@@ -310,8 +310,8 @@ if( isset( $_POST['submit_greylisting'] ) ) {
                                 ?>
                                 <input type="checkbox" name="greylisting" <?php echo $checked; ?>>
                                 <label for="greylisting">Enable</label> <br />
-                                <button class="btn btn-success" type="submit" name="submit_greylisting">Save</button> &nbsp;
-                                <a href="server_greylisting.php" class="btn btn-primary">Settings</a>
+                                <button class="btn btn-success" type="submit" name="submit_greylisting"><i class='fas fa-save'></i>&nbsp;Save</button> &nbsp;
+                                <a href="server_greylisting.php" class="btn btn-primary"><i class='fa fa-gear'></i>&nbsp;Settings</a>
                             </form>
                         </div>
                     </div>
