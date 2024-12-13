@@ -30,7 +30,7 @@ if( isset( $_POST['submit'] ) ) {
         $minPasswordLength = 8;
     }
     if( isset( $_POST['defaultQuota'] ) ) {
-        $defaultQuota = filter_var( $_POST['defaultQuota'] , FILTER_SANITIZE_NUMBER_INT ) * 1024000000;
+        $defaultQuota = filter_var( $_POST['defaultQuota'] , FILTER_SANITIZE_NUMBER_INT );
     } else {
         $defaultQuota = 1024000000;
     }
@@ -128,9 +128,9 @@ if( isset( $_POST['submit'] ) ) {
                             </li>   
                         </ul>
                         <div class="btn-group">
-                            <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Users" href="users.php?domain=<?php echo $domainToFind; ?>" class="btn btn-primary"><i class="fa fa-id-badge"></i></a>
-                            <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Aliases" href="alias.php?domain=<?php echo $domainToFind; ?>" class="btn btn-primary"><i class="fa fa-mask"></i></a>
-                            <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Groups" href="groups.php?domain=<?php echo $domainToFind; ?>" class="btn btn-primary"><i class="fa fa-group"></i></a>
+                            <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Users" href="users.php?domain=<?php echo $domainToFind; ?>" class="btn btn-primary"><i class="fa fa-id-badge"></i>&nbsp;Mailboxes</a>
+                            <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Aliases" href="alias.php?domain=<?php echo $domainToFind; ?>" class="btn btn-primary"><i class="fa fa-mask"></i>&nbsp;Aliases</a>
+                            <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Groups" href="groups.php?domain=<?php echo $domainToFind; ?>" class="btn btn-primary"><i class="fa fa-group"></i>&nbsp;Groups</a>
                         </div>
                         <p>&nbsp;</p>
 
@@ -150,7 +150,7 @@ if( isset( $_POST['submit'] ) ) {
                         </div>
                         <div class="form-group">
                             <label for="cn">Company/Organization Name:</label>
-                            <input name="cn" class="form-control" value="<?php echo $cn; ?>">
+                            <input required autofocus name="cn" class="form-control" value="<?php echo $cn; ?>">
                         </div>
                         <div class="mb-3">
                             <?php
@@ -173,11 +173,11 @@ if( isset( $_POST['submit'] ) ) {
                                 $append = NULL;
                                 switch( $part[0] ) {
                                     case "minPasswordLength":
-                                        $label = "Minimum password lenght";
+                                        $label = "Minimum password length";
                                         break;
                                     case "defaultQuota":
-                                        $label = "Default Quota";
-                                        $part[1] = $part[1] / 1024000000;
+                                        $label = "Default Quota (Bytes)";
+                                        $part[1] = $part[1];
                                         break;
                                     default:
                                         $label = $part[0];
