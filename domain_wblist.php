@@ -30,6 +30,16 @@ $filter = "(cn=catch-all)";
 $search = ldap_search( $ds , "ou=Users," . $dn , $filter );
 $entry = ldap_get_entries( $ds , $search );
 $catchCount = (int)$entry['count'];
+
+// Delete entry
+if( isset( $_GET['rid'] ) && isset( $_GET['sid'] ) ) {
+    $rid = filter_var( $_GET['rid'] , FILTER_SANITIZE_NUMBER_INT );
+    $sid = filter_var( $_GET['sid'] , FILTER_SANITIZE_NUMBER_INT );
+    $delete = $amavisd->prepare( "DELETE FROM `wblist` WHERE `rid` =:rid AND `sid` =:sid1 LIMIT 1" );
+    $delete->execute( [ ':rid' => $rid , ':sid1' => $sid ] );
+}
+
+// New entry
 if( isset( $_POST['submit_wblist'] ) ) {
     $address = filter_var( $_POST['address'] , FILTER_SANITIZE_STRING );
     $wb = filter_var( $_POST['wb'] , FILTER_SANITIZE_STRING );
@@ -172,21 +182,21 @@ if( isset( $_POST['submit_wblist'] ) ) {
                                             break;
                                     }
                                     echo "</td>";
-                                    echo "<td><a href='wblist_delete.php?rid=" . $rid . "&sid=" . $row['sid'] . "' class='btn btn-danger'>Delete</a></td>";
+                                    echo "<td><a href='domain_wblist.php?domain=$domainToFind&rid=" . $rid . "&sid=" . $row['sid'] . "' class='btn btn-danger'><i class='fas fa-trash'></i></a></td>";
                                     echo "</tr>";
                                 }
                                 ?>
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td><input name="address" style="width: 100%"></td>
+                                    <td><input name="address" class="form-control"></td>
                                     <td>
-                                        <select style="width: 100%;" name="wb">
+                                        <select class="form-control" name="wb">
                                             <option value="B">Block</option>
                                             <option value="W">Allow</option>
                                         </select>
                                     </td>
-                                    <td width="1"><button style="width: 100%;" type="submit" name="submit_wblist" class="btn btn-success">Save<button></td>
+                                    <td width="1"><button style="width: 100%;" type="submit" name="submit_wblist" class="btn btn-success"><i class="fas fa-plus"></i><button></td>
                                 </tr>
                             </tfoot>
                         </table>
