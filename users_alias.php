@@ -78,6 +78,9 @@ if( isset( $_GET['deleteAlias'] ) ) {
                                 <a class="nav-link" aria-current="page" href="users_edit.php?user=<?php echo $user; ?>">General</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="users_groups.php?user=<?php echo $user; ?>">Groups</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link active" href="users_alias.php?user=<?php echo $user; ?>">Addresses</a>
                             </li>  
                             <li class="nav-item">

@@ -54,4 +54,30 @@ function globalOnly() {
         die( "Access Denied!" );
     }
 }
+function display_name( $email , $dn = false ) {
+    require "inc/bind.php";
+    if( ! $dn ) {
+        $filter = "(mail=$email)";
+        $search = ldap_search( $ds , LDAP_BASEDN , $filter );
+        $results = ldap_get_entries( $ds , $search );
+        $results = $results[0]['displayname'][0];
+        if( empty( $results ) ) {
+            return $email;
+        } else {
+            return $results;
+        }
+    } else {
+        $search = ldap_search( $ds , $email , "(mail=*)" );
+        $results = ldap_get_entries( $ds , $search );
+        return $results[0]['displayname'][0];
+    }
+    
+}
+function email( $dn ) {
+    require 'inc/bind.php';
+    $filter = "(mail=*)";
+    $search = ldap_search( $ds , $dn , $filter );
+    $results = ldap_get_entries( $ds , $search );
+    return $results[0]['mail'][0];
+}
 ?>
