@@ -53,7 +53,7 @@ if( isset( $_POST['submit'] ) ) {
 
     // Quota
     if( $_SESSION['admin_level'] == "global" ) { 
-        $info['mailquota'] = filter_var( $_POST['mailQuota'] , FILTER_SANITIZE_STRING ) * 1024000000;
+        $info['mailquota'] = filter_var( $_POST['mailQuota'] , FILTER_VALIDATE_INT );
     }
 
     // Modify all user details
@@ -160,8 +160,8 @@ if( empty( $userDetail['displayname'][0] ) ) {
                                 $disabled = "disabled";
                             }
                             ?>
-                            <input type="text" name="mailQuota" class="form-control" value="<?php echo $userDetail['mailquota'][0] /1024000000; ?>" <?php echo $disabled; ?>>
-                            <div class="input-group-append"><span class="input-group-text">GB</span></div>
+                            <input type="text" name="mailQuota" class="form-control" value="<?php echo $userDetail['mailquota'][0]; ?>" <?php echo $disabled; ?>>
+                            <div class="input-group-append"><span class="input-group-text">Bytes</span></div>
                         </div>
                         <p>&nbsp;</p>
                         <?php if( $_SESSION['admin_level'] == "global" ) { ?>
