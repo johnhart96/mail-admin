@@ -23,3 +23,8 @@ pre {
 .sidebar_menu li {
     margin-bottom: 5px;
 }
+.footer {
+    bottom: 0px;
+    left: 0px;
+    position: absolute;
+}

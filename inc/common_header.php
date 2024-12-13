@@ -21,5 +21,5 @@ $amavisd = new PDO( "mysql:host=" . AMA_HOST . ";dbname=" . AMA_DB , AMA_USER , 
 session_start();
 
 // Version control
-//define( MAVERSION , "1.1" );
+define( "MAILADMIN_VERSION" , "2.0" );
 ?>

@@ -111,7 +111,9 @@ plugins_process( "index" , "submit" );
                     </div>
                 </div>
             </div>
-
+        </div>
+        <div class="footer">
+            <a href="about.php">Mail-Admin version <?php echo MAILADMIN_VERSION; ?></a>
         </div>
     </body>
 </html>
