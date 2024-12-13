@@ -28,7 +28,7 @@ if( isset( $_GET['confirm'] ) ) {
             <div class="row">
                 <div class="col">
                     <form method="post">
-                        <h1>Delete Group</h1>
+                        <h1>Delete Distribution Group</h1>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="groups.php">Groups</a></li>

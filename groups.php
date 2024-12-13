@@ -16,7 +16,7 @@ require 'inc/bind.php';
             <div class="row">
                 <div class="col">
                     <form method="post">
-                        <h1>Groups</h1>
+                        <h1>Distribution Groups</h1>
                         <?php
                         if( isset( $_GET['saved'] ) ) {
                             echo "<div class='alert alert-success'>Group saved!</div>";
@@ -62,6 +62,7 @@ require 'inc/bind.php';
                                     $filter = "(memberofgroup=" . $group['mail'][0] . ")";
                                     $findMembers = ldap_search( $ds , $relm , $filter );
                                     $members = ldap_get_entries( $ds , $findMembers );
+                                    $members['count'] = $members['count'] -1;
                                     echo $members['count'];
                                     echo "</td>";
 
@@ -92,7 +93,12 @@ require 'inc/bind.php';
 
                                     // Buttons
                                     echo "<td width='1'><a href='groups_edit.php?group=" . $group['mail'][0] . "' class='btn btn-primary'><i class='fas fa-edit'></i></a></td>";
-                                    echo "<td width='1'><a href='groups_delete.php?group=" . $group['mail'][0] . "' class='btn btn-danger'><i class='fas fa-trash'></i></a></td>";
+                                    if( $members['count'] !== 0 ) {
+                                        echo "<td width='1'><a href='#' class='btn btn-secondary'><i class='fas fa-trash'></i></td>";
+                                    } else {
+                                        echo "<td width='1'><a href='groups_delete.php?group=" . $group['mail'][0] . "' class='btn btn-danger'><i class='fas fa-trash'></i></a></td>";
+                                    }
+                                    
                                     echo "</tr>";
                                 }
                                 ?>
