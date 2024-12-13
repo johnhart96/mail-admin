@@ -62,8 +62,8 @@ unset( $entries['count'] );
                                     echo $address . ", ";
                                 }
                                 echo "</td>";
-                                echo "<td><a href='alias_edit.php?alias=" . $alias['mail'][0] . "' class='btn btn-primary'><i class='fas fa-edit'></i></td>";
-                                echo "<td><a href='alias_delete.php?alias=" . $alias['mail'][0] . "' class='btn btn-danger'><i class='fas fa-trash'></i></td>";
+                                echo "<td width='1'><a href='alias_edit.php?alias=" . $alias['mail'][0] . "' class='btn btn-primary'><i class='fas fa-edit'></i></td>";
+                                echo "<td width='1'><a href='alias_delete.php?alias=" . $alias['mail'][0] . "' class='btn btn-danger'><i class='fas fa-trash'></i></td>";
                                 echo "</tr>";
                             }
                             ?>

@@ -17,15 +17,17 @@
                         echo "<li class='nav-item'><a href='$link' class='nav-link'>$page</a></li>";
                     }
                 }
-                if( $_SESSION['admin_level'] !== "self" ) {
-                    nav_item( "Domains" , "domains.php" );
-                    nav_item( "Mailboxes" , "users.php" );
-                    nav_item( "Groups" , "groups.php" );
-                    nav_item( "Aliases" , "alias.php" );
+            if( $_SESSION['admin_level'] !== "self" ) {
+                nav_item( "Domains" , "domains.php" );
+                nav_item( "Mailboxes" , "users.php" );
+                nav_item( "Groups" , "groups.php" );
+                nav_item( "Aliases" , "alias.php" );
+                if( $_SESSION['admin_level'] == "global" ) {
                     nav_item( "Server" , "server.php" );
                 }
-                nav_item( "Account" , "settings.php" );
-                ?>
+            }
+            nav_item( "Account" , "settings.php" );
+            ?>
             </ul>
         </div>
     </div>

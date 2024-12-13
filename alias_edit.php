@@ -16,22 +16,29 @@ require 'inc/bind.php';
         $getCurrent = ldap_search( $ds , $dn , $filter );
         $current = ldap_get_entries( $ds , $getCurrent );
         unset( $current['count'] );
+
+        // Submit
         if( isset( $_POST['submit'] ) ) {
             if( ! empty( $_POST['description'] ) ) {
                 $description = filter_var( $_POST['description'] , FILTER_SANITIZE_STRING );
-            }
-            ldap_mod_del( $ds , $dn , array( "mailforwardingaddress" => array() ) );
-            $addressess = explode( "," , filter_var( $_POST['destinations'] , FILTER_SANITIZE_STRING ) );
-            foreach( $addressess as $address ) {
-                if( ! empty( $address ) ) {
-                    ldap_mod_add( $ds , $dn , array( "mailforwardingaddress" => $address ) );
-                }
+            } else {
+                $description = NULL;
             }
             ldap_modify( $ds , $dn , array( "description" => $description ) );
+            if( ! empty( $_POST['addAddress'] ) ) {
+                $add = filter_var( $_POST['addAddress'] , FILTER_VALIDATE_EMAIL );
+                ldap_mod_add( $ds , $dn , array( "mailforwardingaddress" => $add ) );
+            }
             $saved = TRUE;
             $getCurrent = ldap_search( $ds , $dn , $filter );
             $current = ldap_get_entries( $ds , $getCurrent );
             plugins_process( "alias_edit" , "submit" );
+        }
+        // Remove
+        if( isset( $_GET['delete'] ) ) {
+            $delete = filter_var( $_GET['delete'] , FILTER_VALIDATE_EMAIL );
+            ldap_mod_del( $ds , $dn , array( "mailforwardingaddress" => $delete ) );
+            header( "Location: alias_edit.php?alias=" . $alias );
         }
         ?>
     </head>
@@ -66,21 +73,31 @@ require 'inc/bind.php';
                             }
                             ?>
                             <input type="text" name="description" value="<?php echo $description; ?>" class="form-control">
+                            <span class="input-group-btn"><button type="submit" name="submit" class="btn btn-success"><i class="fas fa-save"></i></button></span>
                         </div>
-                        <div class="mb-3">
+                        <p></p>
+                        <table class="table table-border table-stripped">
+                            <tr>
+                                <th colspan="2">Forwarding Address:</th>
+                            </tr>
                             <?php
-                            $destinations = "";
                             unset( $current[0]['mailforwardingaddress']['count'] );
-                            foreach( $current[0]['mailforwardingaddress'] as $address ) {
-                                $destinations .= $address . ",";
+                            if( isset( $current[0]['mailforwardingaddress'] ) ) {
+                                foreach( $current[0]['mailforwardingaddress'] as $address ) {
+                                    echo "<tr>";
+                                    echo '<td>' . $address . "</td>";
+                                    echo "<td width='1'><a href='alias_edit.php?alias=$alias&delete=" . $address . "' class='btn btn-danger'><i class='fas fa-trash'></i></a></td>";
+                                    echo "</tr>";
+                                } 
                             }
-                            $destinations = substr( $destinations , 0  , -1 );
                             ?>
-                            <label for="destinations" class="form-label">Destinations (comma seperated):</label>
-                            <textarea class="form-control" id="destinations" rows="3" name="destinations"><?php echo $destinations; ?></textarea>
-                        </div>
+                            <tr>
+                                <td><input type="text" name="addAddress" class="form-control"></td>
+                                <td width="1"><button type="submit" name="submit" class="btn btn-success"><i class="fas fa-plus"></i></td>
+                            </tr>
+                        </table>
                         <?php plugins_process( "alias_edit" , "form" ); ?>
-                        <p><button type="submit" name="submit" class="btn btn-success"><i class="fas fa-save"></i>&nbsp;Save</button></p>
+                        
                     </form>
                 </div>
             </div>
