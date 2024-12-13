@@ -137,6 +137,9 @@ if( isset( $_POST['submit'] ) ) {
                             </li>
                         </ul>
                         <p>&nbsp;</p>
+                        <div class="alert alert-info">
+                            BCC can be used to monitor incoming and outgoing emails from this mailbox.
+                        </div>
 
                         <div class="form-check">
                             <?php
