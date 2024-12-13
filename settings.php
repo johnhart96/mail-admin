@@ -118,7 +118,7 @@ securePage();
             <div class="row">
                 <div class="col">
                     <form method="post">
-                        <h1>Settings</h1>
+                        <h1>Account Settings</h1>
                         <?php
                         if( isset( $passwordMismatch ) ) {
                             echo "<div class='alert alert-success'>Your new password did not match!</div>";
@@ -137,19 +137,19 @@ securePage();
                             }
                         }
                         ?>
-
+                        <p>&nbsp;</p>
 
                         <h2>Change Password</h2>
-                        <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text">Current Password:</span></div>
+                        <div class="form-group">
+                            <label for="password_current">Current Password:</label>
                             <input type="password" name="password_current" class="form-control">
                         </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text">New Password:</span></div>
+                        <div class="form-group">
+                            <label for="password_new">New Password:</label>
                             <input type="password" name="password_new" class="form-control">
                         </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text">Confirm Password:</span></div>
+                        <div class="form-group">
+                            <label for="password_confirm">Confirm Password:</label>
                             <input type="password" name="password_confirm" class="form-control">
                         </div>
                         <p>&nbsp;</p>
@@ -190,7 +190,7 @@ securePage();
 
 
 
-                        <button type="submit" name="submit" class="btn btn-success">Change</button>
+                        <button type="submit" name="submit" class="btn btn-success"><i class="fas fa-save"></i>&nbsp;Save</button>
 
 
                     </form>
@@ -240,7 +240,7 @@ securePage();
                                         break;
                                 }
                                 echo "</td>";
-                                echo "<td width='1'><a href='wblist_delete.php?rid=" . $rid . "&sid=" . $sid . "' class='btn btn-danger'>Delete</a></td>";
+                                echo "<td width='1'><a href='wblist_delete.php?rid=" . $rid . "&sid=" . $sid . "' class='btn btn-danger'><i clas='fas fa-trash'></i></a></td>";
                                 echo "</tr>";
                             }
                             ?>
@@ -248,14 +248,14 @@ securePage();
                         <tfoot>
                             <tr>
                                 <form method="post">
-                                    <td><input style="width: 100%" name="address"></td>
+                                    <td><input class="form-control"vname="address"></td>
                                     <td>
-                                        <select style="width: 100%" name="wb">
+                                        <select class="form-control" name="wb">
                                             <option value="B">Block</option>
                                             <option value="W">Allow</option>
                                         </select>
                                     </td>
-                                    <td width="1"><button style="width: 100%" class="btn btn-success" type="submit" name="submit_wblist">Save</button></td>
+                                    <td width="1"><button class="btn btn-success" type="submit" name="submit_wblist"><i class="fas fa-plus"></i></button></td>
                                 </form>
                             </tr>
                         </tfoot>
