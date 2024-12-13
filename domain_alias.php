@@ -25,19 +25,18 @@ if( $_SESSION['admin_level'] !== "global" && $_SESSION['admin_level'] !== "self"
 $domainToFind = $domain[0]['domainname'][0];
 unset( $domain['count'] );
 
-
+// Delete an alias
+if( isset( $_GET['delete'] ) ) {
+    $delete = filter_var( $_GET['delete'] , FILTER_UNSAFE_RAW );
+    $filter = array( "domainaliasname" => $delete );
+    ldap_mod_del( $ds , $dn , $filter );
+    header( "Location: domain_alias.php?domain=$domainToFind" );
+}
+// Add new alias
 if( isset( $_POST['submit'] ) ) {
-    $aliases = filter_var( $_POST['aliases'] , FILTER_SANITIZE_STRING );
-    if( $aliases !== "," ) {
-        $alias = explode( "," , $aliases );
-        $count = 0;
-        foreach( $alias as $add ) {
-            $info['domainaliasname'][$count] = $add;
-            $count ++;
-        }
-        ldap_modify( $ds , $dn , $info );
-    }
-
+    $add = filter_var( $_POST['domainToAdd'] , FILTER_SANITIZE_STRING );
+    $info['domainaliasname'] = $add;
+    ldap_mod_add( $ds , $dn , $info );
     $found = FALSE;
     foreach( $domain[0]['enabledservice'] as $service ) {       
         if( $service == "domainalias" ) {
@@ -121,6 +120,7 @@ if( isset( $_POST['submit'] ) ) {
                             </li> 
                         </ul>
                         <p>&nbsp;</p>
+                        <div class="alert alert-info">Domains listed below will redirect emails to the primary domain.</div>
 
                         <div class="form-check">
                             <?php
@@ -136,25 +136,26 @@ if( isset( $_POST['submit'] ) ) {
                                 Enable alias domains
                             </label>
                         </div>
-                        <?php
-                        $aliases = "";
-                        unset( $domain['domainaliasname']['count'] );
-                        if( isset( $domain['domainaliasname'] ) ) {
-                            foreach( $domain['domainaliasname'] as $alias ) {
-                                $aliases .= $alias . ",";
+                        <table class="table table-bordered table-stripped">
+                            <?php
+                            if( isset( $domain['domainaliasname'] ) ) {
+                                unset( $domain['domainaliasname']['count'] );
+                                foreach( $domain['domainaliasname'] as $alias ) {
+                                    echo "<tr>";
+                                    echo "<td>" . $alias . "</td>";
+                                    echo "<td width='1'><a href='domain_alias.php?domain=$domainToFind&delete=$alias' class='btn btn-danger'><i class='fas fa-trash'></i></td>";
+                                    echo "</tr>";
+                                }
                             }
-                        }
-                        ?>
+                            ?>
+                            <tr>
+                                <td><input type="text" name="domainToAdd" class="form-control"></td>
+                                <td width="1"><button type="submit" name="submit" class="btn btn-success"><i class="fas fa-plus"></i></button></td>
+                            </tr>
+                        </table>
                         <p>&nbsp;</p>
-                        <div class="mb-3">
-                            <label for="aliases" class="form-label">Alias domains (comma seperated):</label>
-                            <textarea class="form-control" id="aliases" rows="3" name="aliases"><?php echo $aliases; ?></textarea>
-                        </div>
                         
                         <?php plugins_process( "domain_alias" , "form" ); ?>
-
-                        <p>&nbsp;</p>
-                        <p><button type="submit" name="submit" class="btn btn-success"><i class='fas fa-save'></i>&nbsp;Save</button></p>
                     </form>
                 </div>
             </div>
