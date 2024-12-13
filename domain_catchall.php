@@ -122,6 +122,9 @@ if( isset( $_POST['submit'] ) ) {
                             </li>  
                         </ul>
                         <p>&nbsp;</p>
+                        <div class="alert alert-info">
+                            Any email address for this domain that is not known, will be redirected to the catch all address.
+                        </div>
 
                         <div class="form-check">
                             <?php
