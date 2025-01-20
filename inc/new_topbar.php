@@ -18,7 +18,11 @@
                     }
                 }
                 if( $_SESSION['admin_level'] !== "self" ) {
-                    nav_item( "<i class='fas fa-building'></i>&nbsp;Domains" , "domains.php" );
+                    if( $_SESSION['admin_level'] == "global" ) {
+                        nav_item( "<i class='fas fa-building'></i>&nbsp;Domains" , "domains.php" );
+                    } else {
+                        nav_item( "<i class='fas fa-building'></i>&nbsp;Org Settings" , "domain_edit.php" );
+                    }
                     nav_item( "<i class='fas fa-inbox'></i>&nbsp;Mailboxes" , "users.php" );
                     nav_item( "<i class='fa fa-group'></i>&nbsp;Groups" , "groups.php" );
                     nav_item( "<i class='fas fa-mask'></i>&nbsp;Aliases" , "alias.php" );
