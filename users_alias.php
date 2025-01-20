@@ -134,11 +134,13 @@ if( isset( $_GET['deleteAlias'] ) ) {
                             $parts = explode( "," , $al );
                             $full_list = "";
                             // Domain aliases
-                            foreach( $alias_domains as $al_domain ) {
-                                echo "<tr>";
-                                echo "<td>" . $part[0] . "@" . $al_domain . " <em>(Domain Alias)</em></td>";
-                                echo "<td></td>";
-                                echo "</tr>";
+                            if( empty( $alias_domains ) ) { 
+                                foreach( $alias_domains as $al_domain ) {
+                                    echo "<tr>";
+                                    echo "<td>" . $part[0] . "@" . $al_domain . " <em>(Domain Alias)</em></td>";
+                                    echo "<td></td>";
+                                    echo "</tr>";
+                                }
                             }
                             // Mailbox aliases
                             foreach( $parts as $part ) {
