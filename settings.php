@@ -119,6 +119,7 @@ securePage();
                 <div class="col">
                     <form method="post">
                         <h1>Account Settings</h1>
+                        <p><a href="logout.php" class="btn btn-primary">Logout</a></p>
                         <?php
                         if( isset( $passwordMismatch ) ) {
                             echo "<div class='alert alert-success'>Your new password did not match!</div>";
