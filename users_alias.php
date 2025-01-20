@@ -106,7 +106,11 @@ if( isset( $_GET['deleteAlias'] ) ) {
                         $domain_filter = "(domainName=$domain)";
                         $domain_search = ldap_search( $ds , LDAP_DOMAINDN , $domain_filter );
                         $domain_result = ldap_get_entries( $ds , $domain_search );
-                        $alias_domains = $domain_result[0]['domainaliasname'];
+                        if( isset( $domain_result[0]['domainaliasname'] ) ) {
+                            $alias_domains = $domain_result[0]['domainaliasname'];
+                        } else {
+                            $alias_domains = NULL;
+                        }
                         unset( $alias_domains['count'] );
                         unset( $entry['count'] );
                         if( isset( $entry[0]['shadowaddress'] ) ) {
