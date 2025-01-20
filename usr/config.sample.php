@@ -8,6 +8,7 @@
 define( "BRANDING" , "Mail-Admin" ); // Set the brand name
 define( "MAILQUOTA" , 6442450944 );
 define( "DEBUG" , TRUE );
+define( "SERVERHOSTNAME" , "mail.example.com" ); 
 
 // Apps
 define( "APP_MAIL" , "https://gmail.com" );
