@@ -1,4 +1,4 @@
 theme: jekyll-theme-cayman
 title: Mail-Admin
-description: Mail-Admin, a PHP web panel for managing iRedMail or other LDAP based mail servers.
+description: Mail-Admin is a free and open-sourced web admin panel for [https://iredmail.org/](iRedMail)
 show_downloads: true
