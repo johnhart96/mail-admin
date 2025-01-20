@@ -127,11 +127,13 @@ if( isset( $_POST['submit'] ) ) {
                                 <a class="nav-link" href="domain_greylisting.php?domain=<?php echo $domainToFind; ?>">Greylisting</a>
                             </li>   
                         </ul>
-                        <div class="btn-group">
-                            <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Users" href="users.php?domain=<?php echo $domainToFind; ?>" class="btn btn-primary"><i class="fa fa-id-badge"></i>&nbsp;Mailboxes</a>
-                            <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Aliases" href="alias.php?domain=<?php echo $domainToFind; ?>" class="btn btn-primary"><i class="fa fa-mask"></i>&nbsp;Aliases</a>
-                            <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Groups" href="groups.php?domain=<?php echo $domainToFind; ?>" class="btn btn-primary"><i class="fa fa-group"></i>&nbsp;Groups</a>
-                        </div>
+                        <?php if( $_SESSION['admin_level'] == "global" ) { ?>
+                            <div class="btn-group">
+                                <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Users" href="users.php?domain=<?php echo $domainToFind; ?>" class="btn btn-primary"><i class="fa fa-id-badge"></i>&nbsp;Mailboxes</a>
+                                <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Aliases" href="alias.php?domain=<?php echo $domainToFind; ?>" class="btn btn-primary"><i class="fa fa-mask"></i>&nbsp;Aliases</a>
+                                <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Groups" href="groups.php?domain=<?php echo $domainToFind; ?>" class="btn btn-primary"><i class="fa fa-group"></i>&nbsp;Groups</a>
+                            </div>
+                        <?php } ?>
                         <p>&nbsp;</p>
 
                         <div class="form-check">
