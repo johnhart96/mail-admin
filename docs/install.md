@@ -23,7 +23,7 @@ For more information on how to install iRedMail, checkout the following guides f
     cd /var/www
     wget [https://github.com/johnhart96/mail-admin/archive/refs/tags/1.0.zip](https://github.com/johnhart96/mail-admin.git)
     
-## Step 3 - Setup the nginx proxy
+## Step 3 - Setup the nginx
 Make */etc/nginx/sites-enabled/default* look like this:
 
     server {
