@@ -3,7 +3,7 @@ require 'inc/functions.php';
 require 'inc/common_header.php';
 securePage();
 require 'inc/bind.php';
-$user = filter_var( $_GET['user'] , FILTER_SANITIZE_STRING );
+$user = filter_var( $_GET['user'] , FILTER_UNSAFE_RAW );
 if( isset( $_GET['confirm'] ) ) {
     $part = explode( "@" , $user );
     $domain = $part[1];

@@ -3,7 +3,7 @@ require 'inc/functions.php';
 require 'inc/common_header.php';
 securePage();
 require 'inc/bind.php';
-$group = filter_var( $_GET['group'] , FILTER_SANITIZE_STRING );
+$group = filter_var( $_GET['group'] , FILTER_UNSAFE_RAW );
 $part = explode( "@" , $group );
 $domain = $part[1];
 $groupDN = "mail=" . $group . ",ou=Groups,domainName=" . $domain . "," . LDAP_DOMAINDN;

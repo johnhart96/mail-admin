@@ -3,20 +3,20 @@ require 'inc/functions.php';
 require 'inc/common_header.php';
 securePage();
 require 'inc/bind.php';
-$user = filter_var( $_GET['user'] , FILTER_SANITIZE_STRING );
+$user = filter_var( $_GET['user'] , FILTER_UNSAFE_RAW );
 $part = explode( "@" , $user );
 $domain = $part[1];
 if( isset( $_POST['submit'] ) ) {
     $info = array();
-    $info['uid'][0] = filter_var( $_POST['username'] , FILTER_SANITIZE_STRING );
-    $info['givenname'][0] = filter_var( $_POST['firstname'] , FILTER_SANITIZE_STRING );
-    $info['sn'][0] = filter_var( $_POST['lastname'] , FILTER_SANITIZE_STRING );
-    $info['displayname'][0] = filter_var( $_POST['displayname'] , FILTER_SANITIZE_STRING );
+    $info['uid'][0] = filter_var( $_POST['username'] , FILTER_UNSAFE_RAW );
+    $info['givenname'][0] = filter_var( $_POST['firstname'] , FILTER_UNSAFE_RAW );
+    $info['sn'][0] = filter_var( $_POST['lastname'] , FILTER_UNSAFE_RAW );
+    $info['displayname'][0] = filter_var( $_POST['displayname'] , FILTER_UNSAFE_RAW );
     if( ! empty( $_POST['description'] ) ) {
-        $info['description'][0] = filter_var( $_POST['description'] , FILTER_SANITIZE_STRING );
+        $info['description'][0] = filter_var( $_POST['description'] , FILTER_UNSAFE_RAW );
     }
     if( ! empty( $_POST['password'] ) ) {
-        $password = filter_var( $_POST['password'] , FILTER_SANITIZE_STRING );
+        $password = filter_var( $_POST['password'] , FILTER_UNSAFE_RAW );
         $info['userPassword'] = hash_password( $password );
     }
     

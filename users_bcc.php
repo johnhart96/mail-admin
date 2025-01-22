@@ -3,7 +3,7 @@ require 'inc/functions.php';
 require 'inc/common_header.php';
 securePage();
 require 'inc/bind.php';
-$user = filter_var( $_GET['user'] , FILTER_SANITIZE_STRING );
+$user = filter_var( $_GET['user'] , FILTER_UNSAFE_RAW );
 $part = explode( "@" , $user );
 $domain = $part[1];
 // Get entry
@@ -14,8 +14,8 @@ unset( $entry['count'] );
 $entry = $entry[0];
 if( isset( $_POST['submit'] ) ) {
     $dn = $entry['dn'];
-    $userSenderBccAddress = filter_var( $_POST['userSenderBccAddress'] , FILTER_SANITIZE_STRING );
-    $userRecipientBccAddress = filter_var( $_POST['userRecipientBccAddress'] , FILTER_SANITIZE_STRING );
+    $userSenderBccAddress = filter_var( $_POST['userSenderBccAddress'] , FILTER_UNSAFE_RAW );
+    $userRecipientBccAddress = filter_var( $_POST['userRecipientBccAddress'] , FILTER_UNSAFE_RAW );
     $info['usersenderbccaddress'][0] = $userSenderBccAddress;
     $info['userrecipientbccaddress'][0] = $userRecipientBccAddress;
     ldap_modify( $ds , $dn , $info );

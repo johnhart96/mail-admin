@@ -4,14 +4,14 @@ require 'inc/common_header.php';
 securePage();
 require 'inc/bind.php';
 if( isset( $_POST['submit'] ) ) {
-    $address = filter_var( $_POST['address'] , FILTER_SANITIZE_STRING );
-    $domain = filter_var( $_POST['domain'] , FILTER_SANITIZE_STRING );
-    $firstname = filter_var( $_POST['firstname'] , FILTER_SANITIZE_STRING );
-    $lastname = filter_var( $_POST['lastname'] , FILTER_SANITIZE_STRING );
-    $password = filter_var( $_POST['password'] , FILTER_SANITIZE_STRING );
-    $username = filter_var( $_POST['username'] , FILTER_SANITIZE_STRING );
-    $displayname = filter_var( $_POST['displayname'] , FILTER_SANITIZE_STRING );
-    $description = filter_var( $_POST['description'] , FILTER_SANITIZE_STRING );
+    $address = filter_var( $_POST['address'] , FILTER_UNSAFE_RAW );
+    $domain = filter_var( $_POST['domain'] , FILTER_UNSAFE_RAW );
+    $firstname = filter_var( $_POST['firstname'] , FILTER_UNSAFE_RAW );
+    $lastname = filter_var( $_POST['lastname'] , FILTER_UNSAFE_RAW );
+    $password = filter_var( $_POST['password'] , FILTER_UNSAFE_RAW );
+    $username = filter_var( $_POST['username'] , FILTER_UNSAFE_RAW );
+    $displayname = filter_var( $_POST['displayname'] , FILTER_UNSAFE_RAW );
+    $description = filter_var( $_POST['description'] , FILTER_UNSAFE_RAW );
 
     // Check that user dont already exist
     $filter = "(mail=" . $address . "@" . $domain . ")";
@@ -131,8 +131,8 @@ if( isset( $_POST['submit'] ) ) {
                                 $domain = str_replace( LDAP_DOMAINDN , "" , $relm );
                                 $domain = str_replace( "domainName=" , "" , $domain );
                                 $domain = str_replace( "," , "" , $domain );
-                                echo "<input type='hidden' name='domain' value='" . filter_var( $domain , FILTER_SANITIZE_STRING ) . "'>";
-                                echo "<div class='input-group-append'><span class='input-group-text'>@" . filter_var( $domain , FILTER_SANITIZE_STRING ) . "</span></div>";
+                                echo "<input type='hidden' name='domain' value='" . filter_var( $domain , FILTER_UNSAFE_RAW ) . "'>";
+                                echo "<div class='input-group-append'><span class='input-group-text'>@" . filter_var( $domain , FILTER_UNSAFE_RAW ) . "</span></div>";
                             } else {
                                 echo "<span class='input-group-text'>@</span>";
                                 echo "<select name='domain' class='form-control'>";

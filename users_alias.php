@@ -3,12 +3,12 @@ require 'inc/functions.php';
 require 'inc/common_header.php';
 securePage();
 require 'inc/bind.php';
-$user = filter_var( $_GET['user'] , FILTER_SANITIZE_STRING );
+$user = filter_var( $_GET['user'] , FILTER_UNSAFE_RAW );
 $part = explode( "@" , $user );
 $domain = $part[1];
 if( isset( $_POST['addAlias'] ) ) {
     $dn = "mail=" . $user . ",ou=Users,domainName=" . $domain . "," . LDAP_DOMAINDN;
-    $existing_alias = filter_var( $_POST['existing_alias'] , FILTER_SANITIZE_STRING );
+    $existing_alias = filter_var( $_POST['existing_alias'] , FILTER_UNSAFE_RAW );
     $new_alias = filter_var( $_POST['new_alias'] , FILTER_UNSAFE_RAW );
     $new = explode( "@" , $new_alias );
     if( $domain == $new[1] ) {

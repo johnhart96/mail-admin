@@ -3,13 +3,13 @@ require 'inc/functions.php';
 require 'inc/common_header.php';
 securePage();
 require 'inc/bind.php';
-$group = filter_var( $_GET['group'] , FILTER_SANITIZE_STRING );
+$group = filter_var( $_GET['group'] , FILTER_UNSAFE_RAW );
 if( isset( $_POST['submit'] ) ) {
     
     // Owner
     $part = explode( "@" , $group );
     $domain = $part[1];
-    $owner = filter_var( $_POST['owner'] , FILTER_SANITIZE_STRING ) . "@" . $domain;
+    $owner = filter_var( $_POST['owner'] , FILTER_UNSAFE_RAW ) . "@" . $domain;
     $filter = "mail=" . $owner;
     $searchForOwner = ldap_search( $ds , LDAP_BASEDN , $filter );
     $entries = ldap_get_entries( $ds  ,$searchForOwner );
@@ -21,11 +21,11 @@ if( isset( $_POST['submit'] ) ) {
     }
     
     // Access policy
-    $accesspolicy = filter_var( $_POST['accesspolicy'] , FILTER_SANITIZE_STRING );
+    $accesspolicy = filter_var( $_POST['accesspolicy'] , FILTER_UNSAFE_RAW );
     ldap_modify( $ds , $dnToUse , array( "accesspolicy" => $accesspolicy ) );
 
     // Description
-    $description = filter_var( $_POST['description'] , FILTER_SANITIZE_STRING );
+    $description = filter_var( $_POST['description'] , FILTER_UNSAFE_RAW );
     if( ! empty( $description ) ) {
         ldap_modify( $ds , $dnToUse , array( "description" => $description ) );
     }

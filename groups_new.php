@@ -4,9 +4,9 @@ require 'inc/common_header.php';
 securePage();
 require 'inc/bind.php';
 if( isset( $_POST['submit'] ) ) {
-    $domain = filter_var( $_POST['domain'] , FILTER_SANITIZE_STRING );
-    $address = filter_var( $_POST['address'] , FILTER_SANITIZE_STRING ) . "@" . $domain;
-    $cn = filter_var( $_POST['address'] , FILTER_SANITIZE_STRING );
+    $domain = filter_var( $_POST['domain'] , FILTER_UNSAFE_RAW );
+    $address = filter_var( $_POST['address'] , FILTER_UNSAFE_RAW ) . "@" . $domain;
+    $cn = filter_var( $_POST['address'] , FILTER_UNSAFE_RAW );
     $dnToAdd = "mail=" . $address . ",ou=Groups,domainName=" . $domain . "," . LDAP_DOMAINDN;
     $filter = "(mail=" . $address . ")";
     $searchForExisting = ldap_search( $ds , LDAP_BASEDN , $filter );

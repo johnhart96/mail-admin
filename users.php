@@ -22,7 +22,7 @@ securePage();
                         <h1>Mailboxes</h1>
                         <?php
                         if( isset( $_GET['domain'] ) ) {
-                            $domain = filter_var( $_GET['domain'] , FILTER_SANITIZE_STRING );
+                            $domain = filter_var( $_GET['domain'] , FILTER_UNSAFE_RAW );
                             echo "<nav aria-label='breadcrumb'>";
                             echo "<ol class='breadcrumb'>";
                             echo "<li class='breadcrumb-item'><a href='domains.php'>Domains</a></li>";
@@ -38,7 +38,7 @@ securePage();
                             echo "<div class='alert alert-success'>User saved!</div>";
                         }
                         if( isset( $_GET['domain'] ) ) {
-                            $link = "users_new.php?domain=" . filter_var( $_GET['domain'] , FILTER_SANITIZE_STRING );
+                            $link = "users_new.php?domain=" . filter_var( $_GET['domain'] , FILTER_UNSAFE_RAW );
                         } else {
                             $link = "users_new.php";
                         }
@@ -60,7 +60,7 @@ securePage();
                                 <?php
                                 $filter = "(uid=*)";
                                 if( isset( $_GET['domain'] ) ) {
-                                    $dnToUse = "ou=Users,domainName=" . filter_var( $_GET['domain'] , FILTER_SANITIZE_STRING ) . "," . LDAP_DOMAINDN;
+                                    $dnToUse = "ou=Users,domainName=" . filter_var( $_GET['domain'] , FILTER_UNSAFE_RAW ) . "," . LDAP_DOMAINDN;
                                 } else {
                                     require 'inc/relmset.php';
                                     $dnToUse = $relm;

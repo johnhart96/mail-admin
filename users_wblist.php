@@ -3,7 +3,7 @@ require 'inc/functions.php';
 require 'inc/common_header.php';
 securePage();
 require 'inc/bind.php';
-$user = filter_var( $_GET['user'] , FILTER_SANITIZE_STRING );
+$user = filter_var( $_GET['user'] , FILTER_UNSAFE_RAW );
 $part = explode( "@" , $user );
 $domain = $part[1];
 // Get entry
@@ -23,8 +23,8 @@ if( isset( $_GET['rid'] ) && isset( $_GET['sid'] ) ) {
 
 // Submit a new entry
 if( isset( $_POST['submit_wblist'] ) ) {
-    $address = filter_var( $_POST['address'] , FILTER_SANITIZE_STRING );
-    $wb = filter_var( $_POST['wb'] , FILTER_SANITIZE_STRING );
+    $address = filter_var( $_POST['address'] , FILTER_UNSAFE_RAW );
+    $wb = filter_var( $_POST['wb'] , FILTER_UNSAFE_RAW );
     
     // Search for the address
     $searchAddress = $amavisd->prepare( "SELECT * FROM `mailaddr` WHERE `email` =:email LIMIT 1" );
