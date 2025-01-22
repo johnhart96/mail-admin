@@ -71,6 +71,9 @@ plugins_process( "index" , "submit" );
                         print_r( $_SESSION['ldap'] );
                         echo "</pre>";
                     }
+                    if( file_exists( "installer/" ) ) {
+                        echo "<div class='alert alert-warning'><strong>WARNING:</strong> The /installer directory is still present. If you do not delete this directory. Your server will be very insecure!</div>";
+                    }
                     ?>
                 </div>
             </div>

@@ -1,10 +1,6 @@
 <?php
 if( ! file_exists( "usr/config.php" ) ) {
-    echo "<div class='alert alert-danger'>";
-    echo "<strong>Error:</strong><br />";
-    echo "No config file exists. Make a copy of config.sample.php and add your configuration there.";
-    echo "</div>";
-    die();
+    header( "Location: /installer" );
 } else {
     require_once 'usr/config.php';
 }
