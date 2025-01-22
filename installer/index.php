@@ -22,6 +22,11 @@ if( isset( $_POST['submit'] ) ) {
     $AMA_PASSWORD = filter_var( $_POST['AMA_PASSWORD'] , FILTER_UNSAFE_RAW );
     $AMA_DB = filter_var( $_POST['AMA_DB'] , FILTER_UNSAFE_RAW );
 
+    $DOV_HOST = filter_var( $_POST['DOV_HOST'] , FILTER_UNSAFE_RAW );
+    $DOV_USER = filter_var( $_POST['DOV_USER'] , FILTER_UNSAFE_RAW );
+    $DOV_PASSWORD = filter_var( $_POST['DOV_PASSWORD'] , FILTER_UNSAFE_RAW );
+    $DOV_DB = filter_var( $_POST['DOV_DB'] , FILTER_UNSAFE_RAW );
+
 
     $config_file = "
         <?php
@@ -53,6 +58,12 @@ if( isset( $_POST['submit'] ) ) {
         define( 'AMA_USER' , '$AMA_USER' );
         define( 'AMA_PASSWORD' , '$AMA_PASSWORD' );
         define( 'AMA_DB' , '$AMA_DB' );
+
+        // Dovecot
+        define( 'DOV_HOST' , '$DOV_HOST' );
+        define( 'DOV_USER' , '$DOV_USER' );
+        define( 'DOV_PASSWORD' , '$DOV_PASSWORD' );
+        define( 'DOV_DB' , '$DOV_DB' );
         ?>
     ";
     if( file_exists( "../usr/config.php" ) ) {
@@ -239,6 +250,25 @@ if( isset( $_POST['submit'] ) ) {
                                 <div class="input-group">
                                     <div class="input-group-prepend"><span class="input-group-text">Database:</span></div>
                                     <input class="form-control" name="AMA_DB" value="amavisd">
+                                </div>
+                                <br />
+
+                                <p><strong>Dovecot database:</strong></p>
+                                <div class="input-group">
+                                    <div class="input-group-prepend"><span class="input-group-text">Host:</span></div>
+                                    <input class="form-control" name="DOV_HOST" value="127.0.0.1">
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-prepend"><span class="input-group-text">User:</span></div>
+                                    <input class="form-control" name="DOV_USER" value="">
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-prepend"><span class="input-group-text">Password:</span></div>
+                                    <input class="form-control" name="DOV_PASSWORD" value="">
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-prepend"><span class="input-group-text">Database:</span></div>
+                                    <input class="form-control" name="DOV_DB" value="vmail">
                                 </div>
                                 <br />
                                 

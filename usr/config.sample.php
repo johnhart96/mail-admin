@@ -33,5 +33,11 @@ define( "AMA_HOST" , "127.0.0.1" );
 define( "AMA_USER" , "amavisd" );
 define( "AMA_PASSWORD" , "f424dYYdGFhodrIO0ik9WNGJfNYJTQMq" );
 define( "AMA_DB" , "amavisd" );
+
+// Dovecot
+define( "DOV_HOST" , "127.0.0.1" );
+define( "DOV_USER" , "vmail" );
+define( "DOV_PASSWORD" , "" );
+define( "DOV_DB" , "vmail" );
 ?>
 

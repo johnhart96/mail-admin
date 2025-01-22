@@ -14,6 +14,11 @@ $apd = new PDO( "mysql:host=" . IAPD_HOST . ";dbname=" . IAPD_DB , IAPD_USER , I
 
 // Amavisd
 $amavisd = new PDO( "mysql:host=" . AMA_HOST . ";dbname=" . AMA_DB , AMA_USER , AMA_PASSWORD );
+
+// Dovecot
+$dovecot = new PDO( "mysql:host=" . DOV_HOST . ";dbname=" . DOV_DB , DOV_USER , DOV_PASSWORD );
+
+// Session
 session_start();
 
 // Version control

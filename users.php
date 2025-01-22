@@ -8,6 +8,9 @@ securePage();
         <?php
         require 'inc/header.php';
         require 'inc/bind.php';
+        // Prepare queries
+        $getUsed = $dovecot->prepare( "SELECT `bytes` FROM `used_quota` WHERE `username` =:username LIMIT 1" );
+        $getLastLogin = $dovecot->prepare( "SELECT `imap` FROM `last_login` WHERE `username` =:username LIMIT 1" );
         ?>
     </head>
     <body>
@@ -41,12 +44,14 @@ securePage();
                         }
                         ?>
                         <p><a href="<?php echo $link; ?>" class="btn btn-success"><i class="fas fa-plus"></i>&nbsp;User</a></p>
-                        <table class="table table-bordered table-stripped">
+                        <table class="table table-bordered table-stripe">
                             <thead>
                                 <tr>
                                     <th>Display Name</th>
                                     <th>Address</th>
                                     <th>Account Status</th>
+                                    <th>Quota</th>
+                                    <!--<th>Last login</th>-->
                                     <th>Description</th>
                                     <th colspan="2"></th>
                                 </tr>
@@ -82,6 +87,21 @@ securePage();
                                         echo " (Admin)";
                                     }
                                     echo "</td>";
+                                    // Quota
+                                    echo "<td>";
+                                    $email = $user['mail'][0];
+                                    $getUsed->execute( [ ':username' => $email ] );
+                                    $used = $getUsed->fetch( PDO::FETCH_ASSOC );
+                                    echo formatBytes( $used['bytes'] ) . " / " . formatBytes( $user['mailquota'][0] );
+                                    echo "</td>";
+
+                                    // Last login
+                                    /*echo "<td>";
+                                    $getLastLogin->execute( [ ':username' => $email ] );
+                                    $lastLogin = $getLastLogin->fetch( PDO::FETCH_ASSOC );
+                                    //echo date( "Y-m-d H:i" , strtotime( $lastLogin['imap'] ) );
+                                    echo $lastLogin['imap'];
+                                    echo "</td>";*/
                                     // Description
                                     echo "<td>";
                                     if( ! empty( $user['description'][0] ) ) {
