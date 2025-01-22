@@ -21,7 +21,7 @@ For more information on how to install iRedMail, checkout the following guides f
     sudo apt update
     sudo apt install nginx php php-ldap git -y
     cd /var/www
-    wget [https://github.com/johnhart96/mail-admin/archive/refs/tags/1.0.zip](https://github.com/johnhart96/mail-admin.git)
+    git clone [https://github.com/johnhart96/mail-admin/archive/refs/tags/1.0.zip](https://github.com/johnhart96/mail-admin.git)
     
 ## Step 3 - Setup the nginx
 Make */etc/nginx/sites-enabled/default* look like this:
@@ -40,8 +40,9 @@ Make */etc/nginx/sites-enabled/default* look like this:
         }
     }
 
-## Step 4 - Create and edit your config file
+Now restart nginx
 
-    sudo cp /var/www/html/mail-admin/usr/config.sample.php /var/www/html/mail-admin/usr/config.php
+    sudo systemctl restart nginx
 
-Then edit */var/www/html/mail-admin/usr/config.php* and add your LDAP & database details that you find in *~/iRedmail-xx/iRedMail.tips*
+## Step 4 - Run the installer
+Navigate to the http port of your server and you should be redirected to the installer where you can input your details from *~/iRedmail-xx/iRedMail.tips*

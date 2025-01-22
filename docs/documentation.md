@@ -1,5 +1,5 @@
 # Documentation
-[Home](https://mailadminpanel.org/)
+[Go back](https://mailadminpanel.org/)
 
 This page contains the documentation for configuring and using the mail-admin panel.
 All of the user editable files are located in the 'usr/' directory and this directory will contain the admin logs as well as the main configuration file.
@@ -11,7 +11,7 @@ It is not recomended to directly edit files that are not in the 'usr/' directory
 
  The configuration file can be found in the 'usr/' directory.
  If this file does not exist, then mail-admin will not know how to work with your mail server.
- If you do not have a config file, you will see the following message ***No config file exists. Make a copy of config.sample.php and add your configuration there.***
+ If you do not have a config file, you will see the following message ***No config file exists. Make a copy of config.sample.php or run the installer.***
  
 ### Sample config
 
@@ -21,9 +21,12 @@ It is not recomended to directly edit files that are not in the 'usr/' directory
  See the [example config](https://github.com/johnhart96/mail-admin/blob/main/usr/config.sample.php) for more details.
  
  ### Variables
+ [Click here if the table is not showing correctly](https://github.com/johnhart96/mail-admin/blob/main/docs/documentation.md)
+
 | Key              | Data type     | Description                   |
 | -----------------|---------------|-------------------------------|
 | BRANDING         | String        | Branding name                 |
+| SERVERHOSTNAME   | String        | The external server hostname  |
 | MAILQUOTA        | Integer       | Default mailbox size in bytes |
 | DEBUG            | BOOLEAN       | Show error reporting data     |
 | APP_MAIL         | String        | URL to webmail                |
@@ -36,7 +39,7 @@ It is not recomended to directly edit files that are not in the 'usr/' directory
 | IAPD_HOST        | String        | iRedAPD database host         |
 | IAPD_USER        | String        | iRedAPD database user         |
 | IAPD_PASSWORD    | String        | iRedAPD database password     |
-[Click here if the table is not showing correctly](https://github.com/johnhart96/mail-admin/blob/main/docs/documentation.md)
+
 ## Plugins
 Mail-admin has the ability to add your own plugins. These can be added in the 'plugins/' directory and are all contained in their own folders.
 ***(more info to come soon)***
