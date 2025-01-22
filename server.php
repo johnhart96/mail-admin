@@ -75,6 +75,30 @@ if( isset( $_POST['submit_greylisting'] ) ) {
         $disable = $apd->query( "INSERT INTO `greylisting`(`id`,`account`,`priority`,`sender`,`active`) VALUES(1,'@.',0,'@.',0)" );
     }
 }
+
+// Quaranteen
+if( isset( $_POST['qua_submit'] ) ) {
+    if( isset( $_POST['qua_spam'] ) ) {
+        $spam = $amavisd->query( "UPDATE `policy` set spam_lover='N', bypass_spam_checks='N' WHERE policy_name='@.'" );
+    } else {
+        $spam = $amavisd->query( "UPDATE `policy` set spam_lover='Y', bypass_spam_checks='Y' WHERE policy_name='@.'" );
+    }
+    if( isset( $_POST['qua_virus'] ) ) {
+        $virus = $amavisd->query( "UPDATE `policy` set virus_lover='N', bypass_virus_checks='N' WHERE policy_name='@.'" );
+    } else {
+        $virus = $amavisd->query( "UPDATE `policy` set virus_lover='Y', bypass_virus_checks='Y' WHERE policy_name='@.'" );
+    }
+    if( isset( $_POST['qua_files'] ) ) {
+        $files = $amavisd->query( "UPDATE `policy` set banned_files_lover='N', bypass_banned_checks='N' WHERE policy_name='@.'" );
+    } else {
+        $files = $amavisd->query( "UPDATE `policy` set banned_files_lover='Y', bypass_banned_checks='Y' WHERE policy_name='@.'" );
+    }
+    if( isset( $_POST['qua_headers'] ) ) {
+        $headers = $amavisd->query( "UPDATE `policy` set bad_header_lover='N', bypass_header_checks='N' WHERE policy_name='@.'" );
+    } else {
+        $headers = $amavisd->query( "UPDATE `policy` set bad_header_lover='Y', bypass_header_checks='Y' WHERE policy_name='@.'" );
+    }
+}
 ?>
 <html>
     <head>
@@ -312,6 +336,53 @@ if( isset( $_POST['submit_greylisting'] ) ) {
                                 <label for="greylisting">Enable</label> <br />
                                 <button class="btn btn-success" type="submit" name="submit_greylisting"><i class='fas fa-save'></i>&nbsp;Save</button> &nbsp;
                                 <a href="server_greylisting.php" class="btn btn-primary"><i class='fa fa-gear'></i>&nbsp;Settings</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">&nbsp;</div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header"><strong>Quarantining:</strong></div>
+                        <div class="card-body">
+                            <form method="POST">
+                                <?php
+                                $getPolicy = $amavisd->query( "SELECT * FROM `policy` WHERE policy_name='@.' LIMIT 1" );
+                                $policy = $getPolicy->fetch( PDO::FETCH_ASSOC );
+                                $qua_spam = "";
+                                $qua_virus = "";
+                                $qua_files = "";
+                                $qua_headers = "";
+                                if( $policy['bypass_spam_checks'] == "N" ) {
+                                    $qua_spam = "checked";
+                                }
+                                if( $policy['bypass_virus_checks'] == "N" ) {
+                                    $qua_virus = "checked";
+                                }
+                                if( $policy['bypass_banned_checks'] == "N" ) {
+                                    $qua_files = "checked";
+                                }
+                                if( $policy['bypass_header_checks'] == "N" ) {
+                                    $qua_headers = "checked";
+                                }
+                                ?>
+                                <input type="checkbox" name="qua_spam" <?php echo $qua_spam; ?>>
+                                <label for="qua_spam">Quarantine Spam</label> <br />
+
+                                <input type="checkbox" name="qua_virus" <?php echo $qua_virus; ?>>
+                                <label for="qua_virus">Quarantine Viruses</label> <br />
+
+                                <input type="checkbox" name="qua_files" <?php echo $qua_files; ?>>
+                                <label for="qua_files">Quarantine banned file attachments</label> <br />
+
+                                <input type="checkbox" name="qua_headers" <?php echo $qua_headers; ?>>
+                                <label for="qua_headers">Quarantine bad headers</label> <br />
+
+                                <button type="submit" name="qua_submit" class="btn btn-success"><i class="fas fa-save"></i>&nbsp;Save</button>
                             </form>
                         </div>
                     </div>
