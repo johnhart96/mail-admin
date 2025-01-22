@@ -3,9 +3,9 @@ require 'inc/functions.php';
 require 'inc/common_header.php';
 securePage();
 if( isset( $_POST['submit'] ) ) {
-    $cn = filter_var( $_POST['cn'] , FILTER_SANITIZE_STRING );
-    $domain = filter_var( $_POST['domain'] , FILTER_SANITIZE_STRING );
-    $disclaimer = filter_var( $_POST['disclaimer'] , FILTER_SANITIZE_STRING );
+    $cn = filter_var( $_POST['cn'] , FILTER_UNSAFE_RAW );
+    $domain = filter_var( $_POST['domain'] , FILTER_UNSAFE_RAW );
+    $disclaimer = filter_var( $_POST['disclaimer'] , FILTER_UNSAFE_RAW );
     if( ! empty( $disclaimer ) ) {
         $info['disclaimer'] = $disclaimer;
     }

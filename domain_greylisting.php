@@ -11,7 +11,7 @@ if( $_SESSION['admin_level'] !== "global" && $_SESSION['admin_level'] !== "self"
     $domainToFind = $domain['domainname'][0];
     $title = "Organisation:";
 } else {
-    $domainToFind = filter_var( $_GET['domain'] , FILTER_SANITIZE_STRING );
+    $domainToFind = filter_var( $_GET['domain'] , FILTER_UNSAFE_RAW );
     $title = "Domain:";
 }
 $entity = "@" . $domainToFind;
@@ -29,7 +29,7 @@ if( isset( $_POST['submit'] ) ) {
     $insert->execute( [ ':account' => $entity , ':active' => $active ] );
 }
 if( isset( $_POST['add_whitelist'] ) ) {
-    $sender = filter_var( $_POST['sender'] , FILTER_SANITIZE_STRING );
+    $sender = filter_var( $_POST['sender'] , FILTER_UNSAFE_RAW );
     $insert = $apd->prepare( "INSERT INTO `greylisting_whitelists` (`account`,`sender`) VALUES(:account,:sender)" );
     $insert->execute( [ ':account' => $entity , ':sender' => $sender ] );
 }

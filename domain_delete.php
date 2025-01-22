@@ -2,7 +2,7 @@
 require 'inc/functions.php';
 require 'inc/common_header.php';
 securePage();
-$domain = filter_var( $_GET['domain'] , FILTER_SANITIZE_STRING );
+$domain = filter_var( $_GET['domain'] , FILTER_UNSAFE_RAW );
 require 'inc/bind.php';
 if( isset( $_GET['confirm'] ) ) {
     $entry = "domainName=" . $domain . "," . LDAP_DOMAINDN;

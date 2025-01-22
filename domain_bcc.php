@@ -13,7 +13,7 @@ if( $_SESSION['admin_level'] !== "global" && $_SESSION['admin_level'] !== "self"
     $filter = "(domainName=" . $domain[0]['domainname'][0] . ")";
 } else {
     // Global admin
-    $domainToFind = filter_var( $_GET['domain'] , FILTER_SANITIZE_STRING );
+    $domainToFind = filter_var( $_GET['domain'] , FILTER_UNSAFE_RAW );
     $filter = "(domainName=$domainToFind)";
     $result = ldap_search( $ds , LDAP_BASEDN , $filter );
     $domain = ldap_get_entries( $ds , $result );
@@ -63,10 +63,10 @@ if( isset( $_POST['submit'] ) ) {
     }
 
     // domainRecipientBccAddress
-    $domainRecipientBccAddress = filter_var( $_POST['domainRecipientBccAddress'] , FILTER_SANITIZE_STRING );
+    $domainRecipientBccAddress = filter_var( $_POST['domainRecipientBccAddress'] , FILTER_UNSAFE_RAW );
     $info['domainRecipientBccAddress'][0] = $domainRecipientBccAddress;
     // domainSenderBccAddress
-    $domainSenderBccAddress = filter_var( $_POST['domainSenderBccAddress'] , FILTER_SANITIZE_STRING );
+    $domainSenderBccAddress = filter_var( $_POST['domainSenderBccAddress'] , FILTER_UNSAFE_RAW );
     $info['domainSenderBccAddress'][0] = $domainSenderBccAddress;
 
     ldap_modify( $ds , $dn , $info );

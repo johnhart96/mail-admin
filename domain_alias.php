@@ -13,7 +13,7 @@ if( $_SESSION['admin_level'] !== "global" && $_SESSION['admin_level'] !== "self"
     $filter = "(domainName=" . $domain[0]['domainname'][0] . ")";
 } else {
     // Global admin
-    $domainToFind = filter_var( $_GET['domain'] , FILTER_SANITIZE_STRING );
+    $domainToFind = filter_var( $_GET['domain'] , FILTER_UNSAFE_RAW );
     $filter = "(domainName=$domainToFind)";
     $result = ldap_search( $ds , LDAP_BASEDN , $filter );
     $domain = ldap_get_entries( $ds , $result );
@@ -34,7 +34,7 @@ if( isset( $_GET['delete'] ) ) {
 }
 // Add new alias
 if( isset( $_POST['submit'] ) ) {
-    $add = filter_var( $_POST['domainToAdd'] , FILTER_SANITIZE_STRING );
+    $add = filter_var( $_POST['domainToAdd'] , FILTER_UNSAFE_RAW );
     $info['domainaliasname'] = $add;
     ldap_mod_add( $ds , $dn , $info );
     $found = FALSE;

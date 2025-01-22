@@ -11,7 +11,7 @@ if( $_SESSION['admin_level'] !== "global" && $_SESSION['admin_level'] !== "self"
     $domainToFind = $domain['domainname'][0];
     $title = "Organisation:";
 } else {
-    $domainToFind = filter_var( $_GET['domain'] , FILTER_SANITIZE_STRING );
+    $domainToFind = filter_var( $_GET['domain'] , FILTER_UNSAFE_RAW );
     $title = "Domain:";
 }
 //$domainToFind = $domain[0]['domainname'][0];
@@ -23,7 +23,7 @@ $count = (int)$domain['count'];
 
 
 if( isset( $_POST['submit'] ) ) {
-    $cn = filter_var( $_POST['cn'] , FILTER_SANITIZE_STRING );
+    $cn = filter_var( $_POST['cn'] , FILTER_UNSAFE_RAW );
     if( isset( $_POST['minPasswordLength'] ) ) {
         $minPasswordLength = filter_var( $_POST['minPasswordLength'] , FILTER_SANITIZE_NUMBER_INT );
     } else {
@@ -44,7 +44,7 @@ if( isset( $_POST['submit'] ) ) {
     $info['accountsetting'][0] = "minPasswordLength:" . $minPasswordLength;
     $info['accountsetting'][1] = "defaultQuota:" . $defaultQuota;
     if( ! empty( $_POST['description'] ) ) {
-        $info['description'] = filter_var( $_POST['description'] , FILTER_SANITIZE_STRING );
+        $info['description'] = filter_var( $_POST['description'] , FILTER_UNSAFE_RAW );
     }
     if( ldap_modify( $ds , $dn , $info ) ) {
         $saved = true;

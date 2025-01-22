@@ -13,7 +13,7 @@ if( $_SESSION['admin_level'] !== "global" && $_SESSION['admin_level'] !== "self"
     $filter = "(domainName=" . $domain[0]['domainname'][0] . ")";
 } else {
     // Global admin
-    $domainToFind = filter_var( $_GET['domain'] , FILTER_SANITIZE_STRING );
+    $domainToFind = filter_var( $_GET['domain'] , FILTER_UNSAFE_RAW );
     $filter = "(domainName=$domainToFind)";
     $result = ldap_search( $ds , LDAP_BASEDN , $filter );
     $domain = ldap_get_entries( $ds , $result );
@@ -41,8 +41,8 @@ if( isset( $_GET['rid'] ) && isset( $_GET['sid'] ) ) {
 
 // New entry
 if( isset( $_POST['submit_wblist'] ) ) {
-    $address = filter_var( $_POST['address'] , FILTER_SANITIZE_STRING );
-    $wb = filter_var( $_POST['wb'] , FILTER_SANITIZE_STRING );
+    $address = filter_var( $_POST['address'] , FILTER_UNSAFE_RAW );
+    $wb = filter_var( $_POST['wb'] , FILTER_UNSAFE_RAW );
     // Get RID
     $searchForDomain = $amavisd->prepare( "SELECT * FROM `users` WHERE `email` =:domain LIMIT 1" );
     $searchForDomain->execute( [ ':domain' => $entity ] );
