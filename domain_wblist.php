@@ -140,6 +140,7 @@ if( isset( $_POST['submit_wblist'] ) ) {
                             echo "<div class='alert alert-success'>Item added!</div>";
                         }
                         ?>
+                        <?php if( AMA_ENABLE ) { ?>
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
@@ -200,6 +201,9 @@ if( isset( $_POST['submit_wblist'] ) ) {
                                 </tr>
                             </tfoot>
                         </table>
+                        <?php } else { ?>
+                            <div class="alert alert-danger">White/Black list is not avaliable as Amavis is not enabled!</div>
+                        <?php } ?>
                         
                         <?php plugins_process( "domain_wblist" , "form" ); ?>
                     </form>

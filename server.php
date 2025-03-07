@@ -240,58 +240,62 @@ if( isset( $_POST['submit_greylisting'] ) ) {
                     <div class="card">
                         <div class="card-header"><strong>Server Level Filter Policies:</strong></div>
                         <div card="card-body">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Address</th>
-                                        <th>Action</th>
-                                        <th>&nbsp;</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $getGlobal = $amavisd->query( "SELECT * FROM `users` WHERE `email` ='@.' LIMIT 1" );
-                                    $result = $getGlobal->fetch( PDO::FETCH_ASSOC );
-                                    $user = $result['id'];
-                                    $getWB = $amavisd->prepare( "SELECT * FROM `wblist` WHERE `rid` =:user" );
-                                    $getWB->execute( [ ':user' => $user ] );
-                                    $getSID = $amavisd->prepare( "SELECT * FROM `mailaddr` WHERE `id` =:addr LIMIT 1" );
-                                    while( $row = $getWB->fetch( PDO::FETCH_ASSOC ) ) {
-                                        echo "<tr>";
-                                        $address = $row['sid'];
-                                        $getSID->execute( [ ':addr' => $address ] );
-                                        $sid = $getSID->fetch( PDO::FETCH_ASSOC );
-                                        echo "<td>" . $sid['email'] . "</td>";
-                                        echo "<td>";
-                                        switch( $row['wb'] ) {
-                                            case "B":
-                                                echo "Block";
-                                                break;
-                                            case "W":
-                                                echo "Allow";
-                                                break;
-                                        }
-                                        echo "</td>";
-                                        echo "<td width='1'><a class='btn btn-danger' href='wblist_delete.php?rid=" . $row['rid'] . "&sid=" . $row['sid'] . "'>Delete</a></td>";
-                                        echo "</tr>";
-                                    }
-                                    ?>
-                                </tbody>
-                                <tfoot>
-                                    <form method="post">
+                            <?php if( AMA_ENABLE ) { ?>
+                                <table class="table table-bordered table-striped">
+                                    <thead>
                                         <tr>
-                                            <td><input class="form-control" name="address"></td>
-                                            <td>
-                                                <select name="wb" class="form-control">
-                                                    <option value="B">Block</option>
-                                                    <option value="W">Allow</option>
-                                                </select>
-                                            </td>
-                                            <td width="1"><button style="width: 100%" name="submit_newWB" class="btn btn-success"><i class='fas fa-plus'></i></button></td>
+                                            <th>Address</th>
+                                            <th>Action</th>
+                                            <th>&nbsp;</th>
                                         </tr>
-                                    </form>
-                                </tfoot>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $getGlobal = $amavisd->query( "SELECT * FROM `users` WHERE `email` ='@.' LIMIT 1" );
+                                        $result = $getGlobal->fetch( PDO::FETCH_ASSOC );
+                                        $user = $result['id'];
+                                        $getWB = $amavisd->prepare( "SELECT * FROM `wblist` WHERE `rid` =:user" );
+                                        $getWB->execute( [ ':user' => $user ] );
+                                        $getSID = $amavisd->prepare( "SELECT * FROM `mailaddr` WHERE `id` =:addr LIMIT 1" );
+                                        while( $row = $getWB->fetch( PDO::FETCH_ASSOC ) ) {
+                                            echo "<tr>";
+                                            $address = $row['sid'];
+                                            $getSID->execute( [ ':addr' => $address ] );
+                                            $sid = $getSID->fetch( PDO::FETCH_ASSOC );
+                                            echo "<td>" . $sid['email'] . "</td>";
+                                            echo "<td>";
+                                            switch( $row['wb'] ) {
+                                                case "B":
+                                                    echo "Block";
+                                                    break;
+                                                case "W":
+                                                    echo "Allow";
+                                                    break;
+                                            }
+                                            echo "</td>";
+                                            echo "<td width='1'><a class='btn btn-danger' href='wblist_delete.php?rid=" . $row['rid'] . "&sid=" . $row['sid'] . "'>Delete</a></td>";
+                                            echo "</tr>";
+                                        }
+                                        ?>
+                                    </tbody>
+                                    <tfoot>
+                                        <form method="post">
+                                            <tr>
+                                                <td><input class="form-control" name="address"></td>
+                                                <td>
+                                                    <select name="wb" class="form-control">
+                                                        <option value="B">Block</option>
+                                                        <option value="W">Allow</option>
+                                                    </select>
+                                                </td>
+                                                <td width="1"><button style="width: 100%" name="submit_newWB" class="btn btn-success"><i class='fas fa-plus'></i></button></td>
+                                            </tr>
+                                        </form>
+                                    </tfoot>
+                                </table>
+                            <?php } else {  ?>
+                                <div class="alert alert-danger">Policies are not available as Amavis is not enabled!</div>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>

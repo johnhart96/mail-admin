@@ -112,6 +112,7 @@ if( isset( $_POST['submit_wblist'] ) ) {
                             </li> 
                         </ul>
                         <p>&nbsp;</p>
+                        <?php if( AMA_ENABLE ) { ?>
                         <div class="alert alert-info">List email addresses below that are allowed or blocked from emailing this mailbox.</div>
                         <div class="mb-3">
                             <table class="table table-bordered table-striped">
@@ -179,6 +180,9 @@ if( isset( $_POST['submit_wblist'] ) ) {
                                 </tfoot>
                             </table>
                         </div>
+                        <?php } else { ?>
+                            <div class="alert alert-danger">White/Black list is not available as Amavis is not enabled!</div>
+                        <?php } ?>
                     </form>
                 </div>
             </div>

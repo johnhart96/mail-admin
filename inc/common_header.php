@@ -17,7 +17,12 @@ if( IAPD_ENABLE ) {
 }
 
 // Amavisd
-$amavisd = new PDO( "mysql:host=" . AMA_HOST . ";dbname=" . AMA_DB , AMA_USER , AMA_PASSWORD );
+if( AMA_ENABLE ) {
+    $amavisd = new PDO( "mysql:host=" . AMA_HOST . ";dbname=" . AMA_DB , AMA_USER , AMA_PASSWORD );
+} else {
+    $amavisd = NULL;
+}
+
 session_start();
 
 // Version control

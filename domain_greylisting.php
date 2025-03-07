@@ -84,63 +84,67 @@ if( isset( $_POST['add_whitelist'] ) ) {
                         </ul>
                         <p>&nbsp;</p>
                         <?php
-                        $getRule = $apd->prepare( "SELECT * FROM `greylisting` WHERE `account` =:relm LIMIT 1" );
-                        $getRule->execute( [ ':relm' => $entity ] );
-                        $rule = $getRule->fetch( PDO::FETCH_ASSOC );
-                        $checked = "";
-                        if( isset( $rule['id'] ) ) {
-                            // Found
-                            if( $rule['active'] == 1 ) {
-                                $checked = "checked";
-                            }
-                        } else {
-                            // Not found
-                            $getGlobal = $apd->query( "SELECT * FROM `greylisting` WHERE `account` ='@.' LIMIT 1" );
-                            $global = $getGlobal->fetch( PDO::FETCH_ASSOC );
-                            if( isset( $global['id'] ) ) {
-                                if( $global['active'] == 1 ) {
+                        if( IAPD_ENABLE ) {
+                            $getRule = $apd->prepare( "SELECT * FROM `greylisting` WHERE `account` =:relm LIMIT 1" );
+                            $getRule->execute( [ ':relm' => $entity ] );
+                            $rule = $getRule->fetch( PDO::FETCH_ASSOC );
+                            $checked = "";
+                            if( isset( $rule['id'] ) ) {
+                                // Found
+                                if( $rule['active'] == 1 ) {
                                     $checked = "checked";
                                 }
+                            } else {
+                                // Not found
+                                $getGlobal = $apd->query( "SELECT * FROM `greylisting` WHERE `account` ='@.' LIMIT 1" );
+                                $global = $getGlobal->fetch( PDO::FETCH_ASSOC );
+                                if( isset( $global['id'] ) ) {
+                                    if( $global['active'] == 1 ) {
+                                        $checked = "checked";
+                                    }
+                                }
                             }
+                            echo "<input type='checkbox' name='enable' $checked>&nbsp;<label for='enable'>Enable</label>";
                         }
                         ?>
-                        <input type="checkbox" name="enable" <?php echo $checked; ?>>&nbsp;<label for="enable">Enable</label>
-                        
                         <?php plugins_process( "domain_greylisting" , "form" ); ?>
-                        <p>&nbsp;</p>
-                        <p><button type="submit" name="submit" class="btn btn-success"><i class='fas fa-save'></i>&nbsp;Save</button></p>
                     </form>
                     <div class="card">
                         <div class="card-header"><strong>Whitelist</strong></div>
                         <div class="card-body">
-                           <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Sender</th>
-                                        <th width="1">&nbsp;</th>
-                                    </tr>
-                                </thead>   
-                                <tbody>
-                                    <?php
-                                    $getWhitelist = $apd->prepare( "SELECT * FROM `greylisting_whitelists` WHERE `account` =:account" );
-                                    $getWhitelist->execute( [ ':account' => $entity ] );
-                                    while( $row = $getWhitelist->fetch( PDO::FETCH_ASSOC ) ) {
-                                        echo "<tr>";
-                                        echo "<td>" . $row['sender'] . "</td>";
-                                        echo "<td width='1'><a href='greylisting_sender_delete.php?id=" . $row['id'] . "&domain=" . str_replace( "@" , "" , $entity ) . "' class='btn btn-danger'><i class='fas fa-trash'></i></a></td>";
-                                        echo "</tr>";
-                                    }
-                                    ?>
-                                </tbody>
-                                <tfoot>
-                                    <form method="post">
+                            <?php if( IAPD_ENABLE ) { ?>
+                                <p><button type="submit" name="submit" class="btn btn-success"><i class='fas fa-save'></i>&nbsp;Save</button></p>
+                                <table class="table table-bordered table-striped">
+                                    <thead>
                                         <tr>
-                                            <td><input type="text" name="sender" placeholder="someone@someone.com or @someone.com" class="form-control"></td>
-                                            <td><button style="width: 100%" type="submit" name="add_whitelist" class="btn btn-success"><i class="fas fa-plus"></i></button></td>
+                                            <th>Sender</th>
+                                            <th width="1">&nbsp;</th>
                                         </tr>
-                                    </form>
-                                </tfoot>
-                            </table>
+                                    </thead>   
+                                    <tbody>
+                                        <?php
+                                        $getWhitelist = $apd->prepare( "SELECT * FROM `greylisting_whitelists` WHERE `account` =:account" );
+                                        $getWhitelist->execute( [ ':account' => $entity ] );
+                                        while( $row = $getWhitelist->fetch( PDO::FETCH_ASSOC ) ) {
+                                            echo "<tr>";
+                                            echo "<td>" . $row['sender'] . "</td>";
+                                            echo "<td width='1'><a href='greylisting_sender_delete.php?id=" . $row['id'] . "&domain=" . str_replace( "@" , "" , $entity ) . "' class='btn btn-danger'><i class='fas fa-trash'></i></a></td>";
+                                            echo "</tr>";
+                                        }
+                                        ?>
+                                    </tbody>
+                                    <tfoot>
+                                        <form method="post">
+                                            <tr>
+                                                <td><input type="text" name="sender" placeholder="someone@someone.com or @someone.com" class="form-control"></td>
+                                                <td><button style="width: 100%" type="submit" name="add_whitelist" class="btn btn-success"><i class="fas fa-plus"></i></button></td>
+                                            </tr>
+                                        </form>
+                                    </tfoot>
+                                </table>
+                            <?php } else { ?>
+                                <div class="alert alert-danger">Greylisting is not available as iRedAPD is not enabled!</div>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>

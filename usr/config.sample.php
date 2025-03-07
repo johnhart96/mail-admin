@@ -30,6 +30,7 @@ define( "IAPD_PASSWORD" , "f424dYYdGFhodrIO0ik9WNGJfNYJTQMq" );
 define( "IAPD_DB" , "iredapd" );
 
 // Amavisd
+define( "AMA_ENABLE" , TRUE );
 define( "AMA_HOST" , "127.0.0.1" );
 define( "AMA_USER" , "amavisd" );
 define( "AMA_PASSWORD" , "f424dYYdGFhodrIO0ik9WNGJfNYJTQMq" );
