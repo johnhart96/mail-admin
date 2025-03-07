@@ -77,14 +77,6 @@ plugins_process( "index" , "submit" );
                     ?>
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <div class="appdraw">
-                        <a href="<?php echo APP_MAIL; ?>" target="_blank" class="btn btn-success"><i class="fa fa-envelope"></i>&nbsp;Mail</a>
-                        <a href="<?php echo APP_DRIVE; ?>" target="_blank" class="btn btn-success"><i class="fa fa-folder"></i>&nbsp;Drive</a>
-                    </div>
-                </div>
-            </div>
             <?php plugins_process( "index" , "form" ); ?>
             
             <div class="row">&nbsp;</div>
