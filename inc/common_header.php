@@ -1,6 +1,6 @@
 <?php
 if( ! file_exists( "usr/config.php" ) ) {
-    header( "Location: /installer" );
+    header( "Location: installer/" );
 } else {
     require_once 'usr/config.php';
 }
