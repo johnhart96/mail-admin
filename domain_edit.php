@@ -126,6 +126,9 @@ if( isset( $_POST['submit'] ) ) {
                             <li class="nav-item">
                                 <a class="nav-link" href="domain_greylisting.php?domain=<?php echo $domainToFind; ?>">Greylisting</a>
                             </li>   
+                            <li class="nav-item">
+                                <a class="nav-link" href="domain_dns.php?domain=<?php echo $domainToFind; ?>">DNS</a>
+                            </li> 
                         </ul>
                         <?php if( $_SESSION['admin_level'] == "global" ) { ?>
                             <div class="btn-group">

@@ -81,6 +81,9 @@ if( isset( $_POST['add_whitelist'] ) ) {
                             <li class="nav-item">
                                 <a class="nav-link active" href="domain_greylisting.php?domain=<?php echo $domainToFind; ?>">Greylisting</a>
                             </li>   
+                            <li class="nav-item">
+                                <a class="nav-link" href="domain_dns.php?domain=<?php echo $domainToFind; ?>">DNS</a>
+                            </li> 
                         </ul>
                         <p>&nbsp;</p>
                         <?php

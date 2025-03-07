@@ -1,0 +1,11 @@
+; key#1 2048 bits, s=dkim, d=johnathome.online, /var/lib/dkim/johnathome.online.pem
+dkim._domainkey.johnathome.online.	3600 TXT (
+  "v=DKIM1; p="
+  "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqNEtGUgJbgL3MOllYf0S"
+  "KwDXHjJQGIJx+XT9wfDHgdNPZJi8dsnhd3RiqWxrIPS4vqc/hB3rb5UxZi1yZmW0"
+  "CbB39A0efQSrhaZzB3cRPJyTGrFkJxA9m5G0Ygfk4jYTyQn32xdlt2AZIc3HMje2"
+  "+VUzp0IWeIF7jTyqmZ29Z/YNCtjH6cf0o+pjfGvIddocT4EA9scoKuVEaBwR6hca"
+  "AGn23dcGUgUmui8LNQbH+LV/6WcnVzUpcl6XvEogFrg3F02X3+SyAeF1ip2Afkrc"
+  "d+23HRT8OKzkyyc7w5VnXgh5+6plXJjbc/rX+aOVvciMe34Czl+z7CqoQ+feO9Bi"
+  "NwIDAQAB")
+
