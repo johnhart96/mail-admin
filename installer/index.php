@@ -169,8 +169,11 @@ if( isset( $_POST['submit'] ) ) {
                                     <input class="form-control" name="MAILQUOTA" value="6442450944">
                                 </div>
                                 <div class="input-group">
+                                    <?php
+                                    $hostname = gethostname();
+                                    ?>
                                     <div class="input-group-prepend"><span class="input-group-text">Server hostname</span></div>
-                                    <input class="form-control" name="SERVERHOSTNAME" value="<?php echo shell_exec( "hostname -f" ); ?>">
+                                    <input class="form-control" name="SERVERHOSTNAME" value="<?php echo $hostname; ?>">
                                 </div>
                                 <br />
 
