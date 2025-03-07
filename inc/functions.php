@@ -80,4 +80,15 @@ function email( $dn ) {
     $results = ldap_get_entries( $ds , $search );
     return $results[0]['mail'][0];
 }
+function getSystemMemInfo() {       
+    $data = explode("\n", file_get_contents("/proc/meminfo"));
+    $meminfo = array();
+    error_reporting( 0 );
+    foreach ($data as $line) {
+        list($key, $val) = explode(":", $line);
+        $meminfo[$key] = trim($val);
+    }
+    error_reporting( E_ALL );
+    return $meminfo;
+}
 ?>
