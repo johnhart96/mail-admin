@@ -26,5 +26,5 @@ if( AMA_ENABLE ) {
 session_start();
 
 // Version control
-define( "MAILADMIN_VERSION" , "2.1" );
+define( "MAILADMIN_VERSION" , "2.2" );
 ?>
