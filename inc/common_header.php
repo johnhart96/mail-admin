@@ -10,7 +10,11 @@ if( ! file_exists( "plugins" ) ) {
 }
 
 // iRedAPD Database
-$apd = new PDO( "mysql:host=" . IAPD_HOST . ";dbname=" . IAPD_DB , IAPD_USER , IAPD_PASSWORD );
+if( IAPD_ENABLE ) {
+    $apd = new PDO( "mysql:host=" . IAPD_HOST . ";dbname=" . IAPD_DB , IAPD_USER , IAPD_PASSWORD ); 
+} else {
+    $apd = NULL;
+}
 
 // Amavisd
 $amavisd = new PDO( "mysql:host=" . AMA_HOST . ";dbname=" . AMA_DB , AMA_USER , AMA_PASSWORD );

@@ -16,6 +16,11 @@ if( isset( $_POST['submit'] ) ) {
     $IAPD_USER = filter_var( $_POST['IAPD_USER'] , FILTER_UNSAFE_RAW );
     $IAPD_PASSWORD = filter_var( $_POST['IAPD_PASSWORD'] , FILTER_UNSAFE_RAW );
     $IAPD_DB = filter_var( $_POST['IAPD_DB'] , FILTER_UNSAFE_RAW );
+    if( ! empty( $IAPD_HOST ) ) {
+        $IAPD_ENABLE = "TRUE";
+    } else {
+        $IPAD_ENABLE = "FALSE";
+    }
 
     $AMA_HOST = filter_var( $_POST['AMA_HOST'] , FILTER_UNSAFE_RAW );
     $AMA_USER = filter_var( $_POST['AMA_USER'] , FILTER_UNSAFE_RAW );
@@ -43,6 +48,7 @@ if( isset( $_POST['submit'] ) ) {
         define( 'LDAP_DOMAINDN' , 'o=domains,' . LDAP_BASEDN ); // Base DN to add domains
 
         // iRedAPD
+        define( 'IAPD_ENABLE' , $IPAD_ENABLE );
         define( 'IAPD_HOST' , '$IAPD_HOST' );
         define( 'IAPD_USER' , '$IAPD_USER' );
         define( 'IAPD_PASSWORD' , '$IAPD_PASSWORD' );

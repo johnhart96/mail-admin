@@ -23,6 +23,7 @@ define( "LDAP_ADMINPASSWD" , "7tV2Y2A7k4X4bvBawp5UFn3cH3bCxhzJ" );
 define( "LDAP_DOMAINDN" , "o=domains," . LDAP_BASEDN ); // Base DN to add domains
 
 // iRedAPD
+define( "IAPD_ENABLE" , TRUE );
 define( "IAPD_HOST" , "127.0.0.1" );
 define( "IAPD_USER" , "vmail" );
 define( "IAPD_PASSWORD" , "f424dYYdGFhodrIO0ik9WNGJfNYJTQMq" );
