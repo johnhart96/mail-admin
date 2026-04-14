@@ -1,2 +1,5 @@
 usr/config.php
 usr/admin.log
+usr/.config.php.swp
+usr/dkim_johnathome.online.txt
+usr/dkim_test.internal.txt
