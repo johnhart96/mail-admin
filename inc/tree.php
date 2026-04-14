@@ -43,10 +43,10 @@
                     $filter = "(objectclass=mailList)";
                     $getGroups = ldap_search( $ds , $dn , $filter );
                     $e = ldap_get_entries( $ds , $getGroups );
-                    foreach( $e as $group ) {
-                        if( ! empty( $group['mail'][0] ) ) {
+                    foreach( $e as $g ) {
+                        if( ! empty( $g['mail'][0] ) ) {
                             echo "<li>";
-                            echo "<a href='groups_edit.php?group=" . $group['mail'][0] . "'>" . $group['mail'][0] . "</a>";
+                            echo "<a href='groups_edit.php?group=" . $g['mail'][0] . "'>" . $g['mail'][0] . "</a>";
                             echo "</li>";
                         }
                     }
