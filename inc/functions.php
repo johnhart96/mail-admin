@@ -54,6 +54,14 @@ function globalOnly() {
         die( "Access Denied!" );
     }
 }
+function is_global() {
+    require 'inc/relmset.php';
+    if( $_SESSION['admin_level'] !== "global" ) {
+        return false;
+    } else {
+        return true;
+    }
+}
 function display_name( $email , $dn = false ) {
     require "inc/bind.php";
     if( ! $dn ) {
