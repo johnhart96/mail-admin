@@ -8,7 +8,6 @@
                 $filter = "(domainName=*)";
                 $result = ldap_search( $ds , LDAP_BASEDN , $filter ) or exit("Unable to search");
                 $e = ldap_get_entries( $ds , $result );
-                $count = $e['count'];
                 unset( $e['count'] );
                 foreach( $e as $d ) { 
                     $dn = $d['dn'];
