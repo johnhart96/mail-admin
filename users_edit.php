@@ -3,7 +3,7 @@ require 'inc/functions.php';
 require 'inc/common_header.php';
 securePage();
 require 'inc/bind.php';
-$user = filter_var( $_GET['user'] , FILTER_SANITIZE_STRING );
+$user = filter_var( $_GET['user'] , FILTER_VALIDATE_EMAIL );
 $part = explode( "@" , $user );
 $domain = $part[1];
 if( isset( $_POST['submit'] ) ) {
@@ -81,6 +81,10 @@ if( empty( $userDetail['givenname'] ) ) {
 if( empty( $userDetail['displayname'][0] ) ) {
     $userDetail['displayname'][0] = $userDetail['givenname'][0] . " " . $userDetail['sn'][0];
 }
+
+//echo "<pre>";
+//print_r( $userDetail );
+//echo "</pre>";
 ?>
 <html>
     <head>
@@ -92,7 +96,10 @@ if( empty( $userDetail['displayname'][0] ) ) {
         <?php require 'inc/topbar.php'; ?>
         <div class="container-fluid">
             <div class="row">
-                <?php require 'inc/tree.php'; ?>
+                <?php
+                require 'inc/tree.php';
+                $user = $userDetail['mail'][0];
+                ?>
                 <div class="col">
                     <form method="post">
                         <h1>Edit Mailbox</h1>
