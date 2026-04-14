@@ -62,11 +62,13 @@ $userDetail = $userDetail[0];
                         <p>&nbsp;</p>
                         <table class="table table-bordered table-stripped">
                             <?php
-                            unset( $userDetail['memberofgroup']['count'] );
-                            foreach( $userDetail['memberofgroup'] as $group ) {
-                                echo "<tr>";
-                                echo "<td><a href='groups_members.php?group=$group'>" . $group . "</a></td>";
-                                echo "</tr>";
+                            if( ! empty( $userDetail['memberofgroup'] ) ) {  
+                                unset( $userDetail['memberofgroup']['count'] );
+                                foreach( $userDetail['memberofgroup'] as $group ) {
+                                    echo "<tr>";
+                                    echo "<td><a href='groups_members.php?group=$group'>" . $group . "</a></td>";
+                                    echo "</tr>";
+                                }
                             }
                             ?>
                         </table>
