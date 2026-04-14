@@ -48,7 +48,7 @@ if( isset( $_POST['submit'] ) ) {
         define( 'LDAP_DOMAINDN' , 'o=domains,' . LDAP_BASEDN ); // Base DN to add domains
 
         // iRedAPD
-        define( 'IAPD_ENABLE' , $IPAD_ENABLE );
+        define( 'IAPD_ENABLE' , $IAPD_ENABLE );
         define( 'IAPD_HOST' , '$IAPD_HOST' );
         define( 'IAPD_USER' , '$IAPD_USER' );
         define( 'IAPD_PASSWORD' , '$IAPD_PASSWORD' );
