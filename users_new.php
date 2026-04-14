@@ -110,8 +110,9 @@ if( isset( $_POST['submit'] ) ) {
     </head>
     <body>
         <?php require 'inc/new_topbar.php'; ?>
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
+                <?php require 'inc/tree.php'; ?>
                 <div class="col">
                     <form method="post">
                         <h1>New Mailbox</h1>

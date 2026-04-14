@@ -39,8 +39,9 @@ if( isset( $_GET['confirm'] ) ) {
     </head>
     <body>
         <?php require 'inc/topbar.php'; ?>
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
+                <?php require 'inc/tree.php'; ?>
                 <div class="col">
                     <form method="post">
                         <h1>Delete User</h1>

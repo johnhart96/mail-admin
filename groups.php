@@ -12,8 +12,9 @@ require 'inc/bind.php';
     </head>
     <body>
         <?php require 'inc/new_topbar.php'; ?>
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
+                <?php require 'inc/tree.php'; ?>
                 <div class="col">
                     <form method="post">
                         <h1>Distribution Groups</h1>

@@ -18,8 +18,9 @@ unset( $entries['count'] );
     </head>
     <body>
         <?php require 'inc/new_topbar.php'; ?>
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
+                <?php require 'inc/tree.php'; ?>
                 <div class="col">
                     <h1>Aliases</h1>
                     <?php
