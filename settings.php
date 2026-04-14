@@ -208,41 +208,43 @@ securePage();
                         <tbody>
                             <?php
                             // Search for RID
-                            $getGlobal = $amavisd->prepare( "SELECT * FROM `users` WHERE `email` =:source LIMIT 1" );
-                            $getGlobal->execute( [ ':source' => $_SESSION['ldap']['mail'][0] ] );
-                            $result = $getGlobal->fetch( PDO::FETCH_ASSOC );
-                            if( isset( $result['id'] ) ) {
-                                // Found one
-                                $rid = $result['id'];
-                            } else {
-                                $insertRID = $amavisd->prepare( "INSERT INTO `users`(`priority`,`policy_id`,`email`) VALUES(10,0,:email)" );
-                                $insertRID->execute( [ ':email' => $_SESSION['ldap']['mail'][0] ] );
-                                $getLastEntry = $amavisd->query( "SELECT `id` FROM `users` ORDER BY `id` DESC LIMIT 1" );
-                                $lastEntry = $getLastEntry->fetch( PDO::FETCH_ASSOC );
-                                $rid = $lastEntry['id'];
-                            }
-                            $getWB = $amavisd->prepare( "SELECT * FROM `wblist` WHERE `rid` =:rid" );
-                            $getWB->execute( [ ':rid' => $rid ] );
-                            $getSID = $amavisd->prepare( "SELECT * FROM `mailaddr` WHERE `id` =:id LIMIT 1" );
-                            while( $row = $getWB->fetch( PDO::FETCH_ASSOC ) ) {
-                                echo "<tr>";
-                                $sid = $row['sid'];
-                                $getSID->execute( [ ':id' => $sid ] );
-                                $result = $getSID->fetch( PDO::FETCH_ASSOC );
-                                $address = $result['email'];
-                                echo "<td>" . $address . "</td>";
-                                echo "<td>";
-                                switch( $row['wb'] ) {
-                                    case "B":
-                                        echo "Block";
-                                        break;
-                                    case "W":
-                                        echo "Allow";
-                                        break;
+                            if( $amavisd ) {
+                                $getGlobal = $amavisd->prepare( "SELECT * FROM `users` WHERE `email` =:source LIMIT 1" );
+                                $getGlobal->execute( [ ':source' => $_SESSION['ldap']['mail'][0] ] );
+                                $result = $getGlobal->fetch( PDO::FETCH_ASSOC );
+                                if( isset( $result['id'] ) ) {
+                                    // Found one
+                                    $rid = $result['id'];
+                                } else {
+                                    $insertRID = $amavisd->prepare( "INSERT INTO `users`(`priority`,`policy_id`,`email`) VALUES(10,0,:email)" );
+                                    $insertRID->execute( [ ':email' => $_SESSION['ldap']['mail'][0] ] );
+                                    $getLastEntry = $amavisd->query( "SELECT `id` FROM `users` ORDER BY `id` DESC LIMIT 1" );
+                                    $lastEntry = $getLastEntry->fetch( PDO::FETCH_ASSOC );
+                                    $rid = $lastEntry['id'];
                                 }
-                                echo "</td>";
-                                echo "<td width='1'><a href='wblist_delete.php?rid=" . $rid . "&sid=" . $sid . "' class='btn btn-danger'><i clas='fas fa-trash'></i></a></td>";
-                                echo "</tr>";
+                                $getWB = $amavisd->prepare( "SELECT * FROM `wblist` WHERE `rid` =:rid" );
+                                $getWB->execute( [ ':rid' => $rid ] );
+                                $getSID = $amavisd->prepare( "SELECT * FROM `mailaddr` WHERE `id` =:id LIMIT 1" );
+                                while( $row = $getWB->fetch( PDO::FETCH_ASSOC ) ) {
+                                    echo "<tr>";
+                                    $sid = $row['sid'];
+                                    $getSID->execute( [ ':id' => $sid ] );
+                                    $result = $getSID->fetch( PDO::FETCH_ASSOC );
+                                    $address = $result['email'];
+                                    echo "<td>" . $address . "</td>";
+                                    echo "<td>";
+                                    switch( $row['wb'] ) {
+                                        case "B":
+                                            echo "Block";
+                                            break;
+                                        case "W":
+                                            echo "Allow";
+                                            break;
+                                    }
+                                    echo "</td>";
+                                    echo "<td width='1'><a href='wblist_delete.php?rid=" . $rid . "&sid=" . $sid . "' class='btn btn-danger'><i clas='fas fa-trash'></i></a></td>";
+                                    echo "</tr>";
+                                }
                             }
                             ?>
                         </tbody>
