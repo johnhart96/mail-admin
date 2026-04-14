@@ -60,10 +60,15 @@ function display_name( $email , $dn = false ) {
         $filter = "(mail=$email)";
         $search = ldap_search( $ds , LDAP_BASEDN , $filter );
         $results = ldap_get_entries( $ds , $search );
-        $results = $results[0]['displayname'][0];
+        
         if( empty( $results ) ) {
+
             return $email;
         } else {
+            if( empty( $results[0]['displayname'][0] ) ) {
+                $results[0]['displayname'][0] = $results[0]['mail'][0];
+            }
+            $results = $results[0]['displayname'][0];
             return $results;
         }
     } else {
