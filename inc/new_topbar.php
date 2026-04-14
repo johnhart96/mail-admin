@@ -6,8 +6,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="<?php echo APP_MAIL; ?>"><i class="fas fa-mail-bulk"></i>&nbsp;Mail</a></li>
-                <li class="nav-item"><a class="nav-link" href="<?php echo APP_DRIVE; ?>"><i class="fas fa-folder"></i>&nbsp;Drive</a></li>
+                <?php if( ! empty( APP_MAIL ) ) { ?>
+                    <li class="nav-item"><a class="nav-link" href="<?php echo APP_MAIL; ?>"><i class="fas fa-mail-bulk"></i>&nbsp;Mail</a></li>
+                <?php } ?>
+                <?php if( ! empty( APP_DRIVE ) ) { ?>
+                    <li class="nav-item"><a class="nav-link" href="<?php echo APP_DRIVE; ?>"><i class="fas fa-folder"></i>&nbsp;Drive</a></li>
+                <?php } ?>
+                
                 <?php
                 function nav_item( $page , $link ) {
                     $current_page = str_replace( "/" , "" , $_SERVER['SCRIPT_NAME'] );
