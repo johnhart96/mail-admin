@@ -59,8 +59,9 @@ plugins_process( "index" , "submit" );
     </head>
     <body>
         <?php require 'inc/new_topbar.php'; ?>
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
+                <?php require 'inc/tree.php'; ?>
                 <div class="col">
                     <h1>Welcome <?php echo ucfirst( $_SESSION['ldap']['displayname'][0] ); ?>!</h1>
                     <?php
@@ -75,14 +76,6 @@ plugins_process( "index" , "submit" );
                         echo "<div class='alert alert-warning'><strong>WARNING:</strong> The /installer directory is still present. If you do not delete this directory. Your server will be very insecure!</div>";
                     }
                     ?>
-                </div>
-            </div>
-            <?php plugins_process( "index" , "form" ); ?>
-            
-            <div class="row">&nbsp;</div>
-
-            <div class="row">
-                <div class="col">
                     <div class="card">
                         <div class="card-header"><strong>Quick Block/Allow:</strong></div>
                         <div class="card-body">
@@ -104,6 +97,7 @@ plugins_process( "index" , "submit" );
                             </form>
                         </div>
                     </div>
+                    <?php plugins_process( "index" , "form" ); ?>
                 </div>
             </div>
         </div>
