@@ -145,11 +145,13 @@ if( isset( $_GET['deleteAlias'] ) ) {
                             }
                             // Mailbox aliases
                             foreach( $parts as $part ) {
-                                echo "<tr>";
-                                echo "<td>" . $part . "</td>";
-                                echo "<td width='1'><a class='btn btn-danger' href='users_alias.php?user=$user&deleteAlias=" . $part . "'><i class='fas fa-trash'></i></a>";
-                                echo "</tr>";
-                                $full_list .= $part . ",";
+                                if( ! empty( $part ) ) {
+                                    echo "<tr>";
+                                    echo "<td>" . $part . "</td>";
+                                    echo "<td width='1'><a class='btn btn-danger' href='users_alias.php?user=$user&deleteAlias=" . $part . "'><i class='fas fa-trash'></i></a>";
+                                    echo "</tr>";
+                                    $full_list .= $part . ",";
+                                }
                             }
                             ?>
                             <tr>
