@@ -12,4 +12,6 @@
 <script src="js/ui.js" type="text/javascript"></script>
 <link href="css/topbar.css" rel="stylesheet" type="text/css" />
 <link href="css/ui.css" rel="stylesheet" type="text/css" />
+<link href="css/sidebar.css" rel="stylesheet" type="text/css" />
+<script src="js/sidebar.js" type="text/javascript"></script>
 <title><?php echo BRANDING; ?></title>

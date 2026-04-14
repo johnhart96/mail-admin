@@ -1,0 +1,63 @@
+#myTree, #myTree ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    color: #000000 !important; /* Forces text to Black */
+}
+
+#myTree ul {
+    margin-left: 15px;
+    position: relative;
+}
+
+/* Vertical line for the tree */
+#myTree ul::before {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    border-left: 1px solid #ccc; /* Light gray line for light backgrounds */
+}
+
+#myTree li {
+    position: relative;
+    padding: 5px 0 5px 20px;
+    color: #000000 !important;
+}
+
+/* Horizontal branches */
+#myTree li::before {
+    content: "";
+    position: absolute;
+    top: 15px; left: 0;
+    width: 15px; height: 1px;
+    border-top: 1px solid #ccc;
+}
+
+/* Toggler Styles */
+.caret {
+    cursor: pointer;
+    user-select: none;
+    display: inline-block;
+    color: #000000 !important;
+}
+
+.caret::before {
+    content: "\25B6"; 
+    color: #333; /* Darker triangle */
+    display: inline-block;
+    margin-right: 8px;
+    font-size: 10px;
+    transition: transform 0.2s;
+}
+
+.caret-down::before {
+    transform: rotate(90deg);
+}
+
+.nested {
+    display: none;
+}
+
+.active {
+    display: block !important;
+}
