@@ -74,7 +74,12 @@ function display_name( $email , $dn = false ) {
     } else {
         $search = ldap_search( $ds , $email , "(mail=*)" );
         $results = ldap_get_entries( $ds , $search );
-        return $results[0]['displayname'][0];
+        if( empty( $results[0]['displayname'][0] ) ) {
+            return $results[0]['mail'][0];
+        } else {
+            return $results[0]['displayname'][0];
+        }
+        
     }
     
 }

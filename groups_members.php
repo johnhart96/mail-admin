@@ -67,7 +67,7 @@ if( isset( $_GET['delete'] ) ) {
 
                         <p>&nbsp;</p>
 
-                        <table class="table table-bordered table-stripped">
+                        <table class="table table-bordered table-striped">
                             <?php
                             $dnToUse = "mail=" . $group . ",ou=Groups,domainName=" . $domain . "," . LDAP_DOMAINDN;
                             $filter = "(mail=*)";
@@ -94,6 +94,9 @@ if( isset( $_GET['delete'] ) ) {
                                         $entries = ldap_get_entries( $ds , $getMailboxes );
                                         unset( $entries['count'] );
                                         foreach( $entries as $entry ) {
+                                            if( empty( $entry['displayname'][0] ) ) {
+                                                $entry['displayname'][0] = $entry['mail'][0];
+                                            }
                                             echo "<option value='" . $entry['mail'][0] . "'>" . $entry['displayname'][0] . "</option>";
                                         }
                                         ?>
